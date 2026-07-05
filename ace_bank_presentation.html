@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ace Bank — Accenture UX Case Study Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ========== GLOBAL RESET & SYSTEM VARIABLES ========== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* Futuristic Premium Palette (Minimalist Light Tech) */
+            --bg-base: #FAF9F6; /* Warm alabaster white */
+            --bg-panel: rgba(255, 255, 255, 0.7);
+            --border-primary: rgba(15, 23, 42, 0.08);
+            --border-heavy: #0F172A;
+            
+            /* Typography */
+            --color-text-primary: #0F172A;
+            --color-text-secondary: #475569;
+            --color-text-muted: #94A3B8;
+            
+            /* UI Accent colors */
+            --color-emerald: #059669;
+            --color-emerald-light: #ECFDF5;
+            --color-indigo: #4F46E5;
+            --color-indigo-light: #EEF2FF;
+            --color-purple: #7C3AED;
+            --color-purple-light: #F5F3FF;
+            --color-orange: #EA580C;
+            --color-orange-light: #FFF7ED;
+            --color-red: #DC2626;
+
+            /* Spacing & Border Radius */
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 32px;
+
+            /* Transitions & Spacing */
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 40px;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--color-text-primary);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            transition: padding-left 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out;
+            opacity: 0;
+        }
+        body.page-loaded {
+            opacity: 1;
+        }
+        body.page-exit {
+            opacity: 0 !important;
+        }
+
+        /* Ambient Glowing Background Elements */
+        .ambient-glow {
+            position: fixed;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(5, 150, 105, 0.06) 0%, rgba(79, 70, 229, 0.06) 50%, transparent 100%);
+            top: -200px;
+            right: -200px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Cover Specific Split Layout & Aesthetics */
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            align-items: center;
+            width: 100%;
+            min-height: 70vh;
+        }
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .hero-tag {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--color-indigo);
+            text-transform: uppercase;
+        }
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-top: 10px;
+        }
+        .btn-primary-hero {
+            display: inline-flex;
+            align-items: center;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--color-indigo), #3b82f6);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: var(--font-display);
+            border-radius: var(--radius-sm);
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.25);
+            transition: var(--transition-smooth);
+        }
+        .btn-primary-hero:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(79, 70, 229, 0.4);
+            color: #fff;
+        }
+        .btn-secondary-hero {
+            display: inline-flex;
+            align-items: center;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-weight: 700;
+            font-family: var(--font-display);
+            transition: var(--transition-smooth);
+            gap: 6px;
+        }
+        .btn-secondary-hero:hover {
+            color: var(--color-indigo);
+            transform: translateX(3px);
+        }
+        
+        /* Right Side Illustration (FinTech Card UI Visual) */
+        .hero-right {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 380px;
+        }
+        .visual-card-wrapper {
+            position: relative;
+            width: 320px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: var(--radius-md);
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: floatHero 6s ease-in-out infinite;
+            z-index: 2;
+        }
+        .visual-glow-orb {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, var(--color-emerald) 0%, transparent 70%);
+            opacity: 0.15;
+            top: -30px;
+            right: -30px;
+            animation: pulseOrb 4s ease-in-out infinite alternate;
+        }
+        .visual-glow-orb-2 {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, var(--color-indigo) 0%, transparent 70%);
+            opacity: 0.15;
+            bottom: -40px;
+            left: -20px;
+            animation: pulseOrb 5s ease-in-out infinite alternate;
+        }
+        .floating-badge {
+            position: absolute;
+            background: white;
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-sm);
+            padding: 10px 16px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            animation: floatHeroBadge 7s ease-in-out infinite alternate;
+        }
+        .floating-badge-1 {
+            top: 30px;
+            left: -20px;
+            animation-delay: 0.5s;
+        }
+        .floating-badge-2 {
+            bottom: 40px;
+            right: -20px;
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes floatHero {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(0deg); }
+        }
+        @keyframes floatHeroBadge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes pulseOrb {
+            0% { transform: scale(1); opacity: 0.1; }
+            100% { transform: scale(1.15); opacity: 0.2; }
+        }
+        
+        @media (max-width: 990px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                text-align: center;
+            }
+            .hero-left {
+                align-items: center;
+            }
+            .hero-actions {
+                justify-content: center;
+            }
+            .hero-right {
+                height: auto;
+                margin-top: 20px;
+            }
+        }
+
+        /* ========== DYNAMIC STICKY SIDE NAVIGATION (DESKTOP) ========== */
+        .sidebar {
+            width: 320px;
+            background-color: var(--bg-panel);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-right: 1px solid var(--border-primary);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 90px 30px 40px 30px;
+            z-index: 999;
+            will-change: transform;
+            transform: translate3d(-100%, 0, 0);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+        }
+
+        .sidebar-header {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-mark {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--color-indigo), var(--color-emerald));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-family: var(--font-display);
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--color-text-primary);
+        }
+
+        .nav-links {
+            list-style: none;
+            overflow-y: auto;
+            flex: 1;
+            min-height: 0;
+            padding-right: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-links::-webkit-scrollbar {
+            width: 3px;
+        }
+        .nav-links::-webkit-scrollbar-thumb {
+            background-color: var(--color-text-muted);
+            border-radius: 2px;
+        }
+
+        .nav-item {
+            margin-bottom: 2px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: var(--radius-sm);
+            transition: var(--transition-smooth);
+            gap: 10px;
+            font-family: var(--font-display);
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            color: var(--color-text-primary);
+        }
+
+        .nav-link.active {
+            background-color: var(--color-indigo-light);
+            color: var(--color-indigo);
+            font-weight: 700;
+        }
+
+        /* ========== TOP NAVBAR ========== */
+        .top-navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            background-color: var(--bg-panel);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--border-primary);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            transform: translateY(0);
+        }
+
+        .top-navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .menu-toggle {
+            background: transparent;
+            color: var(--color-text-primary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        
+        .menu-toggle:hover {
+            background: rgba(15, 23, 42, 0.05);
+        }
+
+        /* Sidebar open state */
+        body.sidebar-open .sidebar {
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media(min-width: 1101px) {
+            body.sidebar-open {
+                padding-left: 320px;
+            }
+        }
+
+        /* ========== STORYTELLING MAIN WINDOW ========== */
+        .presentation-flow {
+            margin: 0 auto;
+            padding: 110px 80px 60px 80px;
+            max-width: 1300px;
+            display: flex;
+            flex-direction: column;
+            gap: 120px;
+            flex: 1;
+        }
+
+        /* ========== FUTURISTIC SECTIONS (SLIDES / CARDS) ========== */
+        .slide-section {
+            opacity: 0;
+            transform: translateY(80px) scale(0.97);
+            background-color: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: 60px;
+            box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.04);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.4s ease, 
+                        border-color 0.4s ease;
+            position: relative;
+            scroll-margin-top: 80px;
+        }
+
+        .slide-section.revealed {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .slide-section:hover {
+            border-color: rgba(15, 23, 42, 0.12);
+            box-shadow: 0 20px 50px -12px rgba(15, 23, 42, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .slide-header {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-num {
+            font-family: var(--font-display);
+            font-size: 80px;
+            font-weight: 900;
+            color: rgba(15, 23, 42, 0.04);
+            line-height: 1;
+            position: absolute;
+            top: -40px;
+            left: -20px;
+            z-index: -1;
+            user-select: none;
+        }
+
+        .section-tag {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-indigo);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--color-text-primary);
+            letter-spacing: -1px;
+        }
+
+        /* Stagger reveal animations for elements inside slides */
+        .slide-section .section-title,
+        .slide-section .editorial-column,
+        .slide-section .card,
+        .slide-section .large-stat-block,
+        .slide-section .journey-timeline-container,
+        .slide-section .blueprint-interactive-container,
+        .slide-section .roadmap-timeline,
+        .slide-section .rationale-strip-grid {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide-section.revealed .section-title {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.1s;
+        }
+
+        .slide-section.revealed .editorial-column:nth-child(1),
+        .slide-section.revealed .large-stat-block {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.2s;
+        }
+
+        .slide-section.revealed .editorial-column:nth-child(2),
+        .slide-section.revealed .card {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.35s;
+        }
+
+        .slide-section.revealed .journey-timeline-container,
+        .slide-section.revealed .blueprint-interactive-container,
+        .slide-section.revealed .roadmap-timeline,
+        .slide-section.revealed .rationale-strip-grid {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.25s;
+        }
+
+        /* ========== EDITORIAL GRID SYSTEM ========== */
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            border-top: 1px solid var(--border-primary);
+            padding-top: 40px;
+        }
+
+        .editorial-column {
+            position: relative;
+        }
+
+        .editorial-column::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -30px;
+            height: 100%;
+            width: 1px;
+            background-color: var(--border-primary);
+        }
+
+        .editorial-column:last-child::after {
+            display: none;
+        }
+
+        .editorial-label {
+            font-family: var(--font-display);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--color-text-muted);
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .large-stat-block {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .large-stat-num {
+            font-family: var(--font-display);
+            font-size: 96px;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--color-indigo);
+            letter-spacing: -4px;
+        }
+
+        .large-stat-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            max-width: 200px;
+        }
+
+        .editorial-quote {
+            font-family: var(--font-display);
+            font-size: 24px;
+            line-height: 1.4;
+            font-weight: 500;
+            color: var(--color-text-primary);
+            margin-bottom: 20px;
+            position: relative;
+            letter-spacing: -0.5px;
+            padding-left: 30px;
+        }
+
+        .editorial-quote::before {
+            content: "“";
+            position: absolute;
+            left: 0;
+            top: -10px;
+            font-size: 60px;
+            color: var(--color-indigo);
+            opacity: 0.3;
+            line-height: 1;
+        }
+
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .bullet-item {
+            position: relative;
+            padding-left: 24px;
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .bullet-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 1px;
+            background-color: var(--color-indigo);
+        }
+
+        /* ========== COMPONENT GLASS CARDS ========== */
+        .card {
+            background-color: rgba(255, 255, 255, 0.45);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card:hover {
+            border-color: rgba(79, 70, 229, 0.2);
+            background-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 15px 35px -5px rgba(15, 23, 42, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* ========== JOURNEY MAP & SERVICE BLUEPRINT LAYOUTS ========== */
+        .journey-toggle-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 16px;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: 1px solid var(--border-primary);
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-family: var(--font-display);
+        }
+
+        .toggle-btn.active {
+            background-color: var(--color-indigo);
+            color: white;
+            border-color: var(--color-indigo);
+        }
+
+        .journey-timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .journey-step-card {
+            background: rgba(255,255,255,0.5);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: var(--transition-smooth);
+        }
+
+        .journey-step-card h4 {
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--color-indigo);
+        }
+
+        .journey-step-card .emotion {
+            font-size: 24px;
+        }
+
+        .journey-step-card .detail-section {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+        }
+
+        /* Service Blueprint Grid */
+        .blueprint-interactive-container {
+            border-top: 1px solid var(--border-primary);
+            padding-top: 40px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+        }
+
+        .blueprint-layer-selectors {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .blueprint-btn {
+            background: none;
+            border: 1px solid var(--border-primary);
+            padding: 18px 24px;
+            border-radius: var(--radius-md);
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-family: var(--font-body);
+        }
+
+        .blueprint-btn h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 4px;
+        }
+
+        .blueprint-btn p {
+            font-size: 11px;
+            color: var(--color-text-muted);
+        }
+
+        .blueprint-btn:hover {
+            border-color: var(--color-indigo);
+            background-color: white;
+        }
+
+        .blueprint-btn.active {
+            border-color: var(--color-indigo);
+            background-color: var(--color-indigo-light);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.05);
+        }
+
+        .blueprint-btn.active h4 {
+            color: var(--color-indigo);
+        }
+
+        .blueprint-flow-view {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .blueprint-card {
+            background: rgba(255,255,255,0.45);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            opacity: 0.15;
+            transform: scale(0.96);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .blueprint-card.highlight {
+            opacity: 1;
+            transform: scale(1);
+            border-color: var(--color-indigo);
+            box-shadow: 0 15px 35px rgba(79, 70, 229, 0.06);
+        }
+
+        .blueprint-card-header {
+            font-family: var(--font-display);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--color-indigo);
+        }
+
+        .blueprint-card-body {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ========== HIGH-FIDELITY SMARTPHONE WIREFRAME / INTERACTION DEVICE ========== */
+        .mockup-grid-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 60px;
+            border-top: 1px solid var(--border-primary);
+            padding-top: 40px;
+        }
+
+        .mockup-selector-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .mockup-row-item {
+            background: none;
+            border: none;
+            border-left: 2px solid var(--border-primary);
+            padding: 8px 0 8px 24px;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-family: var(--font-body);
+        }
+
+        .mockup-row-item h4 {
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--color-text-secondary);
+            transition: var(--transition-smooth);
+        }
+
+        .mockup-row-item p {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+
+        .mockup-row-item.active {
+            border-left-color: var(--color-emerald);
+            padding-left: 32px;
+        }
+
+        .mockup-row-item.active h4 {
+            color: var(--color-emerald);
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .futuristic-device-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .smartphone-bezel {
+            width: 320px;
+            height: 640px;
+            background: #000;
+            border-radius: 44px;
+            padding: 8px;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .smartphone-bezel:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 40px 80px -15px rgba(15, 23, 42, 0.3);
+        }
+
+        .smartphone-screen {
+            width: 100%;
+            height: 100%;
+            background: #FFFFFF;
+            border-radius: 38px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .phone-status-bar {
+            height: 38px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            z-index: 10;
+        }
+
+        .phone-inner-content {
+            flex: 1;
+            padding: 16px 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .phone-inner-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .phone-tab-bar {
+            height: 64px;
+            border-top: 1px solid var(--border-primary);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: white;
+            padding-bottom: 6px;
+        }
+
+        .tab-bar-item {
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--color-text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .tab-bar-item.active {
+            color: var(--color-emerald);
+            transform: scale(1.15);
+        }
+
+        /* Smartwatch bezel frame */
+        .watch-mockup {
+            width: 160px;
+            height: 180px;
+            background: #000 !important;
+            border: 6px solid #334155;
+            border-radius: 30px;
+            padding: 12px;
+            color: #FFF !important;
+            font-family: var(--font-body);
+            font-size: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .watch-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 4px;
+            color: var(--color-emerald) !important;
+            font-weight: 700;
+        }
+
+        /* Wireframe details within mockups */
+        .wf-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--border-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .wf-btn {
+            background-color: var(--color-text-primary);
+            color: #FFF;
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .wf-btn-secondary {
+            background-color: var(--border-primary);
+            color: var(--color-text-primary);
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .wf-card {
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            background: #FFF;
+        }
+
+        .wf-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            background-color: var(--border-primary);
+            color: var(--color-text-secondary);
+        }
+
+        .screen-template {
+            display: none;
+        }
+
+        /* ========== RATONALE MATRIX ========== */
+        .rationale-strip-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border-top: 1px solid var(--border-primary);
+            padding-top: 40px;
+        }
+
+        .rationale-row {
+            display: grid;
+            grid-template-columns: 1.2fr 2fr 1.5fr;
+            gap: 40px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-primary);
+            transition: var(--transition-smooth);
+        }
+
+        .rationale-row:hover {
+            background-color: rgba(255,255,255,0.4);
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: var(--radius-sm);
+        }
+
+        .rationale-cell-title {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        .rationale-cell-body {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ========== DETAILED ROADMAP ========== */
+        .roadmap-timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            border-top: 1px solid var(--border-primary);
+            padding-top: 40px;
+        }
+
+        .roadmap-node {
+            position: relative;
+        }
+
+        .roadmap-node::before {
+            content: "";
+            position: absolute;
+            top: -45px;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--color-indigo);
+        }
+
+        .roadmap-node-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: var(--color-text-primary);
+        }
+
+        /* Scroll Progress indicator */
+        .top-scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--color-indigo), var(--color-emerald));
+            z-index: 1100;
+            transition: width 0.1s ease;
+        }
+
+        /* Responsive Layouts */
+        @media(max-width: 1100px) {
+            .sidebar {
+                width: 280px;
+            }
+            .presentation-flow {
+                padding: 100px 24px 80px 24px;
+            }
+            .editorial-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .editorial-column::after {
+                display: none;
+            }
+            .blueprint-interactive-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .mockup-grid-wrapper {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .journey-timeline-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .roadmap-timeline {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .roadmap-node::before {
+                display: none;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .journey-timeline-grid {
+                grid-template-columns: 1fr;
+            }
+            .blueprint-flow-view {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Progress Indicator -->
+    <div class="top-scroll-indicator" id="scrollProgress"></div>
+
+    <!-- Background glowing sphere effects -->
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow" style="bottom: 0; left: -200px; top: auto; right: auto;"></div>
+
+    <!-- Top Navigation Bar (Visible on mobile or when sidebar is collapsed) -->
+    <header class="top-navbar" id="topNavbar">
+        <div class="top-navbar-left">
+            <button class="menu-toggle" onclick="toggleDrawer()" aria-label="Toggle Navigation menu">
+                <svg viewBox="0 0 24 24" id="hamburgerMenuIconTop" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                    <line x1="4" y1="6" x2="20" y2="6"></line>
+                    <line x1="4" y1="12" x2="20" y2="12"></line>
+                    <line x1="4" y1="18" x2="20" y2="18"></line>
+                </svg>
+            </button>
+            <div class="logo-mark" style="width:32px; height:32px; font-size: 14px;">A</div>
+            <div class="logo-text" style="font-size: 16px; margin:0;">Ace Bank</div>
+        </div>
+        <div style="font-size: 13px; color: var(--color-text-secondary); font-weight:500; display:flex; align-items:center;">
+            <span class="desktop-only">Accenture UX Challenge</span>
+        </div>
+    </header>
+
+    <!-- Navigation Sidebar (Sticky desktop, drawer mobile) -->
+    <aside class="sidebar" id="sidebarMenu">
+        <ul class="nav-links">
+            <li class="nav-item"><a href="#slide-1" class="nav-link active" onclick="closeDrawer()">01. Cover</a></li>
+            <li class="nav-item"><a href="#slide-2" class="nav-link" onclick="closeDrawer()">02. The Challenge</a></li>
+            <li class="nav-item"><a href="#slide-3" class="nav-link" onclick="closeDrawer()">03. Research & Insights</a></li>
+            <li class="nav-item"><a href="#slide-4" class="nav-link" onclick="closeDrawer()">04. Opportunity Areas</a></li>
+            <li class="nav-item"><a href="#slide-5" class="nav-link" onclick="closeDrawer()">05. User Persona</a></li>
+            <li class="nav-item"><a href="#slide-6" class="nav-link" onclick="closeDrawer()">06. User Journey</a></li>
+            <li class="nav-item"><a href="#slide-7" class="nav-link" onclick="closeDrawer()">07. Service Blueprint</a></li>
+            <li class="nav-item"><a href="#slide-8" class="nav-link" onclick="closeDrawer()">08. Experience Ecosystem</a></li>
+            <li class="nav-item"><a href="#slide-9" class="nav-link" onclick="closeDrawer()">09. Solution Overview</a></li>
+            <li class="nav-item"><a href="#slide-10" class="nav-link" onclick="closeDrawer()">10. Key Features</a></li>
+            <li class="nav-item"><a href="#slide-11" class="nav-link" onclick="closeDrawer()">11. Omnichannel Design</a></li>
+            <li class="nav-item"><a href="#slide-12" class="nav-link" onclick="closeDrawer()">12. AI + Gamification</a></li>
+            <li class="nav-item"><a href="#slide-13" class="nav-link" onclick="closeDrawer()">13. High-Fidelity UI</a></li>
+            <li class="nav-item"><a href="#slide-14" class="nav-link" onclick="closeDrawer()">14. Design Decisions</a></li>
+            <li class="nav-item"><a href="#slide-15" class="nav-link" onclick="closeDrawer()">15. Future Vision</a></li>
+            <li class="nav-item"><a href="#slide-16" class="nav-link" onclick="closeDrawer()">16. Conclusion</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Presentation Stream -->
+    <main class="presentation-flow">
+
+        <!-- 01. COVER -->
+        <section class="slide-section revealed" id="slide-1" style="min-height: 80vh; display: flex; align-items: center; padding-top: 40px; padding-bottom: 40px;">
+            <div class="hero-container">
+                <!-- Left Content -->
+                <div class="hero-left">
+                    <span class="hero-tag">Case Study &bull; Gen-Z FinTech</span>
+                    <h1 style="font-family: var(--font-display); font-size: 56px; font-weight: 900; line-height: 1.1; letter-spacing: -2px;">
+                        ACE BANK: <br>
+                        <span style="background: linear-gradient(135deg, var(--color-indigo), var(--color-emerald)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Habit-Building FinTech</span>
+                    </h1>
+                    <p style="font-size: 18px; color: var(--color-text-secondary); max-width: 600px; line-height: 1.6;">
+                        Re-imagining banking to address young adults' balance anxiety and foster long-term, self-directed wealth creation through visuals-first interactions.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <a href="Ace_Bank_Prototype.html" class="btn-primary-hero">
+                            Launch Live Prototype
+                            <svg style="margin-left:8px;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        </a>
+                        <a href="#slide-2" class="btn-secondary-hero">
+                            Explore Case Study
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Right Illustration Visual -->
+                <div class="hero-right">
+                    <div class="visual-glow-orb"></div>
+                    <div class="visual-glow-orb-2"></div>
+                    
+                    <!-- Glassmorphism Card representation -->
+                    <div class="visual-card-wrapper">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div class="logo-mark" style="width:36px; height:36px; font-size:16px;">A</div>
+                            <span style="font-size:11px; font-family:var(--font-display); font-weight:800; color:var(--color-indigo); text-transform:uppercase; letter-spacing:1px;">Premium</span>
+                        </div>
+                        <div style="margin-top:20px;">
+                            <div style="font-size:11px; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:1px; font-weight:600;">Current Balance</div>
+                            <div style="font-size:28px; font-weight:900; font-family:var(--font-display); color:var(--color-text-primary); margin-top:2px;">$3,420.50</div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; border-top:1px solid rgba(15,23,42,0.05); padding-top:12px;">
+                            <span style="font-size:11px; color:var(--color-text-secondary); font-weight:500;">Card Holder</span>
+                            <span style="font-size:11px; color:var(--color-text-primary); font-weight:700;">Alex Carter</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating UI elements -->
+                    <div class="floating-badge floating-badge-1">
+                        <span style="color:var(--color-emerald);">🌳</span>
+                        <span>Level 4 Savings Tree</span>
+                    </div>
+                    <div class="floating-badge floating-badge-2">
+                        <span style="color:var(--color-indigo);">✨</span>
+                        <span>AI Balance Safeguard</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02. THE CHALLENGE -->
+        <section class="slide-section" id="slide-2">
+            <div class="slide-header">
+                <div class="section-num">02</div>
+                <span class="section-tag">Strategic Framing</span>
+                <h2 class="section-title">The Challenge</h2>
+            </div>
+            <div class="editorial-grid">
+                <div class="editorial-column">
+                    <span class="editorial-label">The Problem Statement</span>
+                    <p style="font-size: 15px; color:var(--color-text-secondary); line-height:1.7;">
+                        Legacy banking systems rely on administrative spreadsheets and raw transaction lists. For young adults (Gen Z), checking balances is an anxiety-inducing chore, resulting in financial avoidance, overdraft loops, and low product adoption.
+                    </p>
+                </div>
+                <div class="editorial-column">
+                    <span class="editorial-label">Strategic Objectives</span>
+                    <div style="display:flex; flex-direction:column; gap:16px;">
+                        <div style="border-left:2px solid var(--color-indigo); padding-left:16px;">
+                            <strong style="font-size:13px; text-transform:uppercase; color:var(--color-indigo);">Business Goal</strong>
+                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:4px;">Build a primary relationship moat to convert low-balance checking accounts into long-term wealth, borrowing, and deposit customers.</p>
+                        </div>
+                        <div style="border-left:2px solid var(--color-emerald); padding-left:16px;">
+                            <strong style="font-size:13px; text-transform:uppercase; color:var(--color-emerald);">User Goal</strong>
+                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:4px;">Engage with financial tracking daily without anxiety, using visual metrics and contextual prompts to build savings consistency.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03. RESEARCH & INSIGHTS -->
+        <section class="slide-section" id="slide-3">
+            <div class="slide-header">
+                <div class="section-num">03</div>
+                <span class="section-tag">User Behavior Research</span>
+                <h2 class="section-title">Research & Insights</h2>
+            </div>
+            <div class="editorial-grid">
+                <div class="editorial-column">
+                    <div class="large-stat-block">
+                        <span class="large-stat-num">64%</span>
+                        <span class="large-stat-label">of Gen Z avoid checking balances due to anxiety.</span>
+                    </div>
+                    <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6;">
+                        Checking statements triggers an emotional response of stress and failure. Young adults actively avoid banking apps when money is tight.
+                    </p>
+                </div>
+                <div class="editorial-column">
+                    <span class="editorial-label">Research Observations</span>
+                    <ul class="bullet-list">
+                        <li class="bullet-item">
+                            <strong>Value Alignment:</strong> Gen Z is driven by ethical objectives (e.g. green investing, visual progression) rather than dry numeric interest rates.
+                        </li>
+                        <li class="bullet-item">
+                            <strong>Friction Sensitivity:</strong> Complex registration screens or manual budget sheets lead to swift app deletion within 3 minutes.
+                        </li>
+                        <li class="bullet-item">
+                            <strong>Skepticism of Exploitative Patterns:</strong> Users spot and delete banking setups that push high-interest debt or credit card streaks.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04. OPPORTUNITY AREAS -->
+        <section class="slide-section" id="slide-4">
+            <div class="slide-header">
+                <div class="section-num">04</div>
+                <span class="section-tag">Product Architecture</span>
+                <h2 class="section-title">Opportunity Areas</h2>
+            </div>
+            <div class="slide-body">
+                <div class="editorial-grid" style="border-top:none; padding-top:0;">
+                    <div class="editorial-column">
+                        <span class="editorial-label">Anxiety to Empowerment</span>
+                        <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6;">
+                            We transform common financial pain points into core growth features. The strategy maps directly from user friction to digital value creation.
+                        </p>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:16px;">
+                        <div class="card" style="border-left: 4px solid var(--color-indigo);">
+                            <span style="font-size:10px; font-weight:800; color:var(--color-text-muted); text-transform:uppercase;">Pain Point</span>
+                            <p style="font-size:13px; font-weight:600; color:var(--color-text-primary); margin:4px 0;">"I don't know where my dining money goes, but checking budgets stresses me out."</p>
+                            <span style="font-size:10px; font-weight:800; color:var(--color-indigo); text-transform:uppercase; display:block; margin-top:8px;">↓ Opportunity</span>
+                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:2px;">Deploy conversational AI budget adjustments and pre-purchase category alerts.</p>
+                        </div>
+                        <div class="card" style="border-left: 4px solid var(--color-emerald);">
+                            <span style="font-size:10px; font-weight:800; color:var(--color-text-muted); text-transform:uppercase;">Pain Point</span>
+                            <p style="font-size:13px; font-weight:600; color:var(--color-text-primary); margin:4px 0;">"Savings feel like boring sacrifices with no immediate value."</p>
+                            <span style="font-size:10px; font-weight:800; color:var(--color-emerald); text-transform:uppercase; display:block; margin-top:8px;">↓ Opportunity</span>
+                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:2px;">Design an interactive Savings Tree tied to micro-savings consistency rather than quantum.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05. USER PERSONA -->
+        <section class="slide-section" id="slide-5">
+            <div class="slide-header">
+                <div class="section-num">05</div>
+                <span class="section-tag">Ideal User</span>
+                <h2 class="section-title">User Persona</h2>
+            </div>
+            <div class="editorial-grid">
+                <div class="editorial-column">
+                    <div style="display:flex; align-items:center; gap:20px; margin-bottom:20px;">
+                        <div class="wf-avatar" style="width:64px; height:64px; font-size:24px; background-color:var(--color-indigo-light); color:var(--color-indigo);">A</div>
+                        <div>
+                            <h3 style="font-family:var(--font-display); font-size:20px; font-weight:700;">Alex</h3>
+                            <p style="font-size:12px; color:var(--color-text-muted);">23 years old • Junior Developer • Mumbai</p>
+                        </div>
+                    </div>
+                    <h4 class="editorial-quote">
+                        "I want my savings to grow, but traditional banking apps feel like they want me to make mistakes."
+                    </h4>
+                </div>
+                <div class="editorial-column">
+                    <span class="editorial-label">Key Parameters</span>
+                    <ul class="bullet-list">
+                        <li class="bullet-item"><strong>Motivations:</strong> High visual feedback, value-based micro-investing, travel goals.</li>
+                        <li class="bullet-item"><strong>Frustrations:</strong> Complex banking acronyms, balance check dread, hidden transactions.</li>
+                        <li class="bullet-item"><strong>Personality:</strong> Tech-savvy, seeks autonomy, susceptible to swipe/ordering impulses.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 06. USER JOURNEY (BEFORE VS AFTER) -->
+        <section class="slide-section" id="slide-6">
+            <div class="slide-header">
+                <div class="section-num">06</div>
+                <span class="section-tag">Before vs After Comparisons</span>
+                <h2 class="section-title">End-to-End Journey</h2>
+            </div>
+            <div class="slide-body">
+                <div class="journey-toggle-container">
+                    <button class="toggle-btn active" id="journeyBeforeBtn" onclick="toggleJourneyView('before')">Current Journey (Anxiety)</button>
+                    <button class="toggle-btn" id="journeyAfterBtn" onclick="toggleJourneyView('after')">Future Journey (Empowerment)</button>
+                </div>
+
+                <div class="journey-timeline-grid" id="journeyTimeline">
+                    <!-- Dynamic rendering by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 07. SERVICE BLUEPRINT -->
+        <section class="slide-section" id="slide-7">
+            <div class="slide-header">
+                <div class="section-num">07</div>
+                <span class="section-tag">Systems & Service Design</span>
+                <h2 class="section-title">Service Blueprint</h2>
+            </div>
+            <div class="slide-body">
+                <div class="blueprint-interactive-container">
+                    <div class="blueprint-layer-selectors">
+                        <button class="blueprint-btn active" onclick="setBlueprintLayer('front', this)">
+                            <h4>Frontstage Interactions</h4>
+                            <p>User touchpoints and visible controls</p>
+                        </button>
+                        <button class="blueprint-btn" onclick="setBlueprintLayer('back', this)">
+                            <h4>Backstage Engines</h4>
+                            <p>Transaction sweeps and decision trees</p>
+                        </button>
+                        <button class="blueprint-btn" onclick="setBlueprintLayer('support', this)">
+                            <h4>Supporting Systems</h4>
+                            <p>Compliance networks, video coach logs</p>
+                        </button>
+                    </div>
+
+                    <div class="blueprint-flow-view" id="blueprintFlow" style="grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%;">
+                        <!-- Row 1: Frontstage -->
+                        <div class="blueprint-card highlight" data-layer="front">
+                            <div class="blueprint-card-header">Step 1: Frontstage</div>
+                            <div class="blueprint-card-body">Goal selection wizard triggers upon registration.</div>
+                        </div>
+                        <div class="blueprint-card highlight" data-layer="front">
+                            <div class="blueprint-card-header">Step 2: Frontstage</div>
+                            <div class="blueprint-card-body">Grow Tree updates live graphics as auto-saves verify.</div>
+                        </div>
+                        <div class="blueprint-card highlight" data-layer="front">
+                            <div class="blueprint-card-header">Step 3: Frontstage</div>
+                            <div class="blueprint-card-body">Smartwatch nudge triggers wrist tap at point-of-sale.</div>
+                        </div>
+                        <div class="blueprint-card highlight" data-layer="front">
+                            <div class="blueprint-card-header">Step 4: Frontstage</div>
+                            <div class="blueprint-card-body">AI conversational UI escalates to Human certified advisor.</div>
+                        </div>
+
+                        <!-- Row 2: Backstage -->
+                        <div class="blueprint-card" data-layer="back">
+                            <div class="blueprint-card-header">Step 1: Backstage</div>
+                            <div class="blueprint-card-body">AI Engine profiles user risk score & generates Tree metrics.</div>
+                        </div>
+                        <div class="blueprint-card" data-layer="back">
+                            <div class="blueprint-card-header">Step 2: Backstage</div>
+                            <div class="blueprint-card-body">Transaction sweeps aggregate spare change every 24h.</div>
+                        </div>
+                        <div class="blueprint-card" data-layer="back">
+                            <div class="blueprint-card-header">Step 3: Backstage</div>
+                            <div class="blueprint-card-body">AI category scanner intercepts card auth request.</div>
+                        </div>
+                        <div class="blueprint-card" data-layer="back">
+                            <div class="blueprint-card-header">Step 4: Backstage</div>
+                            <div class="blueprint-card-body">Trigger CRM alert with transaction summary log.</div>
+                        </div>
+
+                        <!-- Row 3: Support -->
+                        <div class="blueprint-card" data-layer="support">
+                            <div class="blueprint-card-header">Step 1: Support</div>
+                            <div class="blueprint-card-body">E-KYC verification API and bank database check.</div>
+                        </div>
+                        <div class="blueprint-card" data-layer="support">
+                            <div class="blueprint-card-header">Step 2: Support</div>
+                            <div class="blueprint-card-body">Unified Payments Interface (UPI) clearing gateway.</div>
+                        </div>
+                        <div class="blueprint-card" data-layer="support">
+                            <div class="blueprint-card-header">Step 3: Support</div>
+                            <div class="blueprint-card-body">Visa/Mastercard merchant classification database.</div>
+                        </div>
+                        <div class="blueprint-card" data-layer="support">
+                            <div class="blueprint-card-header">Step 4: Support</div>
+                            <div class="blueprint-card-body">Google Meet / Calendly calendar scheduling system.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 08. EXPERIENCE ECOSYSTEM -->
+        <section class="slide-section" id="slide-8">
+            <div class="slide-header">
+                <div class="section-num">08</div>
+                <span class="section-tag">Ecosystem Architecture</span>
+                <h2 class="section-title">Experience Ecosystem</h2>
+            </div>
+            <div class="editorial-grid">
+                <div class="editorial-column">
+                    <span class="editorial-label">Synchronized Channels</span>
+                    <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6; margin-bottom:16px;">
+                        Instead of treating channels as siloed interfaces, Ace Bank shares transaction states and coaching analytics across all user endpoints in real-time.
+                    </p>
+                    <div style="background-color:var(--color-emerald-light); border-left:4px solid var(--color-emerald); padding:16px; border-radius:var(--radius-sm); font-size:12px;">
+                        <strong>Omnichannel Value:</strong> If a user sets a Swiggy cap on their phone, the smartwatch intercepts the checkout, and a certified branch advisor sees this data when advising on debt management.
+                    </div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:12px;">
+                    <div class="card"><strong>Mobile App:</strong> Goal dashboards & streaks tracking.</div>
+                    <div class="card"><strong>Smartwatch:</strong> Real-time POS nudges.</div>
+                    <div class="card"><strong>AI Coach:</strong> Daily conversational tips.</div>
+                    <div class="card"><strong>Certified Coach:</strong> Google Meet debt advisory.</div>
+                    <div class="card"><strong>ATM Network:</strong> Consistent streak reminders.</div>
+                    <div class="card"><strong>Community:</strong> Collaborative saving pools.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 09. SOLUTION OVERVIEW -->
+        <section class="slide-section" id="slide-9">
+            <div class="slide-header">
+                <div class="section-num">09</div>
+                <span class="section-tag">Digital Pillars</span>
+                <h2 class="section-title">Solution Overview</h2>
+            </div>
+            <div class="editorial-grid">
+                <div class="editorial-column">
+                    <span class="editorial-label">Cohesive Pillars</span>
+                    <p style="font-size:15px; color:var(--color-text-secondary); line-height:1.7;">
+                        Ace Bank deploys four digital solutions aimed at behavioral growth. They integrate visual cues, point-of-sale friction, and automated investments.
+                    </p>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr; gap:12px;">
+                    <div style="display:flex; gap:16px; align-items:center;">
+                        <span style="font-size:24px;">🌳</span>
+                        <div>
+                            <strong style="font-size:14px;">Savings Tree Widget:</strong>
+                            <p style="font-size:12px; color:var(--color-text-secondary); margin-top:2px;">Ties daily deposits to visual tree metrics instead of complex ledger listings.</p>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:16px; align-items:center;">
+                        <span style="font-size:24px;">🤖</span>
+                        <div>
+                            <strong style="font-size:14px;">Predictive AI Coach:</strong>
+                            <p style="font-size:12px; color:var(--color-text-secondary); margin-top:2px;">Scans merchant categories and offers recovery challenges.</p>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:16px; align-items:center;">
+                        <span style="font-size:24px;">⌚</span>
+                        <div>
+                            <strong style="font-size:14px;">Point-of-Sale Nudging:</strong>
+                            <p style="font-size:12px; color:var(--color-text-secondary); margin-top:2px;">Adds smartwatch wrist alerts when transaction caps are near.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. KEY FEATURES -->
+        <section class="slide-section" id="slide-10">
+            <div class="slide-header">
+                <div class="section-num">10</div>
+                <span class="section-tag">Value Proposition</span>
+                <h2 class="section-title">Key Features & Business Case</h2>
+            </div>
+            <div class="slide-body">
+                <div class="editorial-grid" style="border-top:none; padding-top:0; grid-template-columns: 280px 1fr;">
+                    <div class="blueprint-layer-selectors">
+                        <button class="blueprint-btn active" onclick="setFeatureKey('tree')">
+                            <h4>Savings Tree Visuals</h4>
+                        </button>
+                        <button class="blueprint-btn" onclick="setFeatureKey('nudge')">
+                            <h4>POS Watch Nudge</h4>
+                        </button>
+                        <button class="blueprint-btn" onclick="setFeatureKey('coach')">
+                            <h4>Coach Escalation</h4>
+                        </button>
+                    </div>
+
+                    <div class="card" id="featureContentBlock">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11. OMNICHANNEL EXPERIENCE -->
+        <section class="slide-section" id="slide-11">
+            <div class="slide-header">
+                <div class="section-num">11</div>
+                <span class="section-tag">Cross-Channel Design</span>
+                <h2 class="section-title">Omnichannel Experience</h2>
+            </div>
+            <div class="editorial-grid">
+                <div class="editorial-column">
+                    <span class="editorial-label">Connected Diagram</span>
+                    <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6; margin-bottom:16px;">
+                        The diagram below charts transaction lifecycle data across three main physical and digital states.
+                    </p>
+                    <div style="background-color: var(--color-indigo-light); border-left:4px solid var(--color-indigo); padding:16px; border-radius:var(--radius-sm); font-size:12px;">
+                        <strong>Data Lifecycle:</strong> Watch checks budget cap ➔ App captures goal status ➔ Advisor dashboard flags critical debt parameters.
+                    </div>
+                </div>
+                <div class="card" style="display:flex; flex-direction:column; justify-content:center; align-items:center; gap:20px;">
+                    <strong style="font-size:12px; text-transform:uppercase; color:var(--color-text-muted);">Sync Architecture</strong>
+                    <div style="display:flex; justify-content:space-between; width:100%; text-align:center; font-size:11px;">
+                        <div style="padding:10px; border:1px solid var(--border-primary); border-radius:6px; background:#FFF;">📱 Mobile App</div>
+                        <div style="display:flex; align-items:center; color:var(--color-indigo);">⟷</div>
+                        <div style="padding:10px; border:1px solid var(--border-primary); border-radius:6px; background:#FFF;">⌚ Smartwatch</div>
+                        <div style="display:flex; align-items:center; color:var(--color-indigo);">⟷</div>
+                        <div style="padding:10px; border:1px solid var(--border-primary); border-radius:6px; background:#FFF;">🧑‍💼 CRM Link</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 12. AI + GAMIFICATION -->
+        <section class="slide-section" id="slide-12">
+            <div class="slide-header">
+                <div class="section-num">12</div>
+                <span class="section-tag">Behavioral Mechanics</span>
+                <h2 class="section-title">AI + Gamification</h2>
+            </div>
+            <div class="editorial-grid">
+                <div class="editorial-column">
+                    <span class="editorial-label">Psychological Frameworks</span>
+                    <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6; margin-bottom:16px;">
+                        We deploy the <strong>Fogg Behavior Model</strong>. When motivation is tied to the Growth Tree, we reduce savings barriers (Ability) and trigger prompts via the Smartwatch.
+                    </p>
+                    <div class="callout callout-info" style="margin:0;">
+                        <strong>Streak Protection:</strong> The "Streak Freeze" preserves momentum when fixed expenses (e.g. rent) spike.
+                    </div>
+                </div>
+                <div class="editorial-column">
+                    <span class="editorial-label">Gamification Systems</span>
+                    <ul class="bullet-list">
+                        <li class="bullet-item"><strong>Weekly Quests:</strong> "Cook-at-Home" quests reward users with actual cashback, not badges.</li>
+                        <li class="bullet-item"><strong>Ethical leaderboards:</strong> Rankings compare savings consistency, never spending totals.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 13. HIGH-FIDELITY UI -->
+        <section class="slide-section" id="slide-13">
+            <div class="slide-header">
+                <div class="section-num">13</div>
+                <span class="section-tag">Final Screens & Interactive Mockup</span>
+                <h2 class="section-title">High-Fidelity UI</h2>
+            </div>
+            
+            <div class="mockup-grid-wrapper">
+                <div class="mockup-selector-list">
+                    <button class="mockup-row-item active" onclick="setHiFiScreen('home')">
+                        <h4>1. Home Dashboard</h4>
+                        <p>Tree visuals, streaks, balance, and quick actions.</p>
+                    </button>
+                    <button class="mockup-row-item" onclick="setHiFiScreen('onboard')">
+                        <h4>2. Onboarding Setup Wizard</h4>
+                        <p>Friction-free, 3-question goal personalization.</p>
+                    </button>
+                    <button class="mockup-row-item" onclick="setHiFiScreen('quests')">
+                        <h4>3. Active Savings Quests</h4>
+                        <p>Cashback challenges replacing standard points.</p>
+                    </button>
+                    <button class="mockup-row-item" onclick="setHiFiScreen('ai')">
+                        <h4>4. Ace AI Coach</h4>
+                        <p>Conversational assistant recommending cap updates.</p>
+                    </button>
+                    <button class="mockup-row-item" onclick="setHiFiScreen('watch')">
+                        <h4>5. Wearable Smartwatch Nudge</h4>
+                        <p>Vibration pre-purchase caps alert.</p>
+                    </button>
+                    <button class="mockup-row-item" onclick="setHiFiScreen('coach')">
+                        <h4>6. Human Coach Handoff</h4>
+                        <p>Seamless advisor transition screen.</p>
+                    </button>
+                </div>
+
+                <div class="futuristic-device-container">
+                    <div class="smartphone-bezel">
+                        <div class="smartphone-screen">
+                            <div class="phone-status-bar">
+                                <span>9:41</span>
+                                <span>📶 🔋</span>
+                            </div>
+                            <div class="phone-inner-content" id="hifiBody">
+                                <!-- Initial rendering handled by JS -->
+                            </div>
+                            <div class="phone-tab-bar">
+                                <div class="tab-bar-item active" onclick="setHiFiScreen('home')">🏠</div>
+                                <div class="tab-bar-item" onclick="setHiFiScreen('quests')">🏆</div>
+                                <div class="tab-bar-item" onclick="setHiFiScreen('ai')">🤖</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 14. DESIGN DECISIONS -->
+        <section class="slide-section" id="slide-14">
+            <div class="slide-header">
+                <div class="section-num">14</div>
+                <span class="section-tag">Strategic Defense</span>
+                <h2 class="section-title">Design Decisions</h2>
+            </div>
+            <div class="slide-body">
+                <div class="rationale-strip-grid">
+                    <div class="rationale-row" style="border-top:1px solid var(--border-primary);">
+                        <span class="rationale-cell-title">Why the visual Tree?</span>
+                        <span class="rationale-cell-body">We tie progress directly to deposit consistency to build intrinsic wellness loops.</span>
+                        <span class="rationale-cell-body" style="color:var(--color-text-muted);">Alternative: Standard transaction lists which drive user balance anxiety.</span>
+                    </div>
+                    <div class="rationale-row">
+                        <span class="rationale-cell-title">Why pre-purchase nudges?</span>
+                        <span class="rationale-cell-body">Providing warnings prior to limit breaks changes buyer behavior at the point of sale.</span>
+                        <span class="rationale-cell-body" style="color:var(--color-text-muted);">Alternative: Post-purchase notifications which trigger avoidance.</span>
+                    </div>
+                    <div class="rationale-row">
+                        <span class="rationale-cell-title">Why certified coach routing?</span>
+                        <span class="rationale-cell-body">AI answers can be inaccurate for complex debt triage. Real coaches guarantee security.</span>
+                        <span class="rationale-cell-body" style="color:var(--color-text-muted);">Alternative: Pure chatbot routing which erodes financial trust.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 15. FUTURE VISION -->
+        <section class="slide-section" id="slide-15">
+            <div class="slide-header">
+                <div class="section-num">15</div>
+                <span class="section-tag">Product Scaling</span>
+                <h2 class="section-title">Future Vision</h2>
+            </div>
+            <div class="roadmap-timeline">
+                <div class="roadmap-node">
+                    <h3 class="roadmap-node-title">Voice Banking</h3>
+                    <p style="font-size:13px; color:var(--color-text-secondary); line-height:1.6;">
+                        Integrating natural language voice inputs to check transaction limits directly via Siri or Google Assistant.
+                    </p>
+                </div>
+                <div class="roadmap-node">
+                    <h3 class="roadmap-node-title">Family Accounts</h3>
+                    <p style="font-size:13px; color:var(--color-text-secondary); line-height:1.6;">
+                        Multiplayer savings networks linking parents to young accounts to auto-match savings consistency.
+                    </p>
+                </div>
+                <div class="roadmap-node">
+                    <h3 class="roadmap-node-title">AR Coaching</h3>
+                    <p style="font-size:13px; color:var(--color-text-secondary); line-height:1.6;">
+                        Long-term financial projection dashboards displaying asset allocation curves when viewing investment sheets on desktop.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 16. CONCLUSION -->
+        <section class="slide-section" id="slide-16" style="text-align:center; padding:100px 0;">
+            <div class="logo-mark" style="margin: 0 auto 24px; width:56px; height:56px; border-radius:14px; font-size:28px;">A</div>
+            <h2 style="font-family:var(--font-display); font-size:40px; font-weight:900; background: linear-gradient(135deg, var(--color-indigo), var(--color-emerald)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                Case Study Complete
+            </h2>
+            <p style="font-size:16px; color:var(--color-text-secondary); max-width:600px; margin:16px auto 0; line-height:1.6;">
+                Building financial autonomy for the next generation.
+            </p>
+
+            <div style="margin-top:40px; display:flex; flex-direction:column; gap:12px; align-items:center;">
+                <a href="Ace_Bank_Prototype.html" style="display:inline-block; padding:14px 28px; border-radius:var(--radius-sm); background:var(--color-indigo); color:white; text-decoration:none; font-weight:700; font-family:var(--font-display); transition:var(--transition-smooth);">Launch Interactive App Prototype</a>
+                <p style="font-size:11px; color:var(--color-text-muted); margin-top:8px;">Designed and coded for Accenture UX Evaluation • 2026</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Wireframe Database for Interactive Mockup Switcher -->
+    <div class="screen-template" id="tmpl-home">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <span style="font-size:10px; color:var(--color-text-muted);">Good Morning</span>
+                <h4 style="font-size:14px; font-weight:700;">Alex</h4>
+            </div>
+            <div class="wf-avatar">A</div>
+        </div>
+        <div class="wf-card" style="background-color: var(--color-emerald-light); border-color: var(--color-emerald); margin-top:12px;">
+            <span class="wf-pill" style="background:var(--color-emerald); color:white;">LEVEL 4 SAPLING</span>
+            <div style="font-size:12px; margin-top:8px; font-weight:700;">🌳 Grow Tree Goal: ₹13,600 / ₹20,000</div>
+            <div style="height:6px; background:#DDD; border-radius:3px; margin-top:8px; overflow:hidden;">
+                <div style="width:68%; height:100%; background:var(--color-emerald);"></div>
+            </div>
+        </div>
+        <div class="wf-card" style="margin-top:12px;">
+            <div style="font-size:11px; color:var(--color-text-muted);">Total Savings Balance</div>
+            <div style="font-size:24px; font-weight:800; margin:4px 0;">₹42,850</div>
+            <div class="wf-pill">🔥 12-Day Savings Streak</div>
+        </div>
+        <div class="grid-2" style="margin-top:12px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="wf-btn" style="padding:8px; text-align:center;">Send</div>
+            <div class="wf-btn-secondary" style="padding:8px; text-align:center;">Request</div>
+        </div>
+    </div>
+
+    <div class="screen-template" id="tmpl-onboard">
+        <div style="text-align:center; padding:10px 0;">
+            <h4 style="font-size:15px; font-weight:800;">Plant Your Money Tree</h4>
+            <p style="font-size:11px; color:var(--color-text-muted); margin-top:4px;">Tailor goals in 3 simple selections.</p>
+        </div>
+        <div class="wf-card" style="border-color:var(--color-emerald); background:var(--color-emerald-light); margin-top:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong>🌱 Grow Wealth</strong>
+                <span>🎯</span>
+            </div>
+            <p style="font-size:10px; color:var(--color-text-muted); margin-top:4px;">Daily micro-investment savings tree.</p>
+        </div>
+        <div class="wf-card" style="margin-top:12px;">
+            <strong>✈️ Save for Trip</strong>
+        </div>
+        <div class="wf-card" style="margin-top:12px;">
+            <strong>💳 Reduce Debt</strong>
+        </div>
+        <div class="wf-btn" style="margin-top:16px;">Plant my Savings Tree</div>
+    </div>
+
+    <div class="screen-template" id="tmpl-quests">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h4 style="font-size:14px; font-weight:700;">Active Quests</h4>
+            <span style="font-size:10px; color:var(--color-emerald); font-weight:700;">3 Active</span>
+        </div>
+        <div class="wf-card" style="margin-top:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong>🍳 Cook at Home</strong>
+                <span style="color:var(--color-orange); font-size:11px; font-weight:700;">₹200 back</span>
+            </div>
+            <p style="font-size:10px; color:var(--color-text-muted); margin-top:4px;">Spend &lt; ₹500 on Swiggy this week.</p>
+            <div style="height:4px; background:#EEE; border-radius:2px; margin-top:8px; overflow:hidden;">
+                <div style="width:65%; height:100%; background:var(--color-emerald);"></div>
+            </div>
+        </div>
+        <div class="wf-card" style="margin-top:12px;">
+            <strong>📚 Literacy Sprint</strong>
+        </div>
+    </div>
+
+    <div class="screen-template" id="tmpl-ai">
+        <div style="display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border-primary); padding-bottom:8px;">
+            <div class="wf-avatar" style="background:var(--color-indigo-light); color:var(--color-indigo);">AI</div>
+            <div>
+                <h4 style="font-size:12px; font-weight:700;">Ace AI Coach</h4>
+                <span style="font-size:9px; color:var(--color-emerald); font-weight:700;">● Active</span>
+            </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:11px; flex:1; overflow-y:auto; padding-top:10px;">
+            <div style="background:var(--bg-base); padding:10px; border-radius:var(--radius-sm); max-width:85%; align-self:flex-start; line-height:1.4;">
+                Hi Alex! Food delivery spends are high. Tap below to start a Cook-at-Home challenge?
+            </div>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:10px;">
+            <input type="text" placeholder="Type a message..." style="flex:1; padding:8px; border-radius:6px; border:1px solid var(--border-primary); font-size:11px; outline:none;">
+            <div class="wf-btn" style="padding:8px 12px; font-size:11px;">Send</div>
+        </div>
+    </div>
+
+    <div class="screen-template" id="tmpl-watch">
+        <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; text-align:center; gap:20px; padding:20px;">
+            <h4 style="font-size:14px; font-weight:700; color:var(--color-text-secondary);">Point-of-Sale Nudge</h4>
+            <div class="watch-mockup" style="width:140px; height:160px; background:#000;">
+                <div class="watch-header">
+                    <span>Ace Nudge</span>
+                </div>
+                <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:10px 0; font-size:9px; color:#FFF;">
+                    <span>🍕 Swiggy cap warning</span>
+                    <strong style="margin-top:4px; color:var(--color-orange);">₹80 left!</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="screen-template" id="tmpl-coach">
+        <div style="text-align:center; padding:10px 0;">
+            <h4 style="font-size:15px; font-weight:800;">Certified Coach Handoff</h4>
+            <p style="font-size:10px; color:var(--color-text-muted); margin-top:4px;">Book securely with an expert.</p>
+        </div>
+        <div class="wf-card" style="border-left:4px solid var(--color-emerald); margin-bottom:12px; margin-top:12px;">
+            <div style="font-size:12px; font-weight:700;">Instant Call: 10 min wait</div>
+            <p style="font-size:10px; color:var(--color-text-secondary); margin-top:4px;">A certified coach reviews your transaction history live.</p>
+        </div>
+        <div class="wf-btn" style="background-color: var(--color-indigo); margin-top:10px;">Connect Now</div>
+    </div>
+
+
+    <script>
+        // Toggle responsive side menu drawer
+        function toggleDrawer() {
+            document.body.classList.toggle("sidebar-open");
+            const isOpen = document.body.classList.contains("sidebar-open");
+            updateHamburgerIcon(isOpen);
+        }
+
+        function updateHamburgerIcon(isOpen) {
+            const icon = document.getElementById("hamburgerMenuIconTop");
+            if (icon) {
+                if (isOpen) {
+                    icon.innerHTML = `<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>`;
+                } else {
+                    icon.innerHTML = `<line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line>`;
+                }
+            }
+        }
+
+        function closeDrawer() {
+            if (window.innerWidth <= 1100) {
+                document.body.classList.remove("sidebar-open");
+                updateHamburgerIcon(false);
+            }
+        }
+
+        // Scroll Progressive Indicator & Scroll Reveals
+        window.addEventListener('scroll', () => {
+            const winScroll = window.scrollY || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scrollProgress").style.width = scrolled + "%";
+            
+            // Highlight active side navigation
+            const slides = document.querySelectorAll('.slide-section');
+            let currentId = 'slide-1';
+            
+            slides.forEach(slide => {
+                const rect = slide.getBoundingClientRect();
+                // If the slide's top is near or above the middle of the viewport, 
+                // or if we've scrolled past it but it's still visible
+                if (rect.top <= window.innerHeight / 2) {
+                    currentId = slide.getAttribute('id');
+                }
+                
+                if (rect.top <= window.innerHeight - 100) {
+                    slide.classList.add('revealed');
+                }
+            });
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.getAttribute('href') === '#' + currentId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+
+        // Trigger reveal for first screen instantly
+        document.addEventListener("DOMContentLoaded", () => {
+            const first = document.getElementById("slide-1");
+            first.classList.add("revealed");
+            
+            // Initial journey view
+            toggleJourneyView('before');
+
+            // Initial feature key
+            setFeatureKey('tree');
+
+            // Initial hifi screen
+            setHiFiScreen('home');
+        });
+
+        // End-to-End User Journey Comparison Dataset
+        const journeyBeforeData = [
+            { phase: "1. Onboarding", emot: "😐", details: "Faced with complex, long banking forms. Frustrated by the high barrier to entry." },
+            { phase: "2. Daily Tracking", emot: "😟", details: "Checks app monthly. Sees long numeric lists with no context, prompting avoidant behaviors." },
+            { phase: "3. The Overrun", emot: "❌", details: "Spends impulsively. Fails to notice budget limits, receiving guilt-inducing overdraft warnings." },
+            { phase: "4. No Handoff", emot: "💔", details: "Disconnected chatbot loops provide generic advice, driving Alex to abandon the bank app." }
+        ];
+
+        const journeyAfterData = [
+            { phase: "1. Goal Setup Wizard", emot: "😊", details: "Completes a simple 3-question personalized onboarding flow to plant a visual Tree." },
+            { phase: "2. Consistent Deposits", emot: "🌱", details: "Alex saves ₹50 daily. Watches the Grow Tree level up in real-time on home dashboard." },
+            { phase: "3. Smart POS Alert", emot: "⌚", details: "Smartwatch taps wrist *before* checking out Swiggy. Cap warnings are timely." },
+            { phase: "4. AI + Human Advice", emot: "🤝", details: "AI suggests streak recovery options. Direct routing to human Certified Advisor is offered." }
+        ];
+
+        function toggleJourneyView(type) {
+            const beforeBtn = document.getElementById("journeyBeforeBtn");
+            const afterBtn = document.getElementById("journeyAfterBtn");
+            const timeline = document.getElementById("journeyTimeline");
+            
+            if (type === 'before') {
+                beforeBtn.classList.add('active');
+                afterBtn.classList.remove('active');
+                timeline.innerHTML = journeyBeforeData.map(node => `
+                    <div class="journey-step-card" style="border-left: 3px solid var(--color-red);">
+                        <h4>${node.phase}</h4>
+                        <div class="emotion">${node.emot}</div>
+                        <p class="detail-section">${node.details}</p>
+                    </div>
+                `).join('');
+            } else {
+                beforeBtn.classList.remove('active');
+                afterBtn.classList.add('active');
+                timeline.innerHTML = journeyAfterData.map(node => `
+                    <div class="journey-step-card" style="border-left: 3px solid var(--color-emerald);">
+                        <h4>${node.phase}</h4>
+                        <div class="emotion">${node.emot}</div>
+                        <p class="detail-section">${node.details}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Interactive Service Blueprint Layer Selector
+        function setBlueprintLayer(layerKey, btnElement) {
+            const section = document.getElementById("slide-7");
+            const btns = section.querySelectorAll('.blueprint-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            
+            if (btnElement) {
+                btnElement.classList.add('active');
+            } else {
+                const matchBtn = Array.from(btns).find(btn => btn.getAttribute('onclick').includes(layerKey));
+                if (matchBtn) matchBtn.classList.add('active');
+            }
+
+            const cards = document.querySelectorAll('.blueprint-card');
+            cards.forEach(card => {
+                if (card.dataset.layer === layerKey) {
+                    card.classList.add('highlight');
+                } else {
+                    card.classList.remove('highlight');
+                }
+            });
+        }
+
+        // Feature Prioritization Details Dataset
+        const featureDetails = {
+            tree: {
+                title: "Savings Tree Visualization Widget",
+                prob: "Users avoid traditional spreadsheets because balance numbers induce immediate avoidance and stress.",
+                sol: "Tie savings consistency directly to the health of an interactive graphic Tree. Watching the tree flower triggers intrinsic motivation loops.",
+                biz: "Drives daily active engagement (DAU/MAU) and builds saving habit deposits, expanding deposit sheets."
+            },
+            nudge: {
+                title: "Point-of-Sale Wearable Nudge",
+                prob: "Checking budgets post-purchase comes too late to alter spending behaviors, inducing user guilt.",
+                sol: "Add smartwatch wrist vibrations that warn the user *prior* to checkouts when category caps are near.",
+                biz: "Protects target balances, prevents overdrafts, and strengthens the bank as a smart financial partner."
+            },
+            coach: {
+                title: "Agentic AI to Certified Coach Escalation",
+                prob: "Chatbots provide robotic responses in moments of financial panic, damaging trust in high-stakes banking.",
+                sol: "The AI agent handles micro-budgets. In critical danger parameters (persistent overdrafts), it routes to a human coach.",
+                biz: "Protects bank compliance, drives retention, and opens opportunities to cross-sell primary mortgage and investment assets."
+            }
+        };
+
+        function setFeatureKey(key) {
+            const container = document.getElementById("featureContentBlock");
+            const data = featureDetails[key];
+            
+            // Highlight active button
+            const btns = document.querySelectorAll('#slide-10 .blueprint-btn');
+            btns.forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('onclick').includes(key));
+            });
+
+            container.innerHTML = `
+                <h3 style="font-family:var(--font-display); font-size:20px; font-weight:800; color:var(--color-indigo); margin-bottom:16px;">${data.title}</h3>
+                <div style="display:flex; flex-direction:column; gap:12px; font-size:13px; line-height:1.5;">
+                    <div><strong>🔴 User Problem:</strong> <span style="color:var(--color-text-secondary);">${data.prob}</span></div>
+                    <div><strong>🟢 Solution:</strong> <span style="color:var(--color-text-secondary);">${data.sol}</span></div>
+                    <div><strong>💼 Business Value:</strong> <span style="color:var(--color-text-secondary);">${data.biz}</span></div>
+                </div>
+            `;
+        }
+
+        // Set screen state on mockup phone
+        function setHiFiScreen(screenKey) {
+            const rows = document.querySelectorAll('.mockup-row-item');
+            rows.forEach(row => row.classList.remove('active'));
+            
+            // Find parent row selector to activate
+            const matchBtn = Array.from(rows).find(row => row.getAttribute('onclick').includes(screenKey));
+            if (matchBtn) matchBtn.classList.add('active');
+
+            const phoneBody = document.getElementById("hifiBody");
+            const template = document.getElementById("tmpl-" + screenKey);
+            
+            if (template && phoneBody) {
+                phoneBody.innerHTML = template.innerHTML;
+            }
+        }
+    </script>
+    <script>
+        // Page Transitions
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.body.classList.add('page-loaded');
+            }, 50);
+            
+            document.querySelectorAll('a[href="Ace_Bank_Prototype.html"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetUrl = link.getAttribute('href');
+                    document.body.classList.remove('page-loaded');
+                    document.body.classList.add('page-exit');
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 400);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
