@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ace Bank — Accenture UX Case Study Website</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         /* ========== GLOBAL RESET & SYSTEM VARIABLES ========== */
@@ -858,8 +859,12 @@
             padding: 8px;
             box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15);
             border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
-                        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .smartphone-bezel.watch-mode {
+            width: 180px;
+            height: 220px;
+            border-radius: 44px;
         }
 
         .smartphone-bezel:hover {
@@ -876,6 +881,11 @@
             display: flex;
             flex-direction: column;
             position: relative;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .smartphone-screen.watch-mode {
+            background: #000;
+            border-radius: 36px;
         }
 
         .phone-status-bar {
@@ -1154,8 +1164,9 @@
             <div class="logo-mark" style="width:32px; height:32px; font-size: 14px;">A</div>
             <div class="logo-text" style="font-size: 16px; margin:0;">Ace Bank</div>
         </div>
-        <div style="font-size: 13px; color: var(--color-text-secondary); font-weight:500; display:flex; align-items:center;">
-            <span class="desktop-only">Accenture UX Challenge</span>
+        <div style="display:flex; flex-direction:column; align-items:flex-end; justify-content:center;">
+            <span class="desktop-only" style="font-size: 13px; color: var(--color-text-secondary); font-weight:500;">Accenture UX Challenge</span>
+            <span class="desktop-only" style="font-size: 10px; color: var(--color-text-muted); margin-top:2px;">Rajveer - CID: C19323352</span>
         </div>
     </header>
 
@@ -1189,12 +1200,12 @@
             <div class="hero-container">
                 <!-- Left Content -->
                 <div class="hero-left">
-                    <span class="hero-tag">Case Study &bull; Gen-Z FinTech</span>
-                    <h1 style="font-family: var(--font-display); font-size: 56px; font-weight: 900; line-height: 1.1; letter-spacing: -2px;">
-                        ACE BANK: <br>
-                        <span style="background: linear-gradient(135deg, var(--color-indigo), var(--color-emerald)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Habit-Building FinTech</span>
+                    <span class="hero-tag">UX Case Study</span>
+                    <h1 style="font-family: var(--font-display); font-size: 56px; font-weight: 900; line-height: 1.1; letter-spacing: -2px; margin-bottom: 16px;">
+                        ACE BANK:<br>
+                        <span style="color: transparent; background-clip: text; -webkit-background-clip: text; background-image: linear-gradient(90deg, var(--color-indigo), var(--color-emerald));">Habit-Building<br>FinTech</span>
                     </h1>
-                    <p style="font-size: 18px; color: var(--color-text-secondary); max-width: 600px; line-height: 1.6;">
+                    <p style="font-size: 18px; color: var(--color-text-secondary); max-width: 600px; line-height: 1.6; margin-bottom: 32px;">
                         Re-imagining banking to address young adults' balance anxiety and foster long-term, self-directed wealth creation through visuals-first interactions.
                     </p>
                     
@@ -1227,7 +1238,7 @@
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; border-top:1px solid rgba(15,23,42,0.05); padding-top:12px;">
                             <span style="font-size:11px; color:var(--color-text-secondary); font-weight:500;">Card Holder</span>
-                            <span style="font-size:11px; color:var(--color-text-primary); font-weight:700;">Alex Carter</span>
+                            <span style="font-size:11px; color:var(--color-text-primary); font-weight:700;">Rajveer</span>
                         </div>
                     </div>
                     
@@ -1255,7 +1266,7 @@
                 <div class="editorial-column">
                     <span class="editorial-label">The Problem Statement</span>
                     <p style="font-size: 15px; color:var(--color-text-secondary); line-height:1.7;">
-                        Legacy banking systems rely on administrative spreadsheets and raw transaction lists. For young adults (Gen Z), checking balances is an anxiety-inducing chore, resulting in financial avoidance, overdraft loops, and low product adoption.
+                        Today's banking applications primarily help users perform transactions, but they rarely help users develop better financial habits. Young adults often struggle with inconsistent saving, limited financial literacy, and a lack of motivation to stay financially disciplined.
                     </p>
                 </div>
                 <div class="editorial-column">
@@ -1263,11 +1274,11 @@
                     <div style="display:flex; flex-direction:column; gap:16px;">
                         <div style="border-left:2px solid var(--color-indigo); padding-left:16px;">
                             <strong style="font-size:13px; text-transform:uppercase; color:var(--color-indigo);">Business Goal</strong>
-                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:4px;">Build a primary relationship moat to convert low-balance checking accounts into long-term wealth, borrowing, and deposit customers.</p>
+                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:4px;">Increase daily engagement and build long-term trust, positioning the bank as a lifelong financial partner rather than just a transaction utility.</p>
                         </div>
                         <div style="border-left:2px solid var(--color-emerald); padding-left:16px;">
                             <strong style="font-size:13px; text-transform:uppercase; color:var(--color-emerald);">User Goal</strong>
-                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:4px;">Engage with financial tracking daily without anxiety, using visual metrics and contextual prompts to build savings consistency.</p>
+                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:4px;">Gain confidence in managing finances through personalized insights, proactive guidance, and rewarding habit-building experiences.</p>
                         </div>
                     </div>
                 </div>
@@ -1284,24 +1295,24 @@
             <div class="editorial-grid">
                 <div class="editorial-column">
                     <div class="large-stat-block">
-                        <span class="large-stat-num">64%</span>
-                        <span class="large-stat-label">of Gen Z avoid checking balances due to anxiety.</span>
+                        <span class="large-stat-num">73%</span>
+                        <span class="large-stat-label">of Gen Z expect brands to understand their personal needs and expectations.</span>
                     </div>
                     <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6;">
-                        Checking statements triggers an emotional response of stress and failure. Young adults actively avoid banking apps when money is tight.
+                        Users prefer proactive guidance over reactive banking. Rewards and positive reinforcement significantly increase long-term engagement and financial confidence.
                     </p>
                 </div>
                 <div class="editorial-column">
                     <span class="editorial-label">Research Observations</span>
                     <ul class="bullet-list">
                         <li class="bullet-item">
-                            <strong>Value Alignment:</strong> Gen Z is driven by ethical objectives (e.g. green investing, visual progression) rather than dry numeric interest rates.
+                            <strong>Financial Literacy is Developing:</strong> Young adults need banking applications that educate and simplify complex financial concepts.
                         </li>
                         <li class="bullet-item">
-                            <strong>Friction Sensitivity:</strong> Complex registration screens or manual budget sheets lead to swift app deletion within 3 minutes.
+                            <strong>Mobile-First Expectations:</strong> Experiences must be seamless, intuitive, and designed for quick, everyday interactions.
                         </li>
                         <li class="bullet-item">
-                            <strong>Skepticism of Exploitative Patterns:</strong> Users spot and delete banking setups that push high-interest debt or credit card streaks.
+                            <strong>Desire for Personalization:</strong> Generic financial advice is often ignored; users want insights tailored to their specific spending habits and goals.
                         </li>
                     </ul>
                 </div>
@@ -1316,27 +1327,43 @@
                 <h2 class="section-title">Opportunity Areas</h2>
             </div>
             <div class="slide-body">
-                <div class="editorial-grid" style="border-top:none; padding-top:0;">
-                    <div class="editorial-column">
-                        <span class="editorial-label">Anxiety to Empowerment</span>
-                        <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6;">
-                            We transform common financial pain points into core growth features. The strategy maps directly from user friction to digital value creation.
-                        </p>
-                    </div>
-                    <div style="display:flex; flex-direction:column; gap:16px;">
+                <div style="margin-bottom: 24px;">
+                    <span class="editorial-label">From Friction to Value</span>
+                    <p style="font-size:15px; color:var(--color-text-secondary); line-height:1.6; max-width: 800px;">
+                        We transform common financial pain points into core growth features. The product strategy maps directly from user friction to actionable design opportunities that foster financial well-being.
+                    </p>
+                </div>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:16px;">
                         <div class="card" style="border-left: 4px solid var(--color-indigo);">
                             <span style="font-size:10px; font-weight:800; color:var(--color-text-muted); text-transform:uppercase;">Pain Point</span>
-                            <p style="font-size:13px; font-weight:600; color:var(--color-text-primary); margin:4px 0;">"I don't know where my dining money goes, but checking budgets stresses me out."</p>
+                            <p style="font-size:13px; font-weight:600; color:var(--color-text-primary); margin:4px 0;">"I don't know where my salary goes."</p>
                             <span style="font-size:10px; font-weight:800; color:var(--color-indigo); text-transform:uppercase; display:block; margin-top:8px;">↓ Opportunity</span>
-                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:2px;">Deploy conversational AI budget adjustments and pre-purchase category alerts.</p>
+                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:2px;">Provide AI-powered spending insights to improve financial awareness.</p>
                         </div>
                         <div class="card" style="border-left: 4px solid var(--color-emerald);">
                             <span style="font-size:10px; font-weight:800; color:var(--color-text-muted); text-transform:uppercase;">Pain Point</span>
-                            <p style="font-size:13px; font-weight:600; color:var(--color-text-primary); margin:4px 0;">"Savings feel like boring sacrifices with no immediate value."</p>
+                            <p style="font-size:13px; font-weight:600; color:var(--color-text-primary); margin:4px 0;">"I forget to save every month."</p>
                             <span style="font-size:10px; font-weight:800; color:var(--color-emerald); text-transform:uppercase; display:block; margin-top:8px;">↓ Opportunity</span>
-                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:2px;">Design an interactive Savings Tree tied to micro-savings consistency rather than quantum.</p>
+                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:2px;">Create automated savings goals and intelligent reminders.</p>
                         </div>
-                    </div>
+                        <div class="card" style="border-left: 4px solid var(--color-purple);">
+                            <span style="font-size:10px; font-weight:800; color:var(--color-text-muted); text-transform:uppercase;">Pain Point</span>
+                            <p style="font-size:13px; font-weight:600; color:var(--color-text-primary); margin:4px 0;">"I don't understand investing."</p>
+                            <span style="font-size:10px; font-weight:800; color:var(--color-purple); text-transform:uppercase; display:block; margin-top:8px;">↓ Opportunity</span>
+                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:2px;">Offer AI-guided investment education to build financial confidence.</p>
+                        </div>
+                        <div class="card" style="border-left: 4px solid var(--color-orange);">
+                            <span style="font-size:10px; font-weight:800; color:var(--color-text-muted); text-transform:uppercase;">Pain Point</span>
+                            <p style="font-size:13px; font-weight:600; color:var(--color-text-primary); margin:4px 0;">"I lose motivation quickly."</p>
+                            <span style="font-size:10px; font-weight:800; color:var(--color-orange); text-transform:uppercase; display:block; margin-top:8px;">↓ Opportunity</span>
+                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:2px;">Introduce savings streaks and challenges to maintain engagement.</p>
+                        </div>
+                        <div class="card" style="border-left: 4px solid var(--color-red);">
+                            <span style="font-size:10px; font-weight:800; color:var(--color-text-muted); text-transform:uppercase;">Pain Point</span>
+                            <p style="font-size:13px; font-weight:600; color:var(--color-text-primary); margin:4px 0;">"I don't trust generic advice."</p>
+                            <span style="font-size:10px; font-weight:800; color:var(--color-red); text-transform:uppercase; display:block; margin-top:8px;">↓ Opportunity</span>
+                            <p style="font-size:13px; color:var(--color-text-secondary); margin-top:2px;">Deliver transparent, highly personalized financial recommendations.</p>
+                        </div>
                 </div>
             </div>
         </section>
@@ -1351,22 +1378,23 @@
             <div class="editorial-grid">
                 <div class="editorial-column">
                     <div style="display:flex; align-items:center; gap:20px; margin-bottom:20px;">
-                        <div class="wf-avatar" style="width:64px; height:64px; font-size:24px; background-color:var(--color-indigo-light); color:var(--color-indigo);">A</div>
+                        <div class="wf-avatar" style="width:64px; height:64px; font-size:24px; background-color:var(--color-indigo-light); color:var(--color-indigo);">RS</div>
                         <div>
-                            <h3 style="font-family:var(--font-display); font-size:20px; font-weight:700;">Alex</h3>
+                            <h3 style="font-family:var(--font-display); font-size:20px; font-weight:700;">Rajveer</h3>
                             <p style="font-size:12px; color:var(--color-text-muted);">23 years old • Junior Developer • Mumbai</p>
                         </div>
                     </div>
                     <h4 class="editorial-quote">
-                        "I want my savings to grow, but traditional banking apps feel like they want me to make mistakes."
+                        "I want to build healthy financial habits, but traditional banking apps don't offer the guidance or motivation I need."
                     </h4>
                 </div>
                 <div class="editorial-column">
                     <span class="editorial-label">Key Parameters</span>
                     <ul class="bullet-list">
-                        <li class="bullet-item"><strong>Motivations:</strong> High visual feedback, value-based micro-investing, travel goals.</li>
-                        <li class="bullet-item"><strong>Frustrations:</strong> Complex banking acronyms, balance check dread, hidden transactions.</li>
-                        <li class="bullet-item"><strong>Personality:</strong> Tech-savvy, seeks autonomy, susceptible to swipe/ordering impulses.</li>
+                        <li class="bullet-item"><strong>Goals:</strong> Build an emergency fund, understand basic investing, and save for travel without sacrificing daily lifestyle.</li>
+                        <li class="bullet-item"><strong>Motivations:</strong> Transparent advice, visual progress tracking, and rewarding micro-interactions.</li>
+                        <li class="bullet-item"><strong>Pain Points:</strong> Finds traditional banking jargon confusing, forgets to transfer savings, and feels unmotivated by generic advice.</li>
+                        <li class="bullet-item"><strong>Behaviours:</strong> Relies heavily on mobile devices, expects personalized digital experiences, and learns through interactive content.</li>
                     </ul>
                 </div>
             </div>
@@ -1402,72 +1430,72 @@
                 <div class="blueprint-interactive-container">
                     <div class="blueprint-layer-selectors">
                         <button class="blueprint-btn active" onclick="setBlueprintLayer('front', this)">
-                            <h4>Frontstage Interactions</h4>
-                            <p>User touchpoints and visible controls</p>
+                            <h4>User Action & Interface</h4>
+                            <p>Visible touchpoints and interactions</p>
                         </button>
                         <button class="blueprint-btn" onclick="setBlueprintLayer('back', this)">
-                            <h4>Backstage Engines</h4>
-                            <p>Transaction sweeps and decision trees</p>
+                            <h4>AI & Processing</h4>
+                            <p>Real-time data analysis and logic</p>
                         </button>
                         <button class="blueprint-btn" onclick="setBlueprintLayer('support', this)">
-                            <h4>Supporting Systems</h4>
-                            <p>Compliance networks, video coach logs</p>
+                            <h4>Core Systems</h4>
+                            <p>Foundational banking infrastructure</p>
                         </button>
                     </div>
 
                     <div class="blueprint-flow-view" id="blueprintFlow" style="grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%;">
                         <!-- Row 1: Frontstage -->
                         <div class="blueprint-card highlight" data-layer="front">
-                            <div class="blueprint-card-header">Step 1: Frontstage</div>
-                            <div class="blueprint-card-body">Goal selection wizard triggers upon registration.</div>
+                            <div class="blueprint-card-header">Step 1: Onboarding</div>
+                            <div class="blueprint-card-body">User sets personal goals through the interactive wizard.</div>
                         </div>
                         <div class="blueprint-card highlight" data-layer="front">
-                            <div class="blueprint-card-header">Step 2: Frontstage</div>
-                            <div class="blueprint-card-body">Grow Tree updates live graphics as auto-saves verify.</div>
+                            <div class="blueprint-card-header">Step 2: Tracking</div>
+                            <div class="blueprint-card-body">App interface updates visual progress as savings grow.</div>
                         </div>
                         <div class="blueprint-card highlight" data-layer="front">
-                            <div class="blueprint-card-header">Step 3: Frontstage</div>
-                            <div class="blueprint-card-body">Smartwatch nudge triggers wrist tap at point-of-sale.</div>
+                            <div class="blueprint-card-header">Step 3: Transacting</div>
+                            <div class="blueprint-card-body">Smartwatch displays proactive spending alerts.</div>
                         </div>
                         <div class="blueprint-card highlight" data-layer="front">
-                            <div class="blueprint-card-header">Step 4: Frontstage</div>
-                            <div class="blueprint-card-body">AI conversational UI escalates to Human certified advisor.</div>
+                            <div class="blueprint-card-header">Step 4: Support</div>
+                            <div class="blueprint-card-body">User seamlessly escalates from AI chat to a human advisor.</div>
                         </div>
 
                         <!-- Row 2: Backstage -->
                         <div class="blueprint-card" data-layer="back">
-                            <div class="blueprint-card-header">Step 1: Backstage</div>
-                            <div class="blueprint-card-body">AI Engine profiles user risk score & generates Tree metrics.</div>
+                            <div class="blueprint-card-header">Step 1: Analysis</div>
+                            <div class="blueprint-card-body">AI analyzes income patterns to recommend achievable goals.</div>
                         </div>
                         <div class="blueprint-card" data-layer="back">
-                            <div class="blueprint-card-header">Step 2: Backstage</div>
-                            <div class="blueprint-card-body">Transaction sweeps aggregate spare change every 24h.</div>
+                            <div class="blueprint-card-header">Step 2: Logic</div>
+                            <div class="blueprint-card-body">Engine tracks savings streaks and distributes rewards.</div>
                         </div>
                         <div class="blueprint-card" data-layer="back">
-                            <div class="blueprint-card-header">Step 3: Backstage</div>
-                            <div class="blueprint-card-body">AI category scanner intercepts card auth request.</div>
+                            <div class="blueprint-card-header">Step 3: Processing</div>
+                            <div class="blueprint-card-body">System intercepts transaction request to check budget limits.</div>
                         </div>
                         <div class="blueprint-card" data-layer="back">
-                            <div class="blueprint-card-header">Step 4: Backstage</div>
-                            <div class="blueprint-card-body">Trigger CRM alert with transaction summary log.</div>
+                            <div class="blueprint-card-header">Step 4: Routing</div>
+                            <div class="blueprint-card-body">AI categorizes query complexity and routes to the right advisor.</div>
                         </div>
 
                         <!-- Row 3: Support -->
                         <div class="blueprint-card" data-layer="support">
-                            <div class="blueprint-card-header">Step 1: Support</div>
-                            <div class="blueprint-card-body">E-KYC verification API and bank database check.</div>
+                            <div class="blueprint-card-header">Step 1: Infrastructure</div>
+                            <div class="blueprint-card-body">Identity verification (KYC) and secure account provisioning.</div>
                         </div>
                         <div class="blueprint-card" data-layer="support">
-                            <div class="blueprint-card-header">Step 2: Support</div>
-                            <div class="blueprint-card-body">Unified Payments Interface (UPI) clearing gateway.</div>
+                            <div class="blueprint-card-header">Step 2: Infrastructure</div>
+                            <div class="blueprint-card-body">Core banking APIs process automated deposits.</div>
                         </div>
                         <div class="blueprint-card" data-layer="support">
-                            <div class="blueprint-card-header">Step 3: Support</div>
-                            <div class="blueprint-card-body">Visa/Mastercard merchant classification database.</div>
+                            <div class="blueprint-card-header">Step 3: Infrastructure</div>
+                            <div class="blueprint-card-body">Payment gateway and merchant classification databases.</div>
                         </div>
                         <div class="blueprint-card" data-layer="support">
-                            <div class="blueprint-card-header">Step 4: Support</div>
-                            <div class="blueprint-card-body">Google Meet / Calendly calendar scheduling system.</div>
+                            <div class="blueprint-card-header">Step 4: Infrastructure</div>
+                            <div class="blueprint-card-body">Customer Relationship Management (CRM) scheduling system.</div>
                         </div>
                     </div>
                 </div>
@@ -1483,21 +1511,45 @@
             </div>
             <div class="editorial-grid">
                 <div class="editorial-column">
-                    <span class="editorial-label">Synchronized Channels</span>
+                    <span class="editorial-label">Omnichannel Strategy</span>
                     <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6; margin-bottom:16px;">
-                        Instead of treating channels as siloed interfaces, Ace Bank shares transaction states and coaching analytics across all user endpoints in real-time.
+                        We designed a cohesive ecosystem where every touchpoint communicates seamlessly, ensuring the user's financial context is preserved across devices and interactions.
                     </p>
                     <div style="background-color:var(--color-emerald-light); border-left:4px solid var(--color-emerald); padding:16px; border-radius:var(--radius-sm); font-size:12px;">
-                        <strong>Omnichannel Value:</strong> If a user sets a Swiggy cap on their phone, the smartwatch intercepts the checkout, and a certified branch advisor sees this data when advising on debt management.
+                        <strong>Seamless Continuity:</strong> A budget limit set on the Mobile App instantly informs Smart Notifications on Wearables, which in turn updates the AI Coach's recommendations.
                     </div>
                 </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:12px;">
-                    <div class="card"><strong>Mobile App:</strong> Goal dashboards & streaks tracking.</div>
-                    <div class="card"><strong>Smartwatch:</strong> Real-time POS nudges.</div>
-                    <div class="card"><strong>AI Coach:</strong> Daily conversational tips.</div>
-                    <div class="card"><strong>Certified Coach:</strong> Google Meet debt advisory.</div>
-                    <div class="card"><strong>ATM Network:</strong> Consistent streak reminders.</div>
-                    <div class="card"><strong>Community:</strong> Collaborative saving pools.</div>
+                <div style="padding:24px; border-radius:var(--radius-lg); background: linear-gradient(135deg, rgba(79, 70, 229, 0.03), rgba(5, 150, 105, 0.03)); border: 1px dashed var(--color-indigo); display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:16px;">
+                    <div class="card" style="text-align:center;">
+                        <span style="font-size:24px; margin-bottom:8px; display:block;">📱</span>
+                        <strong>Mobile App</strong><br>
+                        <span style="font-size:11px; color:var(--color-text-secondary); display:block; margin-top:4px;">Primary Control Center</span>
+                    </div>
+                    <div class="card" style="text-align:center;">
+                        <span style="font-size:24px; margin-bottom:8px; display:block;">⌚</span>
+                        <strong>Wearables</strong><br>
+                        <span style="font-size:11px; color:var(--color-text-secondary); display:block; margin-top:4px;">Contextual Alerts</span>
+                    </div>
+                    <div class="card" style="text-align:center;">
+                        <span style="font-size:24px; margin-bottom:8px; display:block;">🤖</span>
+                        <strong>AI Coach</strong><br>
+                        <span style="font-size:11px; color:var(--color-text-secondary); display:block; margin-top:4px;">Proactive Insights</span>
+                    </div>
+                    <div class="card" style="text-align:center;">
+                        <span style="font-size:24px; margin-bottom:8px; display:block;">🏦</span>
+                        <strong>Branch / ATM</strong><br>
+                        <span style="font-size:11px; color:var(--color-text-secondary); display:block; margin-top:4px;">Physical Touchpoints</span>
+                    </div>
+                    <div class="card" style="text-align:center;">
+                        <span style="font-size:24px; margin-bottom:8px; display:block;">🎧</span>
+                        <strong>Support</strong><br>
+                        <span style="font-size:11px; color:var(--color-text-secondary); display:block; margin-top:4px;">Human Guidance</span>
+                    </div>
+                    <div class="card" style="text-align:center;">
+                        <span style="font-size:24px; margin-bottom:8px; display:block;">👥</span>
+                        <strong>Community</strong><br>
+                        <span style="font-size:11px; color:var(--color-text-secondary); display:block; margin-top:4px;">Social Motivation</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1509,34 +1561,58 @@
                 <span class="section-tag">Digital Pillars</span>
                 <h2 class="section-title">Solution Overview</h2>
             </div>
-            <div class="editorial-grid">
-                <div class="editorial-column">
-                    <span class="editorial-label">Cohesive Pillars</span>
-                    <p style="font-size:15px; color:var(--color-text-secondary); line-height:1.7;">
-                        Ace Bank deploys four digital solutions aimed at behavioral growth. They integrate visual cues, point-of-sale friction, and automated investments.
+            <div class="slide-body">
+                <div style="margin-bottom: 24px;">
+                    <span class="editorial-label">Strategic Solution Pillars</span>
+                    <p style="font-size:15px; color:var(--color-text-secondary); line-height:1.7; max-width: 800px;">
+                        Ace Bank deploys five interconnected digital solutions designed to foster positive behavioral change, transforming passive banking into active financial wellness.
                     </p>
                 </div>
-                <div style="display:grid; grid-template-columns: 1fr; gap:12px;">
-                    <div style="display:flex; gap:16px; align-items:center;">
-                        <span style="font-size:24px;">🌳</span>
-                        <div>
-                            <strong style="font-size:14px;">Savings Tree Widget:</strong>
-                            <p style="font-size:12px; color:var(--color-text-secondary); margin-top:2px;">Ties daily deposits to visual tree metrics instead of complex ledger listings.</p>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:16px;">
+                    <div class="card" style="border-left: 4px solid var(--color-indigo);">
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                            <span style="font-size:24px;">🤖</span>
+                            <strong style="font-size:14px; color:var(--color-indigo);">AI Financial Coach</strong>
                         </div>
+                        <p style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;"><strong>What:</strong> Conversational insights tailored to user spending.</p>
+                        <p style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;"><strong>Problem Solved:</strong> Replaces generic advice with actionable guidance.</p>
+                        <p style="font-size:12px; color:var(--color-text-secondary);"><strong>Why it matters:</strong> Builds financial literacy organically.</p>
                     </div>
-                    <div style="display:flex; gap:16px; align-items:center;">
-                        <span style="font-size:24px;">🤖</span>
-                        <div>
-                            <strong style="font-size:14px;">Predictive AI Coach:</strong>
-                            <p style="font-size:12px; color:var(--color-text-secondary); margin-top:2px;">Scans merchant categories and offers recovery challenges.</p>
+                    <div class="card" style="border-left: 4px solid var(--color-emerald);">
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                            <span style="font-size:24px;">📊</span>
+                            <strong style="font-size:14px; color:var(--color-emerald);">Smart Budgeting</strong>
                         </div>
+                        <p style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;"><strong>What:</strong> Automated categorisation and visual limit tracking.</p>
+                        <p style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;"><strong>Problem Solved:</strong> Reduces the cognitive load of manual spreadsheets.</p>
+                        <p style="font-size:12px; color:var(--color-text-secondary);"><strong>Why it matters:</strong> Encourages daily tracking without anxiety.</p>
                     </div>
-                    <div style="display:flex; gap:16px; align-items:center;">
-                        <span style="font-size:24px;">⌚</span>
-                        <div>
-                            <strong style="font-size:14px;">Point-of-Sale Nudging:</strong>
-                            <p style="font-size:12px; color:var(--color-text-secondary); margin-top:2px;">Adds smartwatch wrist alerts when transaction caps are near.</p>
+                    <div class="card" style="border-left: 4px solid var(--color-purple);">
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                            <span style="font-size:24px;">🏆</span>
+                            <strong style="font-size:14px; color:var(--color-purple);">Savings Challenges</strong>
                         </div>
+                        <p style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;"><strong>What:</strong> Gamified savings streaks and micro-goals.</p>
+                        <p style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;"><strong>Problem Solved:</strong> Overcomes the lack of motivation to save consistently.</p>
+                        <p style="font-size:12px; color:var(--color-text-secondary);"><strong>Why it matters:</strong> Transforms long-term goals into achievable daily actions.</p>
+                    </div>
+                    <div class="card" style="border-left: 4px solid var(--color-orange);">
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                            <span style="font-size:24px;">👥</span>
+                            <strong style="font-size:14px; color:var(--color-orange);">Community Engagement</strong>
+                        </div>
+                        <p style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;"><strong>What:</strong> Social saving pools and anonymous peer comparisons.</p>
+                        <p style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;"><strong>Problem Solved:</strong> Alleviates the isolation often felt in personal finance.</p>
+                        <p style="font-size:12px; color:var(--color-text-secondary);"><strong>Why it matters:</strong> Leverages social proof to reinforce positive habits.</p>
+                    </div>
+                    <div class="card" style="border-left: 4px solid var(--color-red);">
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                            <span style="font-size:24px;">🎁</span>
+                            <strong style="font-size:14px; color:var(--color-red);">Personalized Rewards</strong>
+                        </div>
+                        <p style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;"><strong>What:</strong> Value-aligned incentives (e.g., cashback on targeted categories).</p>
+                        <p style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;"><strong>Problem Solved:</strong> Combats skepticism towards generic credit card points.</p>
+                        <p style="font-size:12px; color:var(--color-text-secondary);"><strong>Why it matters:</strong> Motivates users through highly relevant, tangible benefits.</p>
                     </div>
                 </div>
             </div>
@@ -1553,13 +1629,13 @@
                 <div class="editorial-grid" style="border-top:none; padding-top:0; grid-template-columns: 280px 1fr;">
                     <div class="blueprint-layer-selectors">
                         <button class="blueprint-btn active" onclick="setFeatureKey('tree')">
-                            <h4>Savings Tree Visuals</h4>
+                            <h4>Visual Goal Tracking</h4>
                         </button>
                         <button class="blueprint-btn" onclick="setFeatureKey('nudge')">
-                            <h4>POS Watch Nudge</h4>
+                            <h4>Predictive Spending Alerts</h4>
                         </button>
                         <button class="blueprint-btn" onclick="setFeatureKey('coach')">
-                            <h4>Coach Escalation</h4>
+                            <h4>Contextual AI & Human Support</h4>
                         </button>
                     </div>
 
@@ -1584,7 +1660,7 @@
                         The diagram below charts transaction lifecycle data across three main physical and digital states.
                     </p>
                     <div style="background-color: var(--color-indigo-light); border-left:4px solid var(--color-indigo); padding:16px; border-radius:var(--radius-sm); font-size:12px;">
-                        <strong>Data Lifecycle:</strong> Watch checks budget cap ➔ App captures goal status ➔ Advisor dashboard flags critical debt parameters.
+                        <strong>Data Lifecycle:</strong> Smartwatch alerts user of budget cap ➔ App captures goal status ➔ AI Coach provides proactive financial guidance.
                     </div>
                 </div>
                 <div class="card" style="display:flex; flex-direction:column; justify-content:center; align-items:center; gap:20px;">
@@ -1594,7 +1670,7 @@
                         <div style="display:flex; align-items:center; color:var(--color-indigo);">⟷</div>
                         <div style="padding:10px; border:1px solid var(--border-primary); border-radius:6px; background:#FFF;">⌚ Smartwatch</div>
                         <div style="display:flex; align-items:center; color:var(--color-indigo);">⟷</div>
-                        <div style="padding:10px; border:1px solid var(--border-primary); border-radius:6px; background:#FFF;">🧑‍💼 CRM Link</div>
+                        <div style="padding:10px; border:1px solid var(--border-primary); border-radius:6px; background:#FFF;">🤖 AI Coach</div>
                     </div>
                 </div>
             </div>
@@ -1604,25 +1680,29 @@
         <section class="slide-section" id="slide-12">
             <div class="slide-header">
                 <div class="section-num">12</div>
-                <span class="section-tag">Behavioral Mechanics</span>
-                <h2 class="section-title">AI + Gamification</h2>
+                <span class="section-tag">Behavior Change Mechanics</span>
+                <h2 class="section-title">Synergizing AI & Gamification</h2>
             </div>
             <div class="editorial-grid">
                 <div class="editorial-column">
-                    <span class="editorial-label">Psychological Frameworks</span>
+                    <span class="editorial-label">The Habit Loop</span>
                     <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6; margin-bottom:16px;">
-                        We deploy the <strong>Fogg Behavior Model</strong>. When motivation is tied to the Growth Tree, we reduce savings barriers (Ability) and trigger prompts via the Smartwatch.
+                        By integrating AI insights with gamified rewards, we design a continuous loop that encourages long-term financial discipline rather than superficial engagement.
                     </p>
-                    <div class="callout callout-info" style="margin:0;">
-                        <strong>Streak Protection:</strong> The "Streak Freeze" preserves momentum when fixed expenses (e.g. rent) spike.
+                    <div style="background-color:var(--color-indigo-light); border-left:4px solid var(--color-indigo); padding:16px; border-radius:var(--radius-sm); font-size:12px;">
+                        <strong>Sustainable Motivation:</strong> Rewards are tied to actual financial milestones (like consecutive saving days), ensuring the gamification serves a meaningful purpose.
                     </div>
                 </div>
                 <div class="editorial-column">
-                    <span class="editorial-label">Gamification Systems</span>
-                    <ul class="bullet-list">
-                        <li class="bullet-item"><strong>Weekly Quests:</strong> "Cook-at-Home" quests reward users with actual cashback, not badges.</li>
-                        <li class="bullet-item"><strong>Ethical leaderboards:</strong> Rankings compare savings consistency, never spending totals.</li>
-                    </ul>
+                    <span class="editorial-label">The AI-Powered Flow</span>
+                    <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color:var(--color-text-secondary);">
+                        <div style="display:flex; align-items:center; gap:12px;"><strong style="color:var(--color-indigo);">1.</strong> AI analyzes income and spending patterns.</div>
+                        <div style="display:flex; align-items:center; gap:12px;"><strong style="color:var(--color-indigo);">2.</strong> Suggests highly personalized, achievable savings goals.</div>
+                        <div style="display:flex; align-items:center; gap:12px;"><strong style="color:var(--color-indigo);">3.</strong> Creates tailored financial challenges based on habits.</div>
+                        <div style="display:flex; align-items:center; gap:12px;"><strong style="color:var(--color-indigo);">4.</strong> Tracks progress visually through dynamic interfaces.</div>
+                        <div style="display:flex; align-items:center; gap:12px;"><strong style="color:var(--color-indigo);">5.</strong> Rewards challenge completion with tangible benefits.</div>
+                        <div style="display:flex; align-items:center; gap:12px;"><strong style="color:var(--color-indigo);">6.</strong> Reinforces positive behavior, building lasting habits.</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1639,27 +1719,27 @@
                 <div class="mockup-selector-list">
                     <button class="mockup-row-item active" onclick="setHiFiScreen('home')">
                         <h4>1. Home Dashboard</h4>
-                        <p>Tree visuals, streaks, balance, and quick actions.</p>
+                        <p style="margin-top:8px;"><strong>Purpose:</strong> Provide a holistic view of financial health.<br><strong>Need:</strong> Quick, anxiety-free balance checks.<br><strong>Interaction:</strong> Reviewing the Growth Tree status.<br><strong>Outcome:</strong> Reassurance and motivation to maintain savings streaks.</p>
                     </button>
                     <button class="mockup-row-item" onclick="setHiFiScreen('onboard')">
-                        <h4>2. Onboarding Setup Wizard</h4>
-                        <p>Friction-free, 3-question goal personalization.</p>
+                        <h4>2. Goal Setup Wizard</h4>
+                        <p style="margin-top:8px;"><strong>Purpose:</strong> Personalize the banking experience.<br><strong>Need:</strong> Clear, actionable financial targets.<br><strong>Interaction:</strong> Selecting predefined life goals.<br><strong>Outcome:</strong> A customized dashboard tailored to the user's priorities.</p>
                     </button>
                     <button class="mockup-row-item" onclick="setHiFiScreen('quests')">
                         <h4>3. Active Savings Quests</h4>
-                        <p>Cashback challenges replacing standard points.</p>
+                        <p style="margin-top:8px;"><strong>Purpose:</strong> Gamify daily spending habits.<br><strong>Need:</strong> Motivation to reduce discretionary spending.<br><strong>Interaction:</strong> Tracking progress towards a quest.<br><strong>Outcome:</strong> Real cashback rewards and habit formation.</p>
                     </button>
                     <button class="mockup-row-item" onclick="setHiFiScreen('ai')">
                         <h4>4. Ace AI Coach</h4>
-                        <p>Conversational assistant recommending cap updates.</p>
+                        <p style="margin-top:8px;"><strong>Purpose:</strong> Deliver proactive, personalized advice.<br><strong>Need:</strong> Contextual guidance on spending anomalies.<br><strong>Interaction:</strong> Conversational inquiry regarding budgets.<br><strong>Outcome:</strong> Immediate, actionable steps to course-correct.</p>
                     </button>
                     <button class="mockup-row-item" onclick="setHiFiScreen('watch')">
-                        <h4>5. Wearable Smartwatch Nudge</h4>
-                        <p>Vibration pre-purchase caps alert.</p>
+                        <h4>5. Wearable Smartwatch Alert</h4>
+                        <p style="margin-top:8px;"><strong>Purpose:</strong> Intercept overspending at the point of sale.<br><strong>Need:</strong> Real-time awareness of budget limits.<br><strong>Interaction:</strong> Haptic vibration and visual warning.<br><strong>Outcome:</strong> Reconsidered purchase and protected budget.</p>
                     </button>
                     <button class="mockup-row-item" onclick="setHiFiScreen('coach')">
                         <h4>6. Human Coach Handoff</h4>
-                        <p>Seamless advisor transition screen.</p>
+                        <p style="margin-top:8px;"><strong>Purpose:</strong> Provide empathetic support for complex issues.<br><strong>Need:</strong> Trustworthy advice during financial distress.<br><strong>Interaction:</strong> Seamless transition from AI to Human.<br><strong>Outcome:</strong> High-value consultation and restored user trust.</p>
                     </button>
                 </div>
 
@@ -1694,19 +1774,19 @@
             <div class="slide-body">
                 <div class="rationale-strip-grid">
                     <div class="rationale-row" style="border-top:1px solid var(--border-primary);">
-                        <span class="rationale-cell-title">Why the visual Tree?</span>
-                        <span class="rationale-cell-body">We tie progress directly to deposit consistency to build intrinsic wellness loops.</span>
-                        <span class="rationale-cell-body" style="color:var(--color-text-muted);">Alternative: Standard transaction lists which drive user balance anxiety.</span>
+                        <span class="rationale-cell-title">Visual System & Typography</span>
+                        <span class="rationale-cell-body">We selected emerald green to communicate trust, financial growth, and stability while maintaining strong accessibility contrast. The Plus Jakarta Sans typography ensures legibility of numerical data without feeling overly corporate.</span>
+                        <span class="rationale-cell-body" style="color:var(--color-text-muted);">Impact: Reduces cognitive load and modernizes the banking aesthetic.</span>
                     </div>
                     <div class="rationale-row">
-                        <span class="rationale-cell-title">Why pre-purchase nudges?</span>
-                        <span class="rationale-cell-body">Providing warnings prior to limit breaks changes buyer behavior at the point of sale.</span>
-                        <span class="rationale-cell-body" style="color:var(--color-text-muted);">Alternative: Post-purchase notifications which trigger avoidance.</span>
+                        <span class="rationale-cell-title">Gamification Mechanics</span>
+                        <span class="rationale-cell-body">Rewards are structured around consistency (e.g., Savings Streaks) rather than absolute monetary values. This ensures that users of all income levels feel successful and motivated.</span>
+                        <span class="rationale-cell-body" style="color:var(--color-text-muted);">Impact: Fosters long-term habit formation over short-term gimmickry.</span>
                     </div>
                     <div class="rationale-row">
-                        <span class="rationale-cell-title">Why certified coach routing?</span>
-                        <span class="rationale-cell-body">AI answers can be inaccurate for complex debt triage. Real coaches guarantee security.</span>
-                        <span class="rationale-cell-body" style="color:var(--color-text-muted);">Alternative: Pure chatbot routing which erodes financial trust.</span>
+                        <span class="rationale-cell-title">AI & Human Hybrid Interaction</span>
+                        <span class="rationale-cell-body">The AI Coach handles routine inquiries and micro-nudges to scale personalized advice. However, recognizing the limits of AI in high-stakes financial distress, we designed a frictionless handoff to certified human advisors.</span>
+                        <span class="rationale-cell-body" style="color:var(--color-text-muted);">Impact: Maintains efficiency while preserving critical user trust.</span>
                     </div>
                 </div>
             </div>
@@ -1721,21 +1801,21 @@
             </div>
             <div class="roadmap-timeline">
                 <div class="roadmap-node">
-                    <h3 class="roadmap-node-title">Voice Banking</h3>
+                    <h3 class="roadmap-node-title">AI Investment Advisor</h3>
                     <p style="font-size:13px; color:var(--color-text-secondary); line-height:1.6;">
-                        Integrating natural language voice inputs to check transaction limits directly via Siri or Google Assistant.
+                        Expanding the AI coach to offer predictive financial coaching and personalized wealth creation strategies based on real-time market data and user risk profiles.
                     </p>
                 </div>
                 <div class="roadmap-node">
-                    <h3 class="roadmap-node-title">Family Accounts</h3>
+                    <h3 class="roadmap-node-title">Cross-Bank Dashboard</h3>
                     <p style="font-size:13px; color:var(--color-text-secondary); line-height:1.6;">
-                        Multiplayer savings networks linking parents to young accounts to auto-match savings consistency.
+                        Utilizing Open Banking APIs to provide a holistic Smart Financial Health Score by aggregating data across all of a user's external accounts and credit cards.
                     </p>
                 </div>
                 <div class="roadmap-node">
-                    <h3 class="roadmap-node-title">AR Coaching</h3>
+                    <h3 class="roadmap-node-title">Family Financial Planning</h3>
                     <p style="font-size:13px; color:var(--color-text-secondary); line-height:1.6;">
-                        Long-term financial projection dashboards displaying asset allocation curves when viewing investment sheets on desktop.
+                        Introducing multiplayer features that allow households to set joint goals, track shared expenses, and foster financial literacy across generations.
                     </p>
                 </div>
             </div>
@@ -1764,9 +1844,9 @@
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <div>
                 <span style="font-size:10px; color:var(--color-text-muted);">Good Morning</span>
-                <h4 style="font-size:14px; font-weight:700;">Alex</h4>
+                <h4 style="font-size:14px; font-weight:700;">Rajveer</h4>
             </div>
-            <div class="wf-avatar">A</div>
+            <div class="wf-avatar">RS</div>
         </div>
         <div class="wf-card" style="background-color: var(--color-emerald-light); border-color: var(--color-emerald); margin-top:12px;">
             <span class="wf-pill" style="background:var(--color-emerald); color:white;">LEVEL 4 SAPLING</span>
@@ -1837,7 +1917,7 @@
         </div>
         <div style="display:flex; flex-direction:column; gap:10px; font-size:11px; flex:1; overflow-y:auto; padding-top:10px;">
             <div style="background:var(--bg-base); padding:10px; border-radius:var(--radius-sm); max-width:85%; align-self:flex-start; line-height:1.4;">
-                Hi Alex! Food delivery spends are high. Tap below to start a Cook-at-Home challenge?
+                Hi Rajveer! Food delivery spends are high. Tap below to start a Cook-at-Home challenge?
             </div>
         </div>
         <div style="display:flex; gap:8px; margin-top:10px;">
@@ -1847,17 +1927,14 @@
     </div>
 
     <div class="screen-template" id="tmpl-watch">
-        <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; text-align:center; gap:20px; padding:20px;">
-            <h4 style="font-size:14px; font-weight:700; color:var(--color-text-secondary);">Point-of-Sale Nudge</h4>
-            <div class="watch-mockup" style="width:140px; height:160px; background:#000;">
-                <div class="watch-header">
-                    <span>Ace Nudge</span>
-                </div>
-                <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:10px 0; font-size:9px; color:#FFF;">
-                    <span>🍕 Swiggy cap warning</span>
-                    <strong style="margin-top:4px; color:var(--color-orange);">₹80 left!</strong>
-                </div>
+        <div style="height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; background:#000; color:#FFF; padding:16px;">
+            <div style="font-size:12px; font-weight:800; color:var(--color-emerald); margin-bottom:16px; display:flex; align-items:center; gap:6px;">
+                <span>✨</span> Ace Nudge
             </div>
+            <div style="font-size:14px; text-align:center; line-height:1.4;">
+                🍕 Swiggy cap warning
+            </div>
+            <strong style="margin-top:12px; font-size:16px; color:var(--color-orange);">₹80 left!</strong>
         </div>
     </div>
 
@@ -1950,17 +2027,17 @@
 
         // End-to-End User Journey Comparison Dataset
         const journeyBeforeData = [
-            { phase: "1. Onboarding", emot: "😐", details: "Faced with complex, long banking forms. Frustrated by the high barrier to entry." },
-            { phase: "2. Daily Tracking", emot: "😟", details: "Checks app monthly. Sees long numeric lists with no context, prompting avoidant behaviors." },
-            { phase: "3. The Overrun", emot: "❌", details: "Spends impulsively. Fails to notice budget limits, receiving guilt-inducing overdraft warnings." },
-            { phase: "4. No Handoff", emot: "💔", details: "Disconnected chatbot loops provide generic advice, driving Alex to abandon the bank app." }
+            { phase: "1. Onboarding", emot: "😐", goal: "Set up a new account quickly.", pain: "Complex, lengthy banking forms.", opp: "Streamline with conversational UI." },
+            { phase: "2. Daily Tracking", emot: "😟", goal: "Understand current balance.", pain: "Overwhelming numbers, lack of context.", opp: "Provide clear, visual summaries." },
+            { phase: "3. Spending", emot: "❌", goal: "Make a purchase within budget.", pain: "Unaware of nearing limits until it's too late.", opp: "Proactive pre-purchase nudges." },
+            { phase: "4. Seeking Help", emot: "💔", goal: "Resolve a financial issue.", pain: "Generic, disconnected chatbot loops.", opp: "Seamless human-to-AI handoff." }
         ];
 
         const journeyAfterData = [
-            { phase: "1. Goal Setup Wizard", emot: "😊", details: "Completes a simple 3-question personalized onboarding flow to plant a visual Tree." },
-            { phase: "2. Consistent Deposits", emot: "🌱", details: "Alex saves ₹50 daily. Watches the Grow Tree level up in real-time on home dashboard." },
-            { phase: "3. Smart POS Alert", emot: "⌚", details: "Smartwatch taps wrist *before* checking out Swiggy. Cap warnings are timely." },
-            { phase: "4. AI + Human Advice", emot: "🤝", details: "AI suggests streak recovery options. Direct routing to human Certified Advisor is offered." }
+            { phase: "1. Goal Setup", emot: "😊", goal: "Define personal savings targets.", pain: "Unsure how much is safe to save.", opp: "AI suggests personalized goals." },
+            { phase: "2. Consistent Saving", emot: "🌱", goal: "Build long-term habits.", pain: "Losing motivation over time.", opp: "Visual progress and gamified streaks." },
+            { phase: "3. Smart Spending", emot: "⌚", goal: "Stay within budget effortlessly.", pain: "Forgetting limits during checkout.", opp: "Wearable real-time alerts." },
+            { phase: "4. Guided Advice", emot: "🤝", goal: "Get reliable financial guidance.", pain: "Generic advice doesn't apply.", opp: "Contextual coaching based on data." }
         ];
 
         function toggleJourneyView(type) {
@@ -1972,20 +2049,28 @@
                 beforeBtn.classList.add('active');
                 afterBtn.classList.remove('active');
                 timeline.innerHTML = journeyBeforeData.map(node => `
-                    <div class="journey-step-card" style="border-left: 3px solid var(--color-red);">
+                    <div class="journey-step-card" style="border-left: 3px solid var(--color-red); background: rgba(255,255,255,0.7);">
                         <h4>${node.phase}</h4>
-                        <div class="emotion">${node.emot}</div>
-                        <p class="detail-section">${node.details}</p>
+                        <div class="emotion" style="font-size:32px;">${node.emot}</div>
+                        <div class="detail-section">
+                            <div style="margin-bottom:8px; line-height: 1.4;"><strong>User Goal:</strong> ${node.goal}</div>
+                            <div style="margin-bottom:8px; color: var(--color-red); line-height: 1.4;"><strong>Pain Point:</strong> ${node.pain}</div>
+                            <div style="color: var(--color-indigo); line-height: 1.4;"><strong>Opportunity:</strong> ${node.opp}</div>
+                        </div>
                     </div>
                 `).join('');
             } else {
                 beforeBtn.classList.remove('active');
                 afterBtn.classList.add('active');
                 timeline.innerHTML = journeyAfterData.map(node => `
-                    <div class="journey-step-card" style="border-left: 3px solid var(--color-emerald);">
+                    <div class="journey-step-card" style="border-left: 3px solid var(--color-emerald); background: white; box-shadow: 0 10px 30px rgba(5,150,105,0.1);">
                         <h4>${node.phase}</h4>
-                        <div class="emotion">${node.emot}</div>
-                        <p class="detail-section">${node.details}</p>
+                        <div class="emotion" style="font-size:32px;">${node.emot}</div>
+                        <div class="detail-section">
+                            <div style="margin-bottom:8px; line-height: 1.4;"><strong>User Goal:</strong> ${node.goal}</div>
+                            <div style="margin-bottom:8px; color: var(--color-text-muted); line-height: 1.4;"><strong>Pain Resolved:</strong> ${node.pain}</div>
+                            <div style="color: var(--color-emerald); line-height: 1.4;"><strong>Solution:</strong> ${node.opp}</div>
+                        </div>
                     </div>
                 `).join('');
             }
@@ -2017,22 +2102,25 @@
         // Feature Prioritization Details Dataset
         const featureDetails = {
             tree: {
-                title: "Savings Tree Visualization Widget",
-                prob: "Users avoid traditional spreadsheets because balance numbers induce immediate avoidance and stress.",
-                sol: "Tie savings consistency directly to the health of an interactive graphic Tree. Watching the tree flower triggers intrinsic motivation loops.",
-                biz: "Drives daily active engagement (DAU/MAU) and builds saving habit deposits, expanding deposit sheets."
+                title: "Visual Goal Tracking",
+                prob: "Users find abstract numbers unmotivating and difficult to connect with long-term aspirations.",
+                feat: "Interactive visualizations that map daily micro-deposits to tangible goal progression.",
+                ben: "Transforms the abstract concept of saving into a highly rewarding, visual experience.",
+                biz: "Increases daily active engagement (DAU) and accelerates deposit growth through habit formation."
             },
             nudge: {
-                title: "Point-of-Sale Wearable Nudge",
-                prob: "Checking budgets post-purchase comes too late to alter spending behaviors, inducing user guilt.",
-                sol: "Add smartwatch wrist vibrations that warn the user *prior* to checkouts when category caps are near.",
-                biz: "Protects target balances, prevents overdrafts, and strengthens the bank as a smart financial partner."
+                title: "Predictive Spending Alerts",
+                prob: "Users unintentionally overspend because they lack real-time context at the point of sale.",
+                feat: "Proactive smartwatch notifications triggered when approaching predefined budget limits.",
+                ben: "Empowers users to make informed purchasing decisions before breaking their budget.",
+                biz: "Reduces overdraft instances and builds long-term user trust by acting as a protective financial partner."
             },
             coach: {
-                title: "Agentic AI to Certified Coach Escalation",
-                prob: "Chatbots provide robotic responses in moments of financial panic, damaging trust in high-stakes banking.",
-                sol: "The AI agent handles micro-budgets. In critical danger parameters (persistent overdrafts), it routes to a human coach.",
-                biz: "Protects bank compliance, drives retention, and opens opportunities to cross-sell primary mortgage and investment assets."
+                title: "Contextual AI & Human Support",
+                prob: "Generic chatbot advice fails during complex or emotionally charged financial situations.",
+                feat: "AI handles routine inquiries and seamlessly routes to a human advisor when complex intervention is needed.",
+                ben: "Ensures users always receive the most appropriate, accurate, and empathetic guidance.",
+                biz: "Improves customer satisfaction scores (CSAT) and unlocks high-value advisory cross-selling opportunities."
             }
         };
 
@@ -2049,8 +2137,9 @@
             container.innerHTML = `
                 <h3 style="font-family:var(--font-display); font-size:20px; font-weight:800; color:var(--color-indigo); margin-bottom:16px;">${data.title}</h3>
                 <div style="display:flex; flex-direction:column; gap:12px; font-size:13px; line-height:1.5;">
-                    <div><strong>🔴 User Problem:</strong> <span style="color:var(--color-text-secondary);">${data.prob}</span></div>
-                    <div><strong>🟢 Solution:</strong> <span style="color:var(--color-text-secondary);">${data.sol}</span></div>
+                    <div><strong>🔴 Problem:</strong> <span style="color:var(--color-text-secondary);">${data.prob}</span></div>
+                    <div><strong>✨ Feature:</strong> <span style="color:var(--color-text-secondary);">${data.feat}</span></div>
+                    <div><strong>🟢 Benefit:</strong> <span style="color:var(--color-text-secondary);">${data.ben}</span></div>
                     <div><strong>💼 Business Value:</strong> <span style="color:var(--color-text-secondary);">${data.biz}</span></div>
                 </div>
             `;
@@ -2065,9 +2154,25 @@
             const matchBtn = Array.from(rows).find(row => row.getAttribute('onclick').includes(screenKey));
             if (matchBtn) matchBtn.classList.add('active');
 
+            const bezel = document.querySelector('.smartphone-bezel');
+            const screen = document.querySelector('.smartphone-screen');
+            const statusBar = document.querySelector('.phone-status-bar');
+            const tabBar = document.querySelector('.phone-tab-bar');
             const phoneBody = document.getElementById("hifiBody");
-            const template = document.getElementById("tmpl-" + screenKey);
             
+            if (screenKey === 'watch') {
+                bezel.classList.add('watch-mode');
+                screen.classList.add('watch-mode');
+                if (statusBar) statusBar.style.display = 'none';
+                if (tabBar) tabBar.style.display = 'none';
+            } else {
+                bezel.classList.remove('watch-mode');
+                screen.classList.remove('watch-mode');
+                if (statusBar) statusBar.style.display = 'flex';
+                if (tabBar) tabBar.style.display = 'flex';
+            }
+
+            const template = document.getElementById("tmpl-" + screenKey);
             if (template && phoneBody) {
                 phoneBody.innerHTML = template.innerHTML;
             }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ace Bank — Interactive Prototype</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* ========== RESET & BASE ========== */
@@ -143,11 +144,14 @@
             background: var(--ace-bg-page);
             color: var(--ace-text-primary);
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding: 30px 20px;
-            overflow-x: hidden;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding-top: 90px;
+            box-sizing: border-box;
+            overflow: hidden;
             opacity: 0;
             transition: background 0.4s ease, color 0.4s ease, opacity 0.5s ease-in-out;
         }
@@ -2030,6 +2034,687 @@
             .try-me-panel { display: none !important; }
             .toggle-guide { display: none !important; }
         }
+
+        /* ========== MULTI-DEVICE MOCKUPS & PLATFORM HEADER ========== */
+        .platform-selector-header {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+        }
+        .platform-selector-tabs {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 5px;
+            border-radius: 40px;
+            display: flex;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            width: 400px;
+        }
+        body.dark-theme .platform-selector-tabs {
+            background: rgba(10, 22, 40, 0.75);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        .platform-tab {
+            background: transparent;
+            border: none;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ace-text-secondary);
+            cursor: pointer;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            gap: 8px;
+            transition: color 0.3s;
+            position: relative;
+            z-index: 2;
+            outline: none;
+        }
+        .platform-tab.active {
+            color: #ffffff !important;
+        }
+        body.dark-theme .platform-tab.active {
+            color: #060D1A !important;
+        }
+        .platform-selector-slider {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            height: calc(100% - 10px);
+            background: #0f172a;
+            border-radius: 30px;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+        }
+        body.dark-theme .platform-selector-slider {
+            background: #ffffff;
+        }
+        .tab-icon {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+        }
+        
+        .prototype-wrapper {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transform-origin: center center;
+            transition: transform 0.3s ease;
+            margin-top: 60px;
+        }
+        
+        /* Auto-scale prototype wrapper to fit viewports without scrolling */
+        @media (max-height: 980px), (max-width: 1100px) {
+            .prototype-wrapper {
+                transform: scale(0.9);
+            }
+        }
+        @media (max-height: 880px), (max-width: 980px) {
+            .prototype-wrapper {
+                transform: scale(0.8);
+            }
+        }
+        @media (max-height: 780px), (max-width: 880px) {
+            .prototype-wrapper {
+                transform: scale(0.7);
+            }
+        }
+        @media (max-height: 680px), (max-width: 780px) {
+            .prototype-wrapper {
+                transform: scale(0.6);
+            }
+        }
+        @media (max-height: 580px), (max-width: 680px) {
+            .prototype-wrapper {
+                transform: scale(0.5);
+            }
+        }
+        .platform-view {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95) translateY(20px);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #platform-mobile {
+            align-items: center;
+            box-sizing: border-box;
+        }
+        #platform-mobile .phone-frame {
+            transform: translateY(-40px) scale(0.92);
+        }
+        .platform-view.active {
+            position: relative;
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1) translateY(0);
+        }
+
+        /* ===== LAPTOP DEVICE MOCKUP ===== */
+        .laptop-frame {
+            width: 1080px;
+            height: 660px;
+            background: #111111;
+            border-radius: 20px 20px 0 0;
+            padding: 14px;
+            box-sizing: border-box;
+            position: relative;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+        }
+        .laptop-screen {
+            width: 100%;
+            height: 100%;
+            background: #f8fafc;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            color: #0f172a;
+            font-family: 'Inter', -apple-system, sans-serif;
+            border: 2px solid #222;
+        }
+        .laptop-webcam {
+            position: absolute;
+            top: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #111;
+            z-index: 10;
+        }
+        .laptop-base {
+            width: 1220px;
+            height: 12px;
+            background: linear-gradient(to bottom, #d1d5db, #9ca3af);
+            border-radius: 0 0 16px 16px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        .laptop-base-notch {
+            width: 120px;
+            height: 5px;
+            background: #4b5563;
+            border-radius: 0 0 6px 6px;
+            margin: 0 auto;
+        }
+
+        /* ===== APPLE WATCH MOCKUP ===== */
+        .watch-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 0;
+        }
+        .watch-strap-top {
+            position: absolute;
+            top: -30px;
+            width: 120px;
+            height: 90px;
+            background: #1e293b;
+            border-radius: 20px 20px 0 0;
+            box-shadow: inset 0 20px 30px rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+        .watch-strap-bottom {
+            position: absolute;
+            bottom: -30px;
+            width: 120px;
+            height: 90px;
+            background: #1e293b;
+            border-radius: 0 0 20px 20px;
+            box-shadow: inset 0 -20px 30px rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+        .watch-frame {
+            width: 260px;
+            height: 320px;
+            background: #090d16;
+            border-radius: 40px;
+            border: 4px solid #334155;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            z-index: 2;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .watch-screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Compact Display', 'Helvetica Neue', sans-serif;
+            font-size: 14px;
+        }
+        .watch-crown {
+            position: absolute;
+            right: -8px;
+            top: 70px;
+            width: 6px;
+            height: 40px;
+            background: #475569;
+            border-radius: 2px 4px 4px 2px;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
+            z-index: 3;
+        }
+        .watch-btn {
+            position: absolute;
+            right: -6px;
+            top: 130px;
+            width: 4px;
+            height: 30px;
+            background: #1e293b;
+            border-radius: 1px 3px 3px 1px;
+            z-index: 3;
+        }
+
+        /* ===== WEB INTERFACE SCREENS ===== */
+        .web-screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            overflow-y: auto;
+            background: #f8fafc;
+            animation: webFadeIn 0.3s ease;
+        }
+        .web-screen.active {
+            display: flex;
+        }
+        @keyframes webFadeIn {
+            from { opacity: 0; transform: scale(0.99); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Web Onboarding Welcome */
+        .web-onboard-layout {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .web-onboard-hero {
+            flex: 1.2;
+            background: linear-gradient(135deg, #0a1628 0%, #132041 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+        .web-onboard-form-side {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #ffffff;
+        }
+
+        /* Web Main App Layout */
+        .web-app-layout {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .web-sidebar {
+            width: 220px;
+            background: #0A1628;
+            color: #94a3b8;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 14px;
+            border-right: 1px solid rgba(255,255,255,0.05);
+            flex-shrink: 0;
+        }
+        .web-sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .web-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            background: transparent;
+            border: none;
+            width: 100%;
+        }
+        .web-nav-item:hover, .web-nav-item.active {
+            color: #ffffff;
+            background: rgba(255,255,255,0.06);
+        }
+        .web-nav-item.active {
+            border-left: 3px solid #00C896;
+            border-radius: 0 8px 8px 0;
+            padding-left: 13px;
+        }
+        .web-content-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+        .web-header {
+            height: 56px;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            flex-shrink: 0;
+        }
+        .web-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .web-grid-2x2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .web-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 12px 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Savings Calendar / Web streak styles */
+        .web-streak-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .web-streak-day {
+            height: 22px;
+            border-radius: 6px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            position: relative;
+        }
+        .web-streak-day.completed {
+            background: rgba(139,92,246,0.1);
+            color: #8b5cf6;
+            border: 1px solid rgba(139,92,246,0.2);
+        }
+        .web-streak-day.completed::after {
+            content: '🔥';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            font-size: 8px;
+        }
+        .web-streak-day.today {
+            border: 2px solid #8b5cf6;
+        }
+
+        /* Web chatbot */
+        .web-chat-bubble {
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            max-width: 85%;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+        .web-chat-user {
+            background: #e2e8f0;
+            color: #0f172a;
+            align-self: flex-end;
+        }
+        .web-chat-ai {
+            background: #EEF2FF;
+            color: #4f46e5;
+            align-self: flex-start;
+        }
+
+        /* Web Custom Components */
+        .web-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+        .web-table th {
+            text-align: left;
+            padding: 8px 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 9px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .web-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #0F172A;
+        }
+        .web-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+        }
+        .web-badge-save { background: rgba(0, 200, 150, 0.1); color: #008866; border: 1px solid rgba(0, 200, 150, 0.15); }
+        .web-badge-spend { background: rgba(241, 245, 249, 1); color: #475569; border: 1px solid rgba(226, 232, 240, 1); }
+        .web-badge-streak { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.15); }
+        
+        .web-chat-input-row {
+            display: flex;
+            gap: 8px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 8px;
+            margin-top: 6px;
+        }
+        .web-chat-input {
+            flex: 1;
+            padding: 6px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 11px;
+            outline: none;
+            font-weight: 500;
+        }
+        .web-chat-send-btn {
+            background: #4f46e5;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .web-social-post {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px;
+            background: #fff;
+            margin-bottom: 12px;
+        }
+        .web-post-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .web-post-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 10px;
+        }
+        
+        .web-settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        /* ===== WATCH UI DETAILS ===== */
+        .watch-time-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 16px 4px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.3px;
+            z-index: 10;
+        }
+        .watch-notifications-feed {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 8px 16px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .watch-feed-title {
+            font-size: 15px;
+            font-weight: 600;
+            padding: 0 4px;
+            margin-bottom: 4px;
+            color: #fff;
+            letter-spacing: -0.2px;
+        }
+        .watch-notif-card {
+            background: rgba(44, 44, 46, 0.9);
+            border-radius: 16px;
+            padding: 14px 12px;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            text-align: left;
+        }
+        .watch-notif-card:active {
+            opacity: 0.7;
+        }
+        .watch-notif-app-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #AEAEB2;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .watch-notif-app-row svg {
+            width: 12px;
+            height: 12px;
+        }
+        .watch-notif-header {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 500;
+            font-size: 15px;
+            color: #fff;
+            line-height: 1.2;
+            letter-spacing: -0.2px;
+        }
+        .watch-notif-body {
+            font-size: 14px;
+            line-height: 1.35;
+            color: #D1D1D6;
+            font-weight: 400;
+            letter-spacing: -0.1px;
+        }
+        .watch-detail-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            padding: 24px 12px 12px 12px;
+            box-sizing: border-box;
+            animation: watchSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
+        }
+        .watch-detail-overlay-content {
+            flex: 1;
+        }
+        .watch-detail-overlay-actions {
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        #watch-detail-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #fff;
+            margin: 0 0 6px 0;
+            line-height: 1.2;
+            letter-spacing: -0.2px;
+        }
+        #watch-detail-desc {
+            font-size: 14px;
+            line-height: 1.35;
+            color: #D1D1D6;
+            margin: 0;
+        }
+        @keyframes watchSlideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .watch-btn-primary {
+            background: #00C896;
+            color: #000;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 20px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .watch-btn-secondary {
+            background: #2C2C2E;
+            color: #fff;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 20px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -2125,8 +2810,30 @@
     </div>
 </div>
 
-<!-- ===== PHONE FRAME ===== -->
-<div class="phone-frame">
+<!-- ===== MULTI-DEVICE WRAPPER ===== -->
+<div class="platform-selector-header">
+    <div class="platform-selector-tabs">
+        <div class="platform-selector-slider" id="platformSelectorSlider"></div>
+        <button class="platform-tab active" onclick="switchPlatform('mobile', this)">
+            <svg class="tab-icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            Mobile
+        </button>
+        <button class="platform-tab" onclick="switchPlatform('web', this)">
+            <svg class="tab-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Web
+        </button>
+        <button class="platform-tab" onclick="switchPlatform('watch', this)">
+            <svg class="tab-icon" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="4"/><path d="M12 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+            Watch
+        </button>
+    </div>
+</div>
+
+<div class="prototype-wrapper">
+    <!-- ===== MOBILE VIEW ===== -->
+    <div id="platform-mobile" class="platform-view active">
+        <!-- ===== PHONE FRAME ===== -->
+        <div class="phone-frame">
     <div class="phone-notch" id="dynamicIsland" onclick="toggleDynamicIsland()">
         <div class="hardware-lenses">
             <div class="hardware-lens"></div>
@@ -2194,7 +2901,7 @@
                 <p>Let's personalize your Ace Bank experience.</p>
                 <div style="width:100%; max-width:320px; text-align:left; margin-top: 24px;">
                     <label style="font-size:12px; font-weight:600; color:var(--ace-text-muted); display:block; margin-bottom:8px;">YOUR NAME</label>
-                    <input type="text" id="onboard-name-input" placeholder="Enter your name" value="Alex" style="width: 100%; box-sizing: border-box; background: var(--ace-navy-card); border: 1px solid var(--ace-border); border-radius: 12px; padding: 14px 16px; color: var(--ace-text-primary); font-size: 16px; font-weight: 600; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--ace-green)'" onblur="this.style.borderColor='var(--ace-border)'">
+                    <input type="text" id="onboard-name-input" placeholder="Enter your name" value="Rajveer" style="width: 100%; box-sizing: border-box; background: var(--ace-navy-card); border: 1px solid var(--ace-border); border-radius: 12px; padding: 14px 16px; color: var(--ace-text-primary); font-size: 16px; font-weight: 600; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--ace-green)'" onblur="this.style.borderColor='var(--ace-border)'">
                 </div>
             </div>
             <div style="position: absolute; bottom: 40px; left: 24px; right: 24px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;">
@@ -2609,7 +3316,7 @@
                     </div>
                     <div class="lb-row highlighted">
                         <div class="lb-rank bronze">3</div>
-                        <div class="lb-avatar" style="background:linear-gradient(135deg,var(--ace-green),var(--ace-blue));">A</div>
+                        <div class="lb-avatar" style="background:linear-gradient(135deg,var(--ace-green),var(--ace-blue));">RS</div>
                         <div class="lb-name" style="color:var(--ace-green);">You</div>
                         <div class="lb-score">12-day streak</div>
                     </div>
@@ -2812,8 +3519,8 @@
             </div>
             
             <div class="profile-header" style="padding: 24px 20px 16px 20px; text-align: center;">
-                <div class="profile-avatar">A</div>
-                <h3 id="profile-name">Alex</h3>
+                <div class="profile-avatar">RS</div>
+                <h3 id="profile-name">Rajveer</h3>
                 <p>Member since June 2026</p>
                 <div class="profile-stats">
                     <div class="profile-stat">
@@ -3359,8 +4066,970 @@
                 <span>Profile</span>
             </div>
         </div>
+            </div>
+        </div>
     </div>
-</div>
+</div> <!-- End of platform-mobile -->
+
+    <!-- ===== WEB PLATFORM VIEW ===== -->
+    <div id="platform-web" class="platform-view">
+        <div class="laptop-frame">
+            <div class="laptop-webcam"></div>
+            <div class="laptop-screen">
+                <!-- ONBOARDING SCREEN 1: Welcome -->
+                <div class="web-screen active" id="web-screen-onboard1">
+                    <div class="web-onboard-layout">
+                        <div class="web-onboard-hero">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <div class="ace-logo" style="width:32px; height:32px; border-radius:8px; background: linear-gradient(135deg, #0f2042, #162c5b); border: 1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" style="width:20px; height:20px;">
+                                        <path d="M5 20L11.2 4.4C11.5 3.8 12.5 3.8 12.8 4.4L19 20" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8.5 14L12 10.5L15.5 14" stroke="var(--ace-green)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h3 style="margin:0; font-size:16px; font-weight:800; letter-spacing:0.5px;">Ace Bank</h3>
+                            </div>
+                            <div style="margin-top: 40px;">
+                                <h1 style="font-size:32px; font-weight:800; line-height:1.2; margin-bottom:16px;">Gamified Gen Z Finance on the Web.</h1>
+                                <p style="font-size:14px; opacity:0.8; line-height:1.5;">Take control of your money, grow your savings tree, and build healthy financial habits with zero effort. The web version keeps you connected, complete with advanced interactive dashboards.</p>
+                            </div>
+                            <div style="font-size:11px; opacity:0.5;">Ace Bank is a registered FDIC-insured digital bank.</div>
+                        </div>
+                        <div class="web-onboard-form-side">
+                            <h2 style="font-size:24px; font-weight:800; margin-bottom:8px;">Create Web Portal Account</h2>
+                            <p style="font-size:13px; color:#64748b; margin-bottom:24px;">Link your account to track goals on your laptop.</p>
+                            
+                            <div style="display:flex; flex-direction:column; gap:16px; width:100%;">
+                                <div>
+                                    <label style="font-size:11px; font-weight:700; color:#64748b; display:block; margin-bottom:6px; text-transform:uppercase;">Email Address</label>
+                                    <input type="email" value="rajveer@example.com" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:13px; font-weight:600;" placeholder="you@domain.com">
+                                </div>
+                                <div>
+                                    <label style="font-size:11px; font-weight:700; color:#64748b; display:block; margin-bottom:6px; text-transform:uppercase;">Password</label>
+                                    <input type="password" value="••••••••" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:13px; font-weight:600;">
+                                </div>
+                                <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+                                    <button class="btn-primary" onclick="webGoTo('web-screen-onboard2')" style="width:100%; padding:12px; font-size:14px; font-weight:700;">Continue Setup</button>
+                                    <button class="btn-secondary" onclick="webGoTo('web-screen-dashboard')" style="width:100%; padding:12px; font-size:14px; font-weight:700; background:transparent; border:none; color:#64748b; cursor:pointer;">Skip to Dashboard</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ONBOARDING SCREEN 2: Target Selection -->
+                <div class="web-screen" id="web-screen-onboard2">
+                    <div class="web-onboard-layout">
+                        <div class="web-onboard-hero" style="flex:1;">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <div class="ace-logo" style="width:32px; height:32px; border-radius:8px; background: linear-gradient(135deg, #0f2042, #162c5b); border: 1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" style="width:20px; height:20px;">
+                                        <path d="M5 20L11.2 4.4C11.5 3.8 12.5 3.8 12.8 4.4L19 20" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8.5 14L12 10.5L15.5 14" stroke="var(--ace-green)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h3 style="margin:0; font-size:16px; font-weight:800; letter-spacing:0.5px;">Ace Bank</h3>
+                            </div>
+                            <div style="margin-top: 40px;">
+                                <h1 style="font-size:28px; font-weight:800; line-height:1.2; margin-bottom:16px;">Define Your Target.</h1>
+                                <p style="font-size:13px; opacity:0.8; line-height:1.5;">Choose your income bracket and savings goals. We will automatically compute your optimum spending buffers to feed your Tree.</p>
+                            </div>
+                            <div style="font-size:11px; opacity:0.5;">Secure SSL connection. Your details are safe with us.</div>
+                        </div>
+                        <div class="web-onboard-form-side" style="flex:1.2; padding:30px;">
+                            <h2 style="font-size:22px; font-weight:800; margin-bottom:16px;">Personalize Your Journey</h2>
+                            
+                            <div style="display:flex; flex-direction:column; gap:20px; width:100%;">
+                                <div>
+                                    <label style="font-size:11px; font-weight:700; color:#64748b; display:block; margin-bottom:8px; text-transform:uppercase;">Monthly Income Bracket</label>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                                        <div class="income-card-web" onclick="selectWebIncome(this)" style="padding:10px; border:1px solid #e2e8f0; border-radius:8px; text-align:center; font-size:12px; font-weight:700; color:#475569; cursor:pointer; transition:all 0.2s;">Under ₹25k</div>
+                                        <div class="income-card-web selected" onclick="selectWebIncome(this)" style="padding:10px; border:2px solid #00c896; background:rgba(0,200,150,0.05); border-radius:8px; text-align:center; font-size:12px; font-weight:700; color:#0f172a; cursor:pointer; transition:all 0.2s;">₹25k - ₹50k</div>
+                                        <div class="income-card-web" onclick="selectWebIncome(this)" style="padding:10px; border:1px solid #e2e8f0; border-radius:8px; text-align:center; font-size:12px; font-weight:700; color:#475569; cursor:pointer; transition:all 0.2s;">₹50k - ₹1L</div>
+                                        <div class="income-card-web" onclick="selectWebIncome(this)" style="padding:10px; border:1px solid #e2e8f0; border-radius:8px; text-align:center; font-size:12px; font-weight:700; color:#475569; cursor:pointer; transition:all 0.2s;">₹1L+</div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                        <label style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Savings Target / Month</label>
+                                        <span id="web-onboard-savings-lbl" style="font-size:14px; font-weight:800; color:#00c896;">₹5,000</span>
+                                    </div>
+                                    <input type="range" min="1000" max="50000" step="1000" value="5000" oninput="document.getElementById('web-onboard-savings-lbl').textContent = '₹' + parseInt(this.value).toLocaleString('en-IN')" style="width:100%;">
+                                </div>
+                                
+                                <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
+                                    <div style="display:flex; gap:10px;">
+                                        <button class="btn-secondary" onclick="webGoTo('web-screen-onboard1')" style="flex:1; padding:10px; font-size:13px;">Back</button>
+                                        <button class="btn-primary" onclick="webGoTo('web-screen-dashboard')" style="flex:2; padding:10px; font-size:13px; font-weight:700;">Initialize Portal</button>
+                                    </div>
+                                    <button class="btn-secondary" onclick="webGoTo('web-screen-dashboard')" style="width:100%; padding:10px; font-size:13px; font-weight:700; background:transparent; border:none; color:#64748b; cursor:pointer;">Skip to Dashboard</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAIN APP SCREEN (Dashboard, Challenges, Tree, Insights, Community, Split, Settings) -->
+                <div class="web-screen" id="web-screen-dashboard">
+                    <div class="web-app-layout">
+                        <!-- Sidebar -->
+                        <div class="web-sidebar">
+                            <div class="web-sidebar-nav">
+                                <div style="display:flex; align-items:center; gap:8px; margin-bottom:24px; padding-left:8px;">
+                                    <div class="ace-logo" style="width:28px; height:28px; border-radius:6px; background: linear-gradient(135deg, #0f2042, #162c5b); border: 1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                        <svg viewBox="0 0 24 24" fill="none" style="width:16px; height:16px;">
+                                            <path d="M5 20L11.2 4.4C11.5 3.8 12.5 3.8 12.8 4.4L19 20" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M8.5 14L12 10.5L15.5 14" stroke="var(--ace-green)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <span style="font-size:15px; font-weight:800; color:#fff; letter-spacing:0.5px;">Ace Bank</span>
+                                </div>
+                                <button class="web-nav-item active" onclick="webSwitchTab('dashboard', this)">
+                                    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                                    Dashboard
+                                </button>
+                                <button class="web-nav-item" onclick="webSwitchTab('challenges', this)">
+                                    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    Challenges
+                                </button>
+                                <button class="web-nav-item" onclick="webSwitchTab('tree', this)">
+                                    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12a5 5 0 0 1 5-5h3M12 12a5 5 0 0 0-5-5H4M17 7a3 3 0 0 0-3-3h-2M7 7a3 3 0 0 1 3-3h2"/></svg>
+                                    Financial Tree
+                                </button>
+                                <button class="web-nav-item" onclick="webSwitchTab('insights', this)">
+                                    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                    Insights
+                                </button>
+                                <button class="web-nav-item" onclick="webSwitchTab('community', this)">
+                                    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                                    Community
+                                </button>
+                                <button class="web-nav-item" onclick="webSwitchTab('settings', this)">
+                                    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                                    Settings
+                                </button>
+                            </div>
+                            
+                            <!-- AI Escalation Panel -->
+                            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:12px; font-size:11px; color:#94a3b8; display:flex; flex-direction:column; gap:8px; margin-top: auto;">
+                                <div style="display:flex; align-items:center; gap:6px; color:#fff; font-weight:700;">
+                                    <span style="display:inline-block; width:6px; height:6px; background:#0078FF; border-radius:50%;"></span>
+                                    Ace AI Copilot
+                                </div>
+                                Chat with our advanced AI assistant for personalized financial coaching.
+                                <button onclick="webSwitchTab('settings')" style="background:linear-gradient(135deg, #00C896, #0078FF); border:none; color:#fff; padding:8px; font-size:11px; font-weight:700; border-radius:6px; width:100%; cursor:pointer; box-shadow: 0 4px 10px rgba(0,120,255,0.3);">Chat with AI</button>
+                            </div>
+                        </div>
+
+                        <!-- Content Pane -->
+                        <div class="web-content-pane">
+                            <!-- Header -->
+                            <div class="web-header">
+                                <h3 id="web-page-title" style="font-size:14px; font-weight:800; margin:0;">Dashboard Overview</h3>
+                                <div style="display:flex; align-items:center; gap:16px;">
+                                    <div style="text-align:right;">
+                                        <div style="font-size:11px; font-weight:700;">Rajveer Sandhu</div>
+                                        <div style="font-size:9px; color:#64748b;">FDIC Insured Portal</div>
+                                    </div>
+                                    <div style="width:32px; height:32px; border-radius:50%; background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px; border:1.5px solid #00c896; color:#0f172a;">RS</div>
+                                </div>
+                            </div>
+
+                            <div class="web-body">
+                                <!-- PANEL 1: DASHBOARD OVERVIEW -->
+                                <div class="web-tab-panel" id="web-tab-dashboard" style="display:flex; flex-direction:column; gap:20px; width:100%;">
+                                    <!-- Top Row KPI Cards -->
+                                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; width:100%;">
+                                        <div class="web-card" style="background:linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);">
+                                            <span style="font-size:9px; font-weight:700; color:#64748b; text-transform:uppercase; margin-bottom:4px;">Savings Balance</span>
+                                            <div style="display:flex; align-items:center; gap:8px;">
+                                                <h1 id="web-balance-val" style="font-size:24px; font-weight:800; margin:0;">₹12,450.80</h1>
+                                                <button onclick="toggleWebBalance()" style="background:none; border:none; color:#64748b; cursor:pointer;" id="web-balance-eye">
+                                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                                </button>
+                                            </div>
+                                            <span style="font-size:10px; color:#008866; font-weight:600; margin-top:4px;">🛡️ Safe • Auto-Save Active</span>
+                                        </div>
+                                        <div class="web-card">
+                                            <span style="font-size:9px; font-weight:700; color:#64748b; text-transform:uppercase; margin-bottom:4px;">Active Saving Streak</span>
+                                            <div style="display:flex; align-items:center; gap:8px;">
+                                                <h1 style="font-size:24px; font-weight:800; color:#ff6b6b; margin:0;">🔥 12 Days</h1>
+                                            </div>
+                                            <span style="font-size:10px; color:#8b5cf6; font-weight:600; margin-top:4px;">2 saves left for weekly bonus!</span>
+                                        </div>
+                                        <div class="web-card">
+                                            <span style="font-size:9px; font-weight:700; color:#64748b; text-transform:uppercase; margin-bottom:4px;">Wealth Tree Status</span>
+                                            <div style="display:flex; align-items:center; gap:8px;">
+                                                <h1 id="web-dash-tree-percent" style="font-size:24px; font-weight:800; color:#00c896; margin:0;">68%</h1>
+                                            </div>
+                                            <span style="font-size:10px; color:#64748b; font-weight:600; margin-top:4px;">Level 4 — Sapling Stage</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Bottom Row 2-Columns -->
+                                    <div style="display:flex; gap:20px; width:100%;">
+                                        <!-- Left Column (60% width) -->
+                                        <div style="flex:1.5; display:flex; flex-direction:column; gap:20px;">
+                                            <!-- Transaction History Table -->
+                                            <div class="web-card">
+                                                <h4 style="margin:0 0 12px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Recent Transactions & Nudges</h4>
+                                                <table class="web-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Description</th>
+                                                            <th>Category</th>
+                                                            <th>Date</th>
+                                                            <th style="text-align:right;">Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>Auto-Save (Dinner Round-up)</strong></td>
+                                                            <td><span class="web-badge web-badge-save">Saved</span></td>
+                                                            <td>Today, 8:44 PM</td>
+                                                            <td style="text-align:right; color:#008866; font-weight:700;">+₹15.20</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Interest Reward (Growth Bonus)</strong></td>
+                                                            <td><span class="web-badge web-badge-save">Bonus</span></td>
+                                                            <td>Yesterday, 10:12 AM</td>
+                                                            <td style="text-align:right; color:#008866; font-weight:700;">+₹120.00</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Zomato delivery activity</strong></td>
+                                                            <td><span class="web-badge web-badge-spend">Spent</span></td>
+                                                            <td>July 3, 2026</td>
+                                                            <td style="text-align:right; color:#475569; font-weight:600;">-₹480.00</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Weekend Challenge Boost</strong></td>
+                                                            <td><span class="web-badge web-badge-streak">Streak Boost</span></td>
+                                                            <td>June 30, 2026</td>
+                                                            <td style="text-align:right; color:#008866; font-weight:700;">+₹500.00</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Spend Control Slider -->
+                                            <div class="web-card">
+                                                <h4 style="margin:0 0 8px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Gen Z Budget Allocation Planner</h4>
+                                                <p style="font-size:10px; color:#94a3b8; margin:0 0 12px 0;">Slide to allocate buffers. Ace AI alerts if fun spend limits restrict your tree's growth speed.</p>
+                                                <div style="display:flex; flex-direction:column; gap:12px;">
+                                                    <div>
+                                                        <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:600; margin-bottom:4px;">
+                                                            <span>Food & Dining Cap</span>
+                                                            <span id="web-budget-food-val">25%</span>
+                                                        </div>
+                                                        <input type="range" min="10" max="60" value="25" oninput="updateWebBudget('food', this.value)" style="width:100%;">
+                                                    </div>
+                                                    <div>
+                                                        <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:600; margin-bottom:4px;">
+                                                            <span>Entertainment & Fun Budget</span>
+                                                            <span id="web-budget-fun-val">20%</span>
+                                                        </div>
+                                                        <input type="range" min="10" max="60" value="20" oninput="updateWebBudget('fun', this.value)" style="width:100%;">
+                                                    </div>
+                                                    <div id="web-budget-warning" style="display:none; font-size:9px; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.15); color:#ef4444; border-radius:6px; padding:6px; text-align:center;">
+                                                        ⚠️ Fun spending is exceeding 30%! Growth multiplier has dropped. Lower it to restore tree sunlight.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Right Column (40% width) -->
+                                        <div style="flex:1; display:flex; flex-direction:column; gap:20px;">
+                                            <!-- Interactive chatbot -->
+                                            <div class="web-card" style="height:250px; justify-content:space-between; padding:14px; overflow:hidden;">
+                                                <h4 style="margin:0 0 8px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#4f46e5; display:flex; align-items:center; gap:6px;">
+                                                    <span style="display:inline-block; width:5px; height:5px; background:#4f46e5; border-radius:50%;"></span>
+                                                    Ace AI Financial Advisor
+                                                </h4>
+                                                <div id="web-chat-output" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:6px; margin-bottom:8px; padding-right:4px;">
+                                                    <div class="web-chat-bubble web-chat-ai">Hi Rajveer! Select a quick question below or type your own to ask about streaks, tree growth, or active budget advice.</div>
+                                                </div>
+                                                <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; flex-shrink:0; border-bottom:1px solid #f1f5f9; margin-bottom:6px;">
+                                                    <button onclick="webAskAI('What is my saving streak?', '🔥 Your streak is currently 12 days! Complete 2 more daily auto-saves to reach the 14-day milestone.')" style="white-space:nowrap; padding:4px 8px; border-radius:10px; background:#f1f5f9; border:1px solid #e2e8f0; font-size:9px; font-weight:600; cursor:pointer; flex-shrink:0;">Check streak</button>
+                                                    <button onclick="webAskAI('How is my Tree doing?', '🌳 Your Tree is Level 4 (Sapling) at 68% progress. Water it or opt-in to active challenges to watch it grow.')" style="white-space:nowrap; padding:4px 8px; border-radius:10px; background:#f1f5f9; border:1px solid #e2e8f0; font-size:9px; font-weight:600; cursor:pointer; flex-shrink:0;">My tree health</button>
+                                                    <button onclick="webAskAI('Suggest a challenge.', '🎯 Try the Sunday Zero Spend! It reduces shopping/dining expenses and helps you auto-save ₹1,500.')" style="white-space:nowrap; padding:4px 8px; border-radius:10px; background:#f1f5f9; border:1px solid #e2e8f0; font-size:9px; font-weight:600; cursor:pointer; flex-shrink:0;">Recommend challenge</button>
+                                                </div>
+                                                <div class="web-chat-input-row">
+                                                    <input type="text" id="web-chat-input" class="web-chat-input" placeholder="Type a question..." onkeydown="if(event.key === 'Enter') webCustomPromptAI()">
+                                                    <button class="web-chat-send-btn" onclick="webCustomPromptAI()">Send</button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Wealth Tree Status Summary -->
+                                            <div class="web-card">
+                                                <h4 style="margin:0 0 10px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Water or Grow Savings Tree</h4>
+                                                <div style="display:flex; justify-content:center; align-items:center; margin-bottom:12px;">
+                                                    <div id="web-dash-tree-svg" style="width:50px; height:50px; background:rgba(0,200,150,0.05); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                                                        <svg viewBox="0 0 64 64" width="30" height="30" fill="none">
+                                                            <rect x="28" y="38" width="8" height="18" rx="2" fill="#8B6B47"/>
+                                                            <ellipse cx="32" cy="36" rx="22" ry="12" fill="#27AE60" opacity="0.9"/>
+                                                            <ellipse cx="32" cy="30" rx="18" ry="10" fill="#2ECC71" opacity="0.9"/>
+                                                            <ellipse cx="32" cy="24" rx="13" ry="8" fill="#00C896" opacity="0.9"/>
+                                                        </svg>
+                                                    </div>
+                                                    <div style="margin-left:12px; flex:1;">
+                                                        <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:700; margin-bottom:2px;">
+                                                            <span>Progress to Level 5</span>
+                                                            <span id="web-dash-tree-val-lbl">68%</span>
+                                                        </div>
+                                                        <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;">
+                                                            <div id="web-dash-tree-progress-fill" style="width:68%; height:100%; background:#00c896; border-radius:3px;"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display:flex; gap:8px;">
+                                                    <button onclick="triggerWebTreeAction('Watered! +5% Growth', 5)" style="flex:1; padding:6px; font-size:9px; font-weight:700;" class="btn-secondary">💧 Save ₹100</button>
+                                                    <button onclick="triggerWebTreeAction('Fertilized! +10% Growth', 10)" style="flex:1; padding:6px; font-size:9px; font-weight:700;" class="btn-secondary">🌿 Challenge</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PANEL 2: CHALLENGES & STREAKS -->
+                                <div class="web-tab-panel" id="web-tab-challenges" style="display:none; gap:16px; width:100%;">
+                                    <!-- Left Column (55%) -->
+                                    <div style="flex:1.2; display:flex; flex-direction:column; gap:16px;">
+                                        <!-- Streak calendar card -->
+                                        <div class="web-card">
+                                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                                <div>
+                                                    <h4 style="margin:0 0 2px 0; font-size:12px; font-weight:800; text-transform:uppercase; color:#64748b;">30-Day Savings Streak Calendar</h4>
+                                                    <p style="font-size:10px; color:#94a3b8; margin:0;">Maintain your saving habit daily. Complete streaks to multiply tree growth! ⚡</p>
+                                                </div>
+                                                <div style="text-align:right;">
+                                                    <span style="font-size:13px; font-weight:800; color:#ff6b6b; display:block;">🔥 <span id="web-streak-days-lbl">12 Days</span></span>
+                                                    <span style="font-size:9px; color:#64748b;">Multiplier: 1.5x</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Calendar grid (5 rows x 7 columns) -->
+                                            <div class="web-streak-grid" id="web-streak-days-grid" style="display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; margin:8px 0;">
+                                                <div class="web-streak-day completed">1</div>
+                                                <div class="web-streak-day completed">2</div>
+                                                <div class="web-streak-day completed">3</div>
+                                                <div class="web-streak-day completed">4</div>
+                                                <div class="web-streak-day completed">5</div>
+                                                <div class="web-streak-day completed">6</div>
+                                                <div class="web-streak-day completed">7</div>
+                                                <div class="web-streak-day completed">8</div>
+                                                <div class="web-streak-day completed">9</div>
+                                                <div class="web-streak-day completed">10</div>
+                                                <div class="web-streak-day completed">11</div>
+                                                <div class="web-streak-day completed" id="web-streak-day-12">12</div>
+                                                <div class="web-streak-day today" id="web-streak-day-13">13</div>
+                                                <div class="web-streak-day">14</div>
+                                                <div class="web-streak-day">15</div>
+                                                <div class="web-streak-day">16</div>
+                                                <div class="web-streak-day">17</div>
+                                                <div class="web-streak-day">18</div>
+                                                <div class="web-streak-day">19</div>
+                                                <div class="web-streak-day">20</div>
+                                                <div class="web-streak-day">21</div>
+                                                <div class="web-streak-day">22</div>
+                                                <div class="web-streak-day">23</div>
+                                                <div class="web-streak-day">24</div>
+                                                <div class="web-streak-day">25</div>
+                                                <div class="web-streak-day">26</div>
+                                                <div class="web-streak-day">27</div>
+                                                <div class="web-streak-day">28</div>
+                                                <div class="web-streak-day">29</div>
+                                                <div class="web-streak-day">30</div>
+                                            </div>
+
+                                            <button onclick="webClaimStreakDay()" id="web-btn-streak-claim" class="btn-primary" style="padding:8px; font-size:11px; margin-top:6px; width:100%;">🔥 Claim Today's Auto-Save (+1 Day to Streak)</button>
+                                        </div>
+
+                                        <!-- Challenges Section -->
+                                        <div class="web-card">
+                                            <h4 style="margin:0 0 10px 0; font-size:12px; font-weight:800; text-transform:uppercase; color:#64748b;">Active Challenges</h4>
+                                            
+                                            <div style="display:flex; flex-direction:column; gap:10px;" id="web-active-challenges-box">
+                                                <!-- Cafe Cutback -->
+                                                <div class="challenge-item-card" id="web-chal-cafe" style="padding:10px; border:1px solid #cbd5e1; border-radius:12px; display:flex; justify-content:space-between; align-items:center; background:#f8fafc;">
+                                                    <div>
+                                                        <div style="display:flex; align-items:center; gap:6px;">
+                                                            <strong style="font-size:12px; color:#0f172a;">☕ Cafe Cutback</strong>
+                                                            <span style="font-size:8px; background:#e0f2fe; color:#0369a1; padding:2px 4px; border-radius:4px; font-weight:700;">DAILY NUDGE</span>
+                                                        </div>
+                                                        <span style="font-size:10px; color:#64748b; display:block; margin:2px 0 6px 0;">Skip commercial coffee, save ₹50 per day. Target: ₹350.</span>
+                                                        <div style="display:flex; align-items:center; gap:6px;">
+                                                            <div style="width:100px; background:#e2e8f0; height:5px; border-radius:3px; overflow:hidden;">
+                                                                <div id="web-chal-cafe-fill" style="width:71%; height:100%; background:#0284c7;"></div>
+                                                            </div>
+                                                            <span style="font-size:9px; font-weight:700; color:#0369a1;" id="web-chal-cafe-lbl">5/7 Days Complete</span>
+                                                        </div>
+                                                    </div>
+                                                    <button id="web-btn-cafe-log" onclick="webCompleteDailyChallenge('cafe')" class="btn-secondary" style="padding:4px 8px; font-size:10px;">Log Save</button>
+                                                </div>
+
+                                                <!-- Sunday Zero Spend -->
+                                                <div class="challenge-item-card" style="padding:10px; border:1px solid rgba(0,200,150,0.2); background:rgba(0,200,150,0.03); border-radius:12px; display:flex; justify-content:space-between; align-items:center;">
+                                                    <div>
+                                                        <div style="display:flex; align-items:center; gap:6px;">
+                                                            <strong style="font-size:12px; color:#008866;">🚫 Sunday Zero Spend</strong>
+                                                            <span style="font-size:8px; background:#d1fae5; color:#065f46; padding:2px 4px; border-radius:4px; font-weight:700;">WEEKLY</span>
+                                                        </div>
+                                                        <span style="font-size:10px; color:#64748b; display:block; margin:2px 0 6px 0;">Avoid dining out or ordering on Sundays. Target: ₹1,500.</span>
+                                                        <div style="display:flex; align-items:center; gap:6px;">
+                                                            <div style="width:100px; background:#e2e8f0; height:5px; border-radius:3px; overflow:hidden;">
+                                                                <div style="width:80%; height:100%; background:#00c896;"></div>
+                                                            </div>
+                                                            <span style="font-size:9px; font-weight:700; color:#008866;">80% Complete</span>
+                                                        </div>
+                                                    </div>
+                                                    <span style="font-size:10px; font-weight:700; color:#00c896; padding-right:8px;">Ongoing</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right Column (45%) -->
+                                    <div style="flex:1; display:flex; flex-direction:column; gap:16px;">
+                                        <!-- Leaderboard -->
+                                        <div class="web-card">
+                                            <h4 style="margin:0 0 10px 0; font-size:12px; font-weight:800; text-transform:uppercase; color:#64748b;">Community Save Streaks</h4>
+                                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                                <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; padding:4px 0;">
+                                                    <div style="display:flex; align-items:center; gap:6px;">
+                                                        <span style="font-weight:700; color:#64748b; width:12px;">1</span>
+                                                        <div style="width:20px; height:20px; border-radius:50%; background:#eedffc; color:#a855f7; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:9px;">AM</div>
+                                                        <strong>Arnav Malhotra</strong>
+                                                    </div>
+                                                    <div style="display:flex; align-items:center; gap:6px;">
+                                                        <span style="font-weight:700; color:#ff6b6b;">🔥 9 Days</span>
+                                                    </div>
+                                                </div>
+
+                                                <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; background:rgba(0,200,150,0.06); padding:6px 8px; border-radius:8px; border:1px solid rgba(0,200,150,0.12);">
+                                                    <div style="display:flex; align-items:center; gap:6px;">
+                                                        <span style="font-weight:700; color:#008866; width:12px;">2</span>
+                                                        <div style="width:20px; height:20px; border-radius:50%; background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:9px; border:1px solid #00c896; color:#0f172a;">RS</div>
+                                                        <strong>You (Rajveer)</strong>
+                                                    </div>
+                                                    <span style="font-weight:700; color:#ff6b6b;">🔥 12 Days</span>
+                                                </div>
+
+                                                <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; padding:4px 0;">
+                                                    <div style="display:flex; align-items:center; gap:6px;">
+                                                        <span style="font-weight:700; color:#64748b; width:12px;">3</span>
+                                                        <div style="width:20px; height:20px; border-radius:50%; background:#e0f2fe; color:#0284c7; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:9px;">KM</div>
+                                                        <strong>Kabir Mehta</strong>
+                                                    </div>
+                                                    <div style="display:flex; align-items:center; gap:6px;">
+                                                        <span style="font-weight:700; color:#ff6b6b;">🔥 3 Days</span>
+                                                    </div>
+                                                </div>
+
+                                                <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; padding:4px 0;">
+                                                    <div style="display:flex; align-items:center; gap:6px;">
+                                                        <span style="font-weight:700; color:#64748b; width:12px;">4</span>
+                                                        <div style="width:20px; height:20px; border-radius:50%; background:#fef3c7; color:#d97706; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:9px;">SK</div>
+                                                        <strong>Sarah Kapoor</strong>
+                                                    </div>
+                                                    <div style="display:flex; align-items:center; gap:6px;">
+                                                        <span style="font-weight:700; color:#ff6b6b;">🔥 2 Days</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Suggested Challenges (Moved here for layout balancing) -->
+                                        <div class="web-card">
+                                            <h4 style="margin:0 0 10px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Suggested Challenge</h4>
+                                            <div class="challenge-item-card" id="web-chal-subscription" style="padding:8px 10px; border:1px solid #e2e8f0; border-radius:12px; display:flex; justify-content:space-between; align-items:center; background:#fff;">
+                                                <div>
+                                                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                                                        <strong style="font-size:11px; color:#475569;">📺 Subscription Cleanse</strong>
+                                                        <span style="font-size:8px; background:#f1f5f9; color:#475569; padding:1px 3px; border-radius:3px; font-weight:700;">SUGGESTED</span>
+                                                    </div>
+                                                    <span style="font-size:9px; color:#64748b; display:block; line-height:1.3;">Cancel unused subscriptions. Save ₹600/mo.</span>
+                                                </div>
+                                                <button onclick="webJoinSuggestedChallenge('web-chal-subscription', '📺 Subscription Cleanse', 'Audit and cancel unused subscriptions.', 600)" class="btn-primary" style="padding:5px 10px; font-size:9px; flex-shrink:0; margin-left:8px;">Join</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PANEL 3: FINANCIAL TREE DETAILS -->
+                                <div class="web-tab-panel" id="web-tab-tree" style="display:none; gap:16px; width:100%;">
+                                    <!-- Left Column (60% width) - Interactive Canvas -->
+                                    <div style="flex:1.5; display:flex; flex-direction:column; gap:16px;">
+                                        <div class="web-card" style="align-items:center; text-align:center; padding:16px 24px; justify-content:center; flex:1;">
+                                            <h3 style="margin:0 0 4px 0; font-size:16px; font-weight:800;">"Rajveer's Fortune Bonsai"</h3>
+                                            <p style="font-size:10px; color:#64748b; margin:0 0 12px 0;">Sapling Stage • Tier 4. Your financial security drives this virtual growth!</p>
+                                            
+                                            <!-- Main Tree Visual with pulsing leaf indicators -->
+                                            <div id="web-tree-svg-container" style="position:relative; width:150px; height:150px; margin-bottom:12px; transition: transform 0.2s;">
+                                                <div id="web-growth-effect" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; display:flex; align-items:center; justify-content:center; font-size:22px; opacity:0; transition:all 0.5s; font-weight:800; color:#00c896; z-index:10;">💧 +5%</div>
+                                                <svg viewBox="0 0 64 64" width="100%" height="100%" fill="none" style="filter: drop-shadow(0 8px 12px rgba(0,200,150,0.12));">
+                                                    <rect x="28" y="38" width="8" height="18" rx="2" fill="#8B6B47"/>
+                                                    <ellipse cx="32" cy="36" rx="22" ry="12" fill="#27AE60" opacity="0.9"/>
+                                                    <ellipse cx="32" cy="30" rx="18" ry="10" fill="#2ECC71" opacity="0.9"/>
+                                                    <ellipse cx="32" cy="24" rx="13" ry="8" fill="#00C896" opacity="0.9"/>
+                                                </svg>
+                                            </div>
+
+                                            <div style="width:100%; max-width:320px; margin-bottom:12px;">
+                                                <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700; margin-bottom:4px;">
+                                                    <span>Sapling Level 4 Progress</span>
+                                                    <span id="web-tree-percent-label">68%</span>
+                                                </div>
+                                                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;">
+                                                    <div id="web-tree-progress-fill" style="width:68%; height:100%; background:#00c896; border-radius:3px; transition:width 0.4s;"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Growth Action Buttons -->
+                                            <div style="display:flex; gap:8px; width:100%; max-width:400px;">
+                                                <button onclick="triggerWebTreeAction('Watered! +5% Growth', 5)" class="btn-secondary" style="flex:1; padding:8px 4px; font-size:10px; font-weight:700;">💧 Water Tree (Save ₹100)</button>
+                                                <button onclick="triggerWebTreeAction('Sunny Day! +10% Growth', 10)" class="btn-secondary" style="flex:1; padding:8px 4px; font-size:10px; font-weight:700;">☀️ Streak Sunlight</button>
+                                                <button onclick="triggerWebTreeAction('Fertilized! +15% Growth', 15)" class="btn-secondary" style="flex:1; padding:8px 4px; font-size:10px; font-weight:700;">🌿 Add Fertilizer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right Column (40% width) - Mangrove Details & History -->
+                                    <div style="flex:1; display:flex; flex-direction:column; gap:16px;">
+                                        <!-- Forest Impact -->
+                                        <div class="web-card" style="background:rgba(0,200,150,0.04); border:1px solid rgba(0,200,150,0.15);">
+                                            <h4 style="margin:0 0 6px 0; font-size:12px; font-weight:800; text-transform:uppercase; color:#008866; display:flex; align-items:center; gap:6px;">
+                                                🌳 Environmental Impact
+                                            </h4>
+                                            <p style="font-size:10px; color:#1e293b; line-height:1.5; margin:0 0 10px 0;">
+                                                For every Level your Money Tree grows, Ace Bank plants a <strong>real mangrove tree</strong> in India's Sundarbans through Grow-Trees.
+                                            </p>
+                                            <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; margin-bottom:4px;">
+                                                <span>Real Mangroves Planted:</span>
+                                                <strong style="color:#008866; font-size:13px;">4 Trees</strong>
+                                            </div>
+                                            <div style="display:flex; justify-content:space-between; align-items:center; font-size:10px; color:#64748b;">
+                                                <span>Goal offset target:</span>
+                                                <span>480 kg CO₂</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Tree Milestones -->
+                                        <div class="web-card">
+                                            <h4 style="margin:0 0 8px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Growth Timeline & Milestones</h4>
+                                            <div style="display:flex; flex-direction:column; gap:8px; font-size:10px;">
+                                                <div style="display:flex; gap:8px; border-left:2px solid #00c896; padding-left:8px; position:relative;">
+                                                    <span style="position:absolute; left:-5px; top:2px; width:8px; height:8px; border-radius:50%; background:#00c896;"></span>
+                                                    <div>
+                                                        <strong>Jul 3: Sprouted Level 4 Sapling</strong>
+                                                        <span style="display:block; color:#94a3b8;">Tree has planted 4 mangrove saplings in Sundarbans.</span>
+                                                    </div>
+                                                </div>
+                                                <div style="display:flex; gap:8px; border-left:2px solid #cbd5e1; padding-left:8px; position:relative;">
+                                                    <span style="position:absolute; left:-5px; top:2px; width:8px; height:8px; border-radius:50%; background:#cbd5e1;"></span>
+                                                    <div>
+                                                        <strong>Jun 18: Reached Level 3 Seedling</strong>
+                                                        <span style="display:block; color:#94a3b8;">Growth accelerated by 1.2x streak multiplier.</span>
+                                                    </div>
+                                                </div>
+                                                <div style="display:flex; gap:8px; border-left:2px solid #cbd5e1; padding-left:8px; position:relative;">
+                                                    <span style="position:absolute; left:-5px; top:2px; width:8px; height:8px; border-radius:50%; background:#cbd5e1;"></span>
+                                                    <div>
+                                                        <strong>Jun 1: Sprouted Level 2 Sprout</strong>
+                                                        <span style="display:block; color:#94a3b8;">Savings tree germinated successfully.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PANEL 4: INSIGHTS & BUDGETS -->
+                                <div class="web-tab-panel" id="web-tab-insights" style="display:none; gap:16px; width:100%;">
+                                    <!-- Left Column (50% width) - Spending breakdown & chart -->
+                                    <div style="flex:1; display:flex; flex-direction:column; gap:16px;">
+                                        <!-- Monthly wealth chart -->
+                                        <div class="web-card">
+                                            <h4 style="margin:0 0 8px 0; font-size:12px; font-weight:800; text-transform:uppercase; color:#64748b;">Monthly Saving Accumulation</h4>
+                                            <div style="display:flex; justify-content:space-around; align-items:flex-end; height:100px; padding-top:10px; border-bottom:1px solid #e2e8f0; margin-bottom:8px;">
+                                                <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                                                    <div style="display:flex; gap:3px; align-items:flex-end;">
+                                                        <div style="width:12px; height:45px; background:#cbd5e1; border-radius:2px;" title="Spent: ₹4,500"></div>
+                                                        <div style="width:12px; height:30px; background:#00c896; border-radius:2px;" title="Saved: ₹3,000"></div>
+                                                    </div>
+                                                    <span style="font-size:9px; color:#64748b;">May</span>
+                                                </div>
+                                                <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                                                    <div style="display:flex; gap:3px; align-items:flex-end;">
+                                                        <div style="width:12px; height:55px; background:#cbd5e1; border-radius:2px;" title="Spent: ₹5,500"></div>
+                                                        <div style="width:12px; height:45px; background:#00c896; border-radius:2px;" title="Saved: ₹4,500"></div>
+                                                    </div>
+                                                    <span style="font-size:9px; color:#64748b;">Jun</span>
+                                                </div>
+                                                <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                                                    <div style="display:flex; gap:3px; align-items:flex-end;">
+                                                        <div style="width:12px; height:35px; background:#cbd5e1; border-radius:2px;" title="Spent: ₹3,500"></div>
+                                                        <div style="width:12px; height:75px; background:#00c896; border-radius:2px;" title="Saved: ₹7,500"></div>
+                                                    </div>
+                                                    <span style="font-size:9px; color:#008866; font-weight:700;">Jul (Cur)</span>
+                                                </div>
+                                            </div>
+                                            <div style="display:flex; justify-content:center; gap:12px; font-size:8px;">
+                                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:6px; height:6px; background:#cbd5e1; border-radius:1px;"></span> Expenses</span>
+                                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:6px; height:6px; background:#00c896; border-radius:1px;"></span> Saved Wealth</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Budget Category Tracker -->
+                                        <div class="web-card">
+                                            <h4 style="margin:0 0 6px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Budget Category Tracker</h4>
+                                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                                <div>
+                                                    <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:600; margin-bottom:2px;">
+                                                        <span>🍔 Food & Dining</span>
+                                                        <span style="color:#64748b;">₹4,800 / ₹6,000 Cap (80%)</span>
+                                                    </div>
+                                                    <div style="background:#f1f5f9; height:5px; border-radius:2px; overflow:hidden;">
+                                                        <div style="width:80%; height:100%; background:#00c896;"></div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:600; margin-bottom:2px;">
+                                                        <span>🛍️ Shopping & Fun</span>
+                                                        <span style="color:#ef4444; font-weight:700;">₹7,800 / ₹8,000 Cap (97.5%)</span>
+                                                    </div>
+                                                    <div style="background:#f1f5f9; height:5px; border-radius:2px; overflow:hidden;">
+                                                        <div style="width:97.5%; height:100%; background:#ef4444;"></div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:600; margin-bottom:2px;">
+                                                        <span>🚗 Commute & Transport</span>
+                                                        <span style="color:#64748b;">₹1,200 / ₹2,000 Cap (60%)</span>
+                                                    </div>
+                                                    <div style="background:#f1f5f9; height:5px; border-radius:2px; overflow:hidden;">
+                                                        <div style="width:60%; height:100%; background:#00c896;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right Column (50% width) - Sliders & Projections -->
+                                    <div style="flex:1; display:flex; flex-direction:column; gap:16px;">
+                                        <!-- Sliders Card -->
+                                        <div class="web-card">
+                                            <h4 style="margin:0 0 6px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Interactive Buffer Allocator</h4>
+                                            <p style="font-size:10px; color:#94a3b8; margin:0 0 10px 0;">Slide to adjust allocation limits. The system triggers warnings on high weekend spend risk.</p>
+                                            <div style="display:flex; flex-direction:column; gap:12px;">
+                                                <div>
+                                                    <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:600; margin-bottom:2px;">
+                                                        <span>Food & Dining Limit</span>
+                                                        <span id="web-budget-food-val-2">25%</span>
+                                                    </div>
+                                                    <input type="range" min="10" max="60" value="25" oninput="updateWebBudgetLimits('food', this.value)" style="width:100%;">
+                                                </div>
+                                                <div>
+                                                    <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:600; margin-bottom:2px;">
+                                                        <span>Fun & Entertainment Limit</span>
+                                                        <span id="web-budget-fun-val-2">20%</span>
+                                                    </div>
+                                                    <input type="range" min="10" max="60" value="20" oninput="updateWebBudgetLimits('fun', this.value)" style="width:100%;">
+                                                </div>
+                                                <div id="web-budget-warning-2" style="display:none; font-size:9px; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.15); color:#ef4444; border-radius:6px; padding:6px; text-align:center;">
+                                                    ⚠️ Allocations exceed 30% threshold! Weekly savings tree growth multiplier will decrease.
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- AI Projections -->
+                                        <div class="web-card" style="background:#f8fafc; border:1px dashed #cbd5e1; justify-content:center;">
+                                            <h4 style="margin:0 0 4px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#4f46e5;">Smart saving Projections</h4>
+                                            <p style="font-size:10px; color:#475569; line-height:1.5; margin:0 0 10px 0;" id="web-smart-proj-text">
+                                                At your current average savings rate (₹5,200/mo), you are on track to purchase your targeted iPad in 2.3 months.
+                                            </p>
+                                            <button onclick="webApplySmartProjections()" class="btn-primary" style="padding:6px; font-size:10px; width:100%;">Apply AI-Recommended Caps (Save ₹400/mo extra)</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PANEL 5: COMMUNITY SOCIAL DISCUSSION -->
+                                <div class="web-tab-panel" id="web-tab-community" style="display:none; gap:16px; width:100%;">
+                                    <!-- Left Column (60% width) - Interactive Post Input and Feed -->
+                                    <div style="flex:1.5; display:flex; flex-direction:column; gap:12px;">
+                                        <!-- Post Creator Card -->
+                                        <div class="web-card" style="padding:10px 12px; gap:8px;">
+                                            <h4 style="margin:0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Create Post</h4>
+                                            <div style="display:flex; gap:8px; align-items:flex-start;">
+                                                <div style="width:28px; height:28px; border-radius:50%; background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:10px; flex-shrink:0;">RS</div>
+                                                <textarea id="web-post-input" placeholder="Share a savings milestone or challenge victory..." style="flex:1; border:1px solid #cbd5e1; border-radius:8px; padding:6px 10px; font-size:11px; outline:none; height:45px; resize:none; font-family:inherit;"></textarea>
+                                            </div>
+                                            <div style="display:flex; justify-content:flex-end;">
+                                                <button onclick="webAddNewPost()" class="btn-primary" style="padding:4px 12px; font-size:10px;">Post to Feed</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Post Feed Container -->
+                                        <div id="web-posts-container" style="display:flex; flex-direction:column; gap:10px; max-height:280px; overflow-y:auto; padding-right:4px;">
+                                            <!-- Post 1 -->
+                                            <div class="web-social-post" style="margin-bottom:0;">
+                                                <div class="web-post-header">
+                                                    <div class="web-post-avatar" style="background:#EEF2FF; color:#4f46e5;">AM</div>
+                                                    <div>
+                                                        <strong style="font-size:12px; display:block; color:#0f172a;">Arnav Malhotra</strong>
+                                                        <span style="font-size:9px; color:#94a3b8;">2 hours ago • Level 6 Tree</span>
+                                                    </div>
+                                                </div>
+                                                <p style="font-size:11px; line-height:1.4; color:#334155; margin:0 0 8px 0;">Just hit a 9-day savings streak! Cafe Cutback challenge is keeping my tree growing fast! ☕❌ 🌳 Saved ₹450 so far this week.</p>
+                                                <div style="display:flex; gap:12px; font-size:10px; color:#64748b; border-top:1px solid #f1f5f9; padding-top:6px;">
+                                                    <span style="cursor:pointer; font-weight:600; color:#4f46e5;" onclick="webIncrementLike(this)">👍 Like (<span class="like-count">12</span>)</span>
+                                                    <span style="cursor:pointer;" onclick="alert('Comment section is read-only in prototype.')">💬 Comment (3)</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Post 2 -->
+                                            <div class="web-social-post" style="margin-bottom:0;">
+                                                <div class="web-post-header">
+                                                    <div class="web-post-avatar" style="background:#F5F3FF; color:#8b5cf6;">KM</div>
+                                                    <div>
+                                                        <strong style="font-size:12px; display:block; color:#0f172a;">Kabir Mehta</strong>
+                                                        <span style="font-size:9px; color:#94a3b8;">Yesterday • Level 4 Tree</span>
+                                                    </div>
+                                                </div>
+                                                <p style="font-size:11px; line-height:1.4; color:#334155; margin:0 0 8px 0;">Auto-saved ₹200 from weekend dining! Getting very close to level 5 sapling. Small saves add up fast! 💰🚀</p>
+                                                <div style="display:flex; gap:12px; font-size:10px; color:#64748b; border-top:1px solid #f1f5f9; padding-top:6px;">
+                                                    <span style="cursor:pointer; font-weight:600; color:#4f46e5;" onclick="webIncrementLike(this)">👍 Like (<span class="like-count">8</span>)</span>
+                                                    <span style="cursor:pointer;" onclick="alert('Comment section is read-only in prototype.')">💬 Comment (1)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right Column (40% width) - Interactive Group Pools -->
+                                    <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
+                                        <h4 style="margin:0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Active Group Goals</h4>
+                                        <!-- Goal 1 -->
+                                        <div class="web-card">
+                                            <strong style="font-size:12px; display:block; color:#0f172a; margin-bottom:2px;">🌴 Goa Trip Savings Group</strong>
+                                            <span style="font-size:9px; color:#64748b; display:block; margin-bottom:6px;">Target: ₹50,000 • Contribution Pool</span>
+                                            <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:700; margin-bottom:2px;">
+                                                <span>Pool Total</span>
+                                                <span style="color:#00c896;" id="web-goa-amount-lbl">₹32,400</span>
+                                            </div>
+                                            <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden; margin-bottom:8px;">
+                                                <div id="web-goa-progress-fill" style="width:65%; height:100%; background:#00c896; border-radius:3px; transition:width 0.4s;"></div>
+                                            </div>
+                                            <div style="display:flex; justify-content:space-between; font-size:8px; color:#64748b; margin-bottom:10px;">
+                                                <span>Rajveer: <span id="web-goa-rajveer-lbl">₹12,000</span></span>
+                                                <span>Arnav: ₹15,000</span>
+                                                <span>Kabir: ₹5,400</span>
+                                            </div>
+                                            <button onclick="webContributeToGoal('goa', 1000)" class="btn-primary" style="padding:6px; font-size:10px; width:100%;">Contribute ₹1,000</button>
+                                        </div>
+
+                                        <!-- Goal 2 -->
+                                        <div class="web-card">
+                                            <strong style="font-size:12px; display:block; color:#0f172a; margin-bottom:2px;">🎸 Coldplay Concert Pool</strong>
+                                            <span style="font-size:9px; color:#64748b; display:block; margin-bottom:6px;">Target: ₹12,000 • Group Target</span>
+                                            <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:700; margin-bottom:2px;">
+                                                <span>Pool Total</span>
+                                                <span style="color:#8b5cf6;" id="web-coldplay-amount-lbl">₹8,400</span>
+                                            </div>
+                                            <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden; margin-bottom:8px;">
+                                                <div id="web-coldplay-progress-fill" style="width:70%; height:100%; background:#8b5cf6; border-radius:3px; transition:width 0.4s;"></div>
+                                            </div>
+                                            <div style="display:flex; justify-content:space-between; font-size:8px; color:#64748b; margin-bottom:10px;">
+                                                <span>Rajveer: <span id="web-coldplay-rajveer-lbl">₹3,000</span></span>
+                                                <span>Sarah: ₹5,400</span>
+                                            </div>
+                                            <button onclick="webContributeToGoal('coldplay', 500)" class="btn-primary" style="padding:6px; font-size:10px; width:100%;">Contribute ₹500</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PANEL 6: PORTAL SETTINGS -->
+                                <div class="web-tab-panel" id="web-tab-settings" style="display:none; gap:16px; width:100%;">
+                                    <!-- Left Column (50%) - User info & security -->
+                                    <div style="flex:1; display:flex; flex-direction:column; gap:16px;">
+                                        <!-- User details -->
+                                        <div class="web-card">
+                                            <h4 style="margin:0 0 10px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Account Profile</h4>
+                                            <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+                                                <div style="width:40px; height:40px; border-radius:50%; background:#e2e8f0; border:2px solid #00c896; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px;">RS</div>
+                                                <div>
+                                                    <strong style="font-size:13px; color:#0f172a; display:block;">Rajveer Sandhu</strong>
+                                                    <span style="font-size:10px; color:#64748b; display:block;">Gold Member • rajveer@acebank</span>
+                                                </div>
+                                            </div>
+                                            <div style="display:flex; flex-direction:column; gap:6px; font-size:10px;">
+                                                <div style="display:flex; justify-content:space-between;"><span style="color:#64748b;">UPI ID:</span><strong>rajveer@acebank</strong></div>
+                                                <div style="display:flex; justify-content:space-between;"><span style="color:#64748b;">Primary Account:</span><strong>HDFC Bank (**** 8920)</strong></div>
+                                                <div style="display:flex; justify-content:space-between;"><span style="color:#64748b;">Member Since:</span><strong>June 2026</strong></div>
+                                                <div style="display:flex; justify-content:space-between;"><span style="color:#64748b;">Carbon Offset Certificate:</span><strong style="color:#008866;">Active (#ACE-MNG-9812)</strong></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Security & Privacy settings -->
+                                        <div class="web-card">
+                                            <h4 style="margin:0 0 10px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Security & Privacy</h4>
+                                            <div class="web-settings-row" style="padding:8px 0;">
+                                                <div>
+                                                    <strong style="display:block; font-size:11px;">Biometric Verification (Mobile Link)</strong>
+                                                    <span style="font-size:9px; color:#64748b; display:block; margin-top:2px;">Prompt fingerprint/FaceID on phone for withdrawals over ₹5,000.</span>
+                                                </div>
+                                                <div style="width:34px; height:18px; background:#00c896; border-radius:9px; position:relative; cursor:pointer;" onclick="this.style.background = this.style.background === 'rgb(0, 200, 150)' ? '#cbd5e1' : '#00c896'">
+                                                    <div style="width:14px; height:14px; background:#fff; border-radius:50%; position:absolute; top:2px; right:2px; transition:all 0.2s;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="web-settings-row" style="padding:8px 0;">
+                                                <div>
+                                                    <strong style="display:block; font-size:11px;">Two-Factor Authentication (2FA)</strong>
+                                                    <span style="font-size:9px; color:#64748b; display:block; margin-top:2px;">Verify web dashboard actions with secure mobile tokens.</span>
+                                                </div>
+                                                <div style="width:34px; height:18px; background:#00c896; border-radius:9px; position:relative; cursor:pointer;" onclick="this.style.background = this.style.background === 'rgb(0, 200, 150)' ? '#cbd5e1' : '#00c896'">
+                                                    <div style="width:14px; height:14px; background:#fff; border-radius:50%; position:absolute; top:2px; right:2px; transition:all 0.2s;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="web-settings-row" style="padding:8px 0; border:none;">
+                                                <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
+                                                    <div>
+                                                        <strong style="display:block; font-size:11px;">Reset Portal Access PIN</strong>
+                                                        <span style="font-size:9px; color:#64748b;">Choose a 4-digit code to unlock browser sessions.</span>
+                                                    </div>
+                                                    <button onclick="alert('PIN update requested! A secure confirmation link has been sent to your registered mobile number.')" class="btn-secondary" style="padding:4px 8px; font-size:9px;">Reset PIN</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right Column (50%) - Nudges & schedules -->
+                                    <div style="flex:1; display:flex; flex-direction:column; gap:16px;">
+                                        <!-- Nudges -->
+                                        <div class="web-card">
+                                            <h4 style="margin:0 0 10px 0; font-size:11px; font-weight:800; text-transform:uppercase; color:#64748b;">Nudges & Schedules</h4>
+                                            
+                                            <div class="web-settings-row" style="padding:8px 0;">
+                                                <div style="flex:1; margin-right:12px;">
+                                                    <strong style="display:block; font-size:11px;">Daily Auto-Save Amount</strong>
+                                                    <span style="font-size:9px; color:#64748b; display:block; margin-top:2px; margin-bottom:4px;">Define target to deposit automatically to grow savings tree.</span>
+                                                    <div style="display:flex; align-items:center; gap:6px;">
+                                                        <input type="range" min="10" max="500" value="100" id="web-settings-save-slider" oninput="document.getElementById('web-settings-save-lbl').textContent = '₹' + this.value + '/day'" style="flex:1;">
+                                                        <span id="web-settings-save-lbl" style="font-size:10px; font-weight:700; color:#008866; width:65px; text-align:right;">₹100/day</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="web-settings-row" style="padding:8px 0;">
+                                                <div>
+                                                    <strong style="display:block; font-size:11px;">Smartwatch Wrist Warnings</strong>
+                                                    <span style="font-size:9px; color:#64748b; display:block; margin-top:2px;">Send weekend shopping limit warning notifications to Apple Watch.</span>
+                                                </div>
+                                                <div style="width:34px; height:18px; background:#00c896; border-radius:9px; position:relative; cursor:pointer;" onclick="this.style.background = this.style.background === 'rgb(0, 200, 150)' ? '#cbd5e1' : '#00c896'">
+                                                    <div style="width:14px; height:14px; background:#fff; border-radius:50%; position:absolute; top:2px; right:2px; transition:all 0.2s;"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="web-settings-row" style="padding:8px 0; border:none;">
+                                                <div>
+                                                    <strong style="display:block; font-size:11px;">Weekly Streak Reports</strong>
+                                                    <span style="font-size:9px; color:#64748b; display:block; margin-top:2px;">Get email performance breakdowns comparing saving trees progress.</span>
+                                                </div>
+                                                <div style="width:34px; height:18px; background:#cbd5e1; border-radius:9px; position:relative; cursor:pointer;" onclick="this.style.background = this.style.background === 'rgb(0, 200, 150)' ? '#cbd5e1' : '#00c896'">
+                                                    <div style="width:14px; height:14px; background:#fff; border-radius:50%; position:absolute; top:2px; left:2px; transition:all 0.2s;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Environmental partner certification download -->
+                                        <div class="web-card" style="background:rgba(0,136,102,0.03); border:1px dashed rgba(0,136,102,0.25); text-align:center; padding:12px;">
+                                            <div style="font-size:16px; margin-bottom:4px;">📜</div>
+                                            <strong style="font-size:11px; display:block; color:#008866; margin-bottom:2px;">Environmental Partnership Certificate</strong>
+                                            <span style="font-size:9px; color:#64748b; display:block; margin-bottom:8px;">You have planting offsets of 480kg CO₂ equivalent through Grow-Trees.</span>
+                                            <button onclick="alert('Downloading Green Certificate PDF (#ACE-MNG-9812)...')" class="btn-primary" style="padding:6px 12px; font-size:9px; width:100%;">Download Certificate PDF</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="laptop-base">
+                <div class="laptop-base-notch"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== WATCH PLATFORM VIEW ===== -->
+    <div id="platform-watch" class="platform-view">
+        <div class="watch-container">
+            <div class="watch-strap-top"></div>
+            <div class="watch-frame">
+                <div class="watch-crown"></div>
+                <div class="watch-btn"></div>
+                <div class="watch-screen">
+                    <!-- Notification Detail Screen Overlay -->
+                    <div class="watch-detail-overlay" id="watch-notif-overlay">
+                        <div class="watch-detail-overlay-content">
+                            <h4 id="watch-detail-title">Auto-Save</h4>
+                            <p id="watch-detail-desc">Ace AI saved ₹100 from your lunch expense! Total auto-saved today: ₹240.</p>
+                        </div>
+                        <div class="watch-detail-overlay-actions">
+                            <button id="watch-detail-action" onclick="watchCloseDetail()" class="watch-btn-primary">View Tree</button>
+                            <button onclick="watchCloseDetail()" class="watch-btn-secondary">Dismiss</button>
+                        </div>
+                    </div>
+
+                    <!-- Time & Status Bar -->
+                    <div class="watch-time-bar">
+                        <span>09:24</span>
+                    </div>
+
+                    <!-- Notification feed -->
+                    <div class="watch-notifications-feed">
+                        
+                        <div class="watch-notif-card" onclick="watchShowDetail('Streak Nudge', '12-Day Save Streak! Maintain your streak to help your Tree grow.', 'View Streak')">
+                            <div class="watch-notif-app-row">
+                                <svg viewBox="0 0 24 24" fill="#ff6b6b"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
+                                ACE BANK
+                            </div>
+                            <div class="watch-notif-header">Streak Alert</div>
+                            <div class="watch-notif-body">12-Day Save Streak! Keep it going to grow your Sapling.</div>
+                        </div>
+
+                        <div class="watch-notif-card" onclick="watchShowDetail('Auto-Save', 'Ace AI saved ₹100 from your lunch expense! Total today: ₹240.', 'Check balance')">
+                            <div class="watch-notif-app-row">
+                                <svg viewBox="0 0 24 24" fill="#3b82f6"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
+                                ACE BANK
+                            </div>
+                            <div class="watch-notif-header">Auto-Save</div>
+                            <div class="watch-notif-body">Ace AI auto-saved ₹100 from food expense today.</div>
+                        </div>
+
+                        <div class="watch-notif-card" onclick="watchShowDetail('Level Up!', 'Tree Level Up! Your tree has sprouted into Level 4 - Sapling!', 'View Tree')">
+                            <div class="watch-notif-app-row">
+                                <svg viewBox="0 0 24 24" fill="#00C896"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
+                                ACE BANK
+                            </div>
+                            <div class="watch-notif-header">Tree Growth</div>
+                            <div class="watch-notif-body">Level Up! Your tree sprouted to Level 4 - Sapling!</div>
+                        </div>
+
+                        <div class="watch-notif-card" onclick="watchShowDetail('Budget Warning', 'Weekend budget alert: You\'ve spent 85% of your food budget. Stop spending?', 'Agree')">
+                            <div class="watch-notif-app-row">
+                                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
+                                ACE BANK
+                            </div>
+                            <div class="watch-notif-header">High Spending</div>
+                            <div class="watch-notif-body">Spent 85% of weekend food allowance. Slow down?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="watch-strap-bottom"></div>
+        </div>
+    </div>
+</div> <!-- End of prototype-wrapper -->
 
 <script>
     // ===== BALANCE VISIBILITY TOGGLE =====
@@ -3762,8 +5431,8 @@
 
     function saveNameAndContinue() {
         const nameInput = document.getElementById('onboard-name-input');
-        let name = nameInput ? nameInput.value.trim() : 'Alex';
-        if (!name) name = 'Alex';
+        let name = nameInput ? nameInput.value.trim() : 'Rajveer';
+        if (!name) name = 'Rajveer';
         
         // Update greeting name on dashboard
         const greetingName = document.getElementById('greeting-name');
@@ -3864,7 +5533,7 @@
         
         // Get name from input
         const nameInput = document.getElementById('onboard-name-input');
-        const name = nameInput ? nameInput.value.trim() : 'Alex';
+        const name = nameInput ? nameInput.value.trim() : 'Rajveer';
         
         // Step 1: Show typing indicator
         showAiTypingIndicator();
@@ -4055,7 +5724,7 @@
             title: "Step 1: Profile Creation",
             desc: "Humanizing the financial experience. Personalization starts by establishing user identity.",
             suggestions: [
-                "Type or view the default name 'Alex' in the input field.",
+                "Type or view the default name 'Rajveer' in the input field.",
                 "Click 'Continue' to advance to the goal configuration."
             ],
             autoPlay: () => {
@@ -4337,7 +6006,7 @@
         if (btn) btn.classList.add('pulse');
         
         const nameInput = document.getElementById('onboard-name-input');
-        if (nameInput) nameInput.value = 'Alex';
+        if (nameInput) nameInput.value = 'Rajveer';
         
         document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('selected'));
         const defaultGoal = document.querySelectorAll('.goal-card')[2]; // Grow Wealth
@@ -4380,6 +6049,438 @@
         document.body.classList.add('guide-open');
         document.getElementById('tryMePanel').classList.add('show');
         updateGuidePanel('screen-splash');
+    }
+
+    // ===== MULTI-PLATFORM SWITCHING =====
+    function switchPlatform(platform, btnEl) {
+        // Toggle active tabs
+        const tabs = document.querySelectorAll('.platform-tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        btnEl.classList.add('active');
+        
+        // Update sliding background position
+        updateTabSlider(btnEl);
+        
+        // Toggle view visibility
+        const views = document.querySelectorAll('.platform-view');
+        views.forEach(v => v.classList.remove('active'));
+        
+        const targetView = document.getElementById('platform-' + platform);
+        if (targetView) targetView.classList.add('active');
+        
+        // Adjust Try Me Guide panel visibility depending on platform
+        const tryMeBtn = document.getElementById('toggleGuideBtn');
+        const tryMePanel = document.getElementById('tryMePanel');
+        if (platform !== 'mobile') {
+            if (tryMeBtn) tryMeBtn.style.display = 'none';
+            if (tryMePanel) tryMePanel.classList.remove('show');
+            document.body.classList.remove('guide-open');
+        } else {
+            if (tryMeBtn) tryMeBtn.style.display = 'flex';
+        }
+    }
+    
+    function updateTabSlider(tabElement) {
+        const slider = document.getElementById('platformSelectorSlider');
+        if (slider && tabElement) {
+            slider.style.width = tabElement.offsetWidth + 'px';
+            slider.style.transform = `translateX(${tabElement.offsetLeft - 5}px)`;
+        }
+    }
+    
+    // Initialize tab slider position on load
+    window.addEventListener('load', () => {
+        const activeTab = document.querySelector('.platform-tab.active');
+        if (activeTab) {
+            setTimeout(() => {
+                updateTabSlider(activeTab);
+            }, 100);
+        }
+    });
+
+    // ===== WEB INTERFACE STATE & NAVIGATION =====
+    function webGoTo(screenId) {
+        const screens = document.querySelectorAll('.web-screen');
+        screens.forEach(s => s.classList.remove('active'));
+        
+        const targetScreen = document.getElementById(screenId);
+        if (targetScreen) targetScreen.classList.add('active');
+    }
+    
+    function selectWebIncome(card) {
+        const cards = document.querySelectorAll('.income-card-web');
+        cards.forEach(c => {
+            c.classList.remove('selected');
+            c.style.border = '1px solid #e2e8f0';
+            c.style.background = 'transparent';
+        });
+        card.classList.add('selected');
+        card.style.border = '2px solid #00c896';
+        card.style.background = 'rgba(0,200,150,0.05)';
+    }
+
+    function webSwitchTab(tabId, btnEl) {
+        // Toggle sidebar tab styles
+        const items = document.querySelectorAll('.web-nav-item');
+        items.forEach(item => item.classList.remove('active'));
+        btnEl.classList.add('active');
+        
+        // Change Web Header Page Title
+        const pageTitle = document.getElementById('web-page-title');
+        let title = "Dashboard Overview";
+        if (tabId === 'challenges') title = "Challenges & Streaks";
+        else if (tabId === 'tree') title = "Financial Growth Tree";
+        else if (tabId === 'insights') title = "Financial Insights";
+        else if (tabId === 'community') title = "Savings Community";
+        else if (tabId === 'settings') title = "Settings & Customizations";
+        if (pageTitle) pageTitle.textContent = title;
+
+        // Toggle Content Panels
+        const panels = document.querySelectorAll('.web-tab-panel');
+        panels.forEach(p => p.style.display = 'none');
+        
+        const targetPanel = document.getElementById('web-tab-' + tabId);
+        if (targetPanel) {
+            targetPanel.style.display = 'flex';
+        }
+    }
+
+    // Toggle Web balance visibility
+    let webBalanceHidden = false;
+    const originalWebBalance = "₹12,450.80";
+    function toggleWebBalance() {
+        const valEl = document.getElementById('web-balance-val');
+        const eyeEl = document.getElementById('web-balance-eye');
+        webBalanceHidden = !webBalanceHidden;
+        if (webBalanceHidden) {
+            valEl.textContent = "••••••";
+            eyeEl.style.opacity = '1';
+        } else {
+            valEl.textContent = originalWebBalance;
+            eyeEl.style.opacity = '0.5';
+        }
+    }
+
+    // Interactive Web Chat Advisor
+    function webAskAI(question, response) {
+        const chatOutput = document.getElementById('web-chat-output');
+        if (!chatOutput) return;
+        
+        // Add User Bubble
+        const userBubble = document.createElement('div');
+        userBubble.className = 'web-chat-bubble web-chat-user';
+        userBubble.textContent = question;
+        chatOutput.appendChild(userBubble);
+        
+        // Auto scroll
+        chatOutput.scrollTop = chatOutput.scrollHeight;
+        
+        // Add typing indicator response
+        setTimeout(() => {
+            const aiBubble = document.createElement('div');
+            aiBubble.className = 'web-chat-bubble web-chat-ai';
+            aiBubble.textContent = response;
+            chatOutput.appendChild(aiBubble);
+            chatOutput.scrollTop = chatOutput.scrollHeight;
+        }, 600);
+    }
+
+    // Custom text prompt typing for AI Copilot
+    function webCustomPromptAI() {
+        const input = document.getElementById('web-chat-input');
+        if (!input || !input.value.trim()) return;
+        const text = input.value.trim();
+        input.value = '';
+        
+        // Add User Bubble
+        const output = document.getElementById('web-chat-output');
+        if (!output) return;
+        const userBubble = document.createElement('div');
+        userBubble.className = 'web-chat-bubble web-chat-user';
+        userBubble.textContent = text;
+        output.appendChild(userBubble);
+        
+        // Auto Scroll
+        output.scrollTop = output.scrollHeight;
+        
+        // Simulate AI response
+        setTimeout(() => {
+            const aiBubble = document.createElement('div');
+            aiBubble.className = 'web-chat-bubble web-chat-ai';
+            let response = "That's a great question! I'm tracking your saving habits to build personalized insights. Keep auto-saving to unlock detailed reports.";
+            
+            const low = text.toLowerCase();
+            if (low.includes('streak')) {
+                response = "🔥 Your current streak is 12 days. Saving every day increases your tree's growth speed by up to 2x!";
+            } else if (low.includes('tree') || low.includes('plant')) {
+                response = "🌳 Your tree is currently a Sapling (Level 4, 68% progress). It needs watering (saving money) or sunlight (daily streaks) to grow!";
+            } else if (low.includes('budget') || low.includes('spend')) {
+                response = "📊 Based on your settings, we recommend allocating 50% to needs, 20% to savings (tree), and capping fun spending under 30%.";
+            } else if (low.includes('challenge')) {
+                response = "🎯 Check out the 'Cafe Cutback' challenge! Joining it and saving ₹50 daily will add +5% weekly speed to your tree.";
+            } else if (low.includes('coach') || low.includes('human')) {
+                response = "📞 I can connect you with a certified Human Wealth Coach right away! Click the 'Talk to Human Coach' button in the sidebar to schedule a video call.";
+            }
+            
+            aiBubble.textContent = response;
+            output.appendChild(aiBubble);
+            output.scrollTop = output.scrollHeight;
+        }, 800);
+    }
+
+    // Join Challenges
+    function webJoinSuggestedChallenge(cardId, name, desc, amount) {
+        const card = document.getElementById(cardId);
+        if (!card) return;
+        
+        // Remove join button
+        const btn = card.querySelector('button');
+        if (btn) btn.outerHTML = `<span style="font-size:10px; font-weight:700; color:#008866; padding-right:8px;">Active</span>`;
+        
+        // Prepend to active challenges box
+        const activeBox = document.getElementById('web-active-challenges-box');
+        if (activeBox) {
+            card.style.background = 'rgba(0,200,150,0.03)';
+            card.style.borderColor = 'rgba(0,200,150,0.2)';
+            
+            // Re-arrange inside container
+            activeBox.removeChild(card);
+            activeBox.insertBefore(card, activeBox.firstChild);
+        }
+        
+        alert(`Joined Challenge: ${name}! Start tracking to accelerate tree growth.`);
+    }
+
+    // Complete Daily Challenge Save
+    let dailyChallengeSaves = 5;
+    function webCompleteDailyChallenge(type) {
+        if (type === 'cafe') {
+            dailyChallengeSaves++;
+            if (dailyChallengeSaves > 7) dailyChallengeSaves = 7;
+            
+            const fill = document.getElementById('web-chal-cafe-fill');
+            const lbl = document.getElementById('web-chal-cafe-lbl');
+            if (fill) fill.style.width = (dailyChallengeSaves / 7 * 100) + '%';
+            if (lbl) lbl.textContent = `${dailyChallengeSaves}/7 Days Complete`;
+            
+            // Water tree automatically
+            triggerWebTreeAction('Logged Cafe Cutback save! +10% Growth', 10);
+        }
+    }
+
+    // Streak Days Claim Nudge
+    let webStreakDays = 5;
+    function webClaimStreakDay() {
+        webStreakDays++;
+        
+        const daysLbl = document.getElementById('web-streak-days-lbl');
+        if (daysLbl) daysLbl.textContent = `${webStreakDays} Days`;
+        
+        // Update Calendar element for Day 6
+        const day6 = document.getElementById('web-streak-day-6');
+        if (day6) {
+            day6.classList.remove('today');
+            day6.classList.add('completed');
+        }
+        
+        // Next day today
+        const grid = document.getElementById('web-streak-days-grid');
+        if (grid && grid.children[6]) {
+            grid.children[6].classList.add('today');
+        }
+        
+        // Disable claim button
+        const btn = document.getElementById('web-btn-streak-claim');
+        if (btn) {
+            btn.textContent = '🔥 Today\'s save registered!';
+            btn.disabled = true;
+            btn.style.opacity = '0.7';
+        }
+        
+        // Update tree
+        triggerWebTreeAction('Streak claimed! +5% Growth', 5);
+    }
+
+    // Smartwatch Nudges
+    function webNudgeFriend(friend) {
+        alert(`Wrist Nudge sent successfully! A custom haptic vibration alert has been pushed to ${friend}'s Smartwatch to encourage saving.`);
+    }
+
+    // Web Tree Growth Actions
+    let webTreePercent = 68;
+    function triggerWebTreeAction(message, amount) {
+        webTreePercent += amount;
+        if (webTreePercent > 100) webTreePercent = 100;
+        
+        // Update Labels and Fills across all screens
+        const lbls = ['web-tree-percent-label', 'web-dash-tree-percent', 'web-dash-tree-val-lbl'];
+        lbls.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = webTreePercent + '%';
+        });
+        
+        const fills = ['web-tree-progress-fill', 'web-dash-tree-fill', 'web-dash-tree-progress-fill'];
+        fills.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.width = webTreePercent + '%';
+        });
+
+        // Animate Container
+        const container = document.getElementById('web-tree-svg-container');
+        if (container) {
+            container.style.transform = 'scale(1.15)';
+            setTimeout(() => container.style.transform = 'scale(1)', 600);
+        }
+        
+        const effect = document.getElementById('web-growth-effect');
+        if (effect) {
+            effect.textContent = `+${amount}%`;
+            effect.style.opacity = '1';
+            effect.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                effect.style.opacity = '0';
+                effect.style.transform = 'translateY(0)';
+            }, 600);
+        }
+        
+        // Show message alert
+        setTimeout(() => {
+            alert(`Ace AI: Tree updated! ${message}`);
+        }, 700);
+    }
+
+    // Interactive Budget Limits Page Slider
+    function updateWebBudgetLimits(type, val) {
+        const lbl = document.getElementById(`web-budget-${type}-val-2`);
+        if (lbl) lbl.textContent = val + '%';
+        
+        // Update dashboard slider too if present
+        const dashVal = document.getElementById(`web-budget-${type}-val`);
+        if (dashVal) dashVal.textContent = val + '%';
+        
+        // Get values
+        const foodEl = document.querySelector('input[oninput*="updateWebBudgetLimits(\'food\'"]');
+        const funEl = document.querySelector('input[oninput*="updateWebBudgetLimits(\'fun\'"]');
+        const foodVal = foodEl ? parseInt(foodEl.value) : 25;
+        const funVal = funEl ? parseInt(funEl.value) : 20;
+        
+        const warning = document.getElementById('web-budget-warning-2');
+        if (warning) {
+            if (foodVal + funVal > 50 || funVal > 30) {
+                warning.style.display = 'block';
+            } else {
+                warning.style.display = 'none';
+            }
+        }
+    }
+
+    // Apply Smart Allocations
+    function webApplySmartProjections() {
+        const text = document.getElementById('web-smart-proj-text');
+        if (text) {
+            text.innerHTML = `🎯 <strong>AI applied!</strong> Buffer cap updated. Food set to <strong>20%</strong>, Fun set to <strong>15%</strong>. Savings rate increased by ₹400/mo. Projection reduced to <strong>1.8 months</strong>!`;
+        }
+        
+        // Adjust sliders
+        const foodEl = document.querySelector('input[oninput*="updateWebBudgetLimits(\'food\'"]');
+        const funEl = document.querySelector('input[oninput*="updateWebBudgetLimits(\'fun\'"]');
+        if (foodEl) {
+            foodEl.value = 20;
+            updateWebBudgetLimits('food', 20);
+        }
+        if (funEl) {
+            funEl.value = 15;
+            updateWebBudgetLimits('fun', 15);
+        }
+        
+        alert("Smart Allocations applied successfully! Sliders and targets have been optimized to expedite your savings goal.");
+    }
+
+    // Community tab dynamic posts
+    function webAddNewPost() {
+        const input = document.getElementById('web-post-input');
+        if (!input || !input.value.trim()) return;
+        const text = input.value.trim();
+        input.value = '';
+        
+        const container = document.getElementById('web-posts-container');
+        if (!container) return;
+        
+        const card = document.createElement('div');
+        card.className = 'web-social-post';
+        card.style.marginBottom = '0';
+        card.innerHTML = `
+            <div class="web-post-header">
+                <div class="web-post-avatar" style="background:#e2e8f0; color:#0f172a;">RS</div>
+                <div>
+                    <strong style="font-size:12px; display:block; color:#0f172a;">You (Rajveer Sandhu)</strong>
+                    <span style="font-size:9px; color:#94a3b8;">Just now • Level 4 Tree</span>
+                </div>
+            </div>
+            <p style="font-size:11px; line-height:1.4; color:#334155; margin:0 0 8px 0;">${text}</p>
+            <div style="display:flex; gap:12px; font-size:10px; color:#64748b; border-top:1px solid #f1f5f9; padding-top:6px;">
+                <span style="cursor:pointer; font-weight:600; color:#4f46e5;" onclick="webIncrementLike(this)">👍 Like (<span class="like-count">0</span>)</span>
+                <span style="cursor:pointer;" onclick="alert('Comment section is read-only in prototype.')">💬 Comment (0)</span>
+            </div>
+        `;
+        
+        container.insertBefore(card, container.firstChild);
+    }
+
+    // Increment Likes
+    function webIncrementLike(el) {
+        const countSpan = el.querySelector('.like-count');
+        if (countSpan) {
+            let count = parseInt(countSpan.textContent) || 0;
+            countSpan.textContent = count + 1;
+        }
+    }
+
+    // Contribute towards Goa/Coldplay
+    let goalGoaAmount = 32400;
+    let goalColdplayAmount = 8400;
+    function webContributeToGoal(type, amount) {
+        if (type === 'goa') {
+            goalGoaAmount += amount;
+            if (goalGoaAmount > 50000) goalGoaAmount = 50000;
+            
+            const lbl = document.getElementById('web-goa-amount-lbl');
+            const fill = document.getElementById('web-goa-progress-fill');
+            const rj = document.getElementById('web-goa-rajveer-lbl');
+            if (lbl) lbl.textContent = '₹' + goalGoaAmount.toLocaleString('en-IN');
+            if (fill) fill.style.width = (goalGoaAmount / 50000 * 100) + '%';
+            if (rj) rj.textContent = '₹' + (12000 + (goalGoaAmount - 32400)).toLocaleString('en-IN');
+            
+            alert(`Contributed ₹${amount} to Goa Trip group savings!`);
+        } else if (type === 'coldplay') {
+            goalColdplayAmount += amount;
+            if (goalColdplayAmount > 12000) goalColdplayAmount = 12000;
+            
+            const lbl = document.getElementById('web-coldplay-amount-lbl');
+            const fill = document.getElementById('web-coldplay-progress-fill');
+            const rj = document.getElementById('web-coldplay-rajveer-lbl');
+            if (lbl) lbl.textContent = '₹' + goalColdplayAmount.toLocaleString('en-IN');
+            if (fill) fill.style.width = (goalColdplayAmount / 12000 * 100) + '%';
+            if (rj) rj.textContent = '₹' + (3000 + (goalColdplayAmount - 8400)).toLocaleString('en-IN');
+            
+            alert(`Contributed ₹${amount} to Coldplay Concert group savings!`);
+        }
+    }
+
+
+    // ===== WATCH NOTIFICATIONS INTERACTION =====
+    function watchShowDetail(title, desc, actionText) {
+        const overlay = document.getElementById('watch-notif-overlay');
+        document.getElementById('watch-detail-title').textContent = title;
+        document.getElementById('watch-detail-desc').textContent = desc;
+        document.getElementById('watch-detail-action').textContent = actionText;
+        
+        overlay.style.display = 'flex';
+    }
+    
+    function watchCloseDetail() {
+        const overlay = document.getElementById('watch-notif-overlay');
+        overlay.style.display = 'none';
     }
 </script>
 
