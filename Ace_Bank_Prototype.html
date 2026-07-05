@@ -1000,69 +1000,73 @@
             padding-bottom: 20px;
         }
         .challenge-card {
-            background: var(--ace-navy-card);
+            background: linear-gradient(135deg, var(--ace-navy-card), rgba(255,255,255,0.03));
             border: 1px solid var(--ace-border);
-            border-radius: var(--radius-md);
-            padding: 20px;
+            border-radius: 24px;
+            padding: 24px;
             cursor: pointer;
             transition: all 0.3s;
+            margin-bottom: 16px;
         }
         .challenge-card:active { border-color: var(--ace-green); transform: scale(0.98); }
         .challenge-card-header {
             display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 12px;
+            align-items: flex-start;
+            gap: 16px;
         }
         .challenge-card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 28px;
+            flex-shrink: 0;
         }
-        .challenge-card h4 { font-size: 15px; font-weight: 700; }
+        .challenge-card h4 { font-size: 18px; font-weight: 800; color: var(--ace-text-primary); margin-bottom: 4px; line-height: 1.2; }
         .challenge-card .challenge-reward {
-            font-size: 12px;
+            font-size: 14px;
             color: var(--ace-orange);
-            font-weight: 600;
+            font-weight: 700;
         }
         .challenge-card p {
-            font-size: 13px;
-            color: var(--ace-text-muted);
-            line-height: 1.4;
-            margin-bottom: 12px;
+            font-size: 15px;
+            color: var(--ace-text-secondary);
+            line-height: 1.5;
+            margin-bottom: 16px;
+            margin-top: 16px;
         }
         .challenge-progress {
             width: 100%;
-            height: 6px;
-            background: var(--ace-progress-track);
-            border-radius: 3px;
+            height: 8px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
             overflow: hidden;
         }
         .challenge-progress-fill {
             height: 100%;
-            border-radius: 3px;
-            transition: width 1s ease;
+            border-radius: 10px;
+            transition: width 1s ease-out;
         }
         .challenge-meta {
             display: flex;
             justify-content: space-between;
-            margin-top: 8px;
-            font-size: 11px;
+            margin-top: 12px;
+            font-size: 13px;
+            font-weight: 500;
             color: var(--ace-text-muted);
         }
         .behavioral-tag {
-            display: inline-block;
-            background: var(--ace-behavioral-bg);
+            display: inline-flex;
+            align-items: center;
+            background: rgba(139, 92, 246, 0.1);
             color: var(--ace-purple);
-            padding: 3px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
-            font-size: 10px;
-            font-weight: 600;
-            margin-top: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 16px;
         }
 
         /* ========== COMMUNITY SCREEN ========== */
@@ -2182,7 +2186,7 @@
 
         <!-- ===== SCREEN: ONBOARDING 1 — PROFILE CREATION ===== -->
         <div class="screen onboarding-screen" id="screen-onboard1">
-            <div class="onboarding-content" style="justify-content: flex-start; padding-top: 60px; position: relative; width: 100%;">
+            <div class="onboarding-content" style="justify-content: flex-start; padding-top: 60px; padding-bottom: 140px; position: relative; width: 100%; overflow-y: auto; height: 100vh; box-sizing: border-box;">
                 <button class="back-btn" onclick="goTo('screen-splash')" style="position: absolute; top: 16px; left: 16px; border: 1px solid var(--ace-border); background: var(--ace-navy-card); display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
                     <svg class="sf-icon" viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: var(--ace-text-secondary); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none;"><polyline points="15 18 9 12 15 6"/></svg>
                 </button>
@@ -2192,19 +2196,21 @@
                     <label style="font-size:12px; font-weight:600; color:var(--ace-text-muted); display:block; margin-bottom:8px;">YOUR NAME</label>
                     <input type="text" id="onboard-name-input" placeholder="Enter your name" value="Alex" style="width: 100%; box-sizing: border-box; background: var(--ace-navy-card); border: 1px solid var(--ace-border); border-radius: 12px; padding: 14px 16px; color: var(--ace-text-primary); font-size: 16px; font-weight: 600; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--ace-green)'" onblur="this.style.borderColor='var(--ace-border)'">
                 </div>
-                <div class="dot-nav" style="margin-top: 32px;">
+            </div>
+            <div style="position: absolute; bottom: 40px; left: 24px; right: 24px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;">
+                <div class="dot-nav" style="margin-bottom: 24px;">
                     <div class="dot active"></div>
                     <div class="dot"></div>
                     <div class="dot"></div>
                     <div class="dot"></div>
                 </div>
-                <button class="btn-primary" style="margin-top: 20px;" onclick="saveNameAndContinue()">Continue</button>
+                <button class="btn-primary" style="width: 100%;" onclick="saveNameAndContinue()">Continue</button>
             </div>
         </div>
 
         <!-- ===== SCREEN: ONBOARDING 2 — GOAL SELECTION ===== -->
         <div class="screen onboarding-screen" id="screen-onboard2">
-            <div class="onboarding-content" style="justify-content: flex-start; padding-top: 60px; position: relative; width: 100%;">
+            <div class="onboarding-content" style="justify-content: flex-start; padding-top: 60px; padding-bottom: 140px; position: relative; width: 100%; overflow-y: auto; height: 100vh; box-sizing: border-box;">
                 <button class="back-btn" onclick="goTo('screen-onboard1')" style="position: absolute; top: 16px; left: 16px; border: 1px solid var(--ace-border); background: var(--ace-navy-card); display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
                     <svg class="sf-icon" viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: var(--ace-text-secondary); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none;"><polyline points="15 18 9 12 15 6"/></svg>
                 </button>
@@ -2232,19 +2238,21 @@
                         <p>Pay off loans faster</p>
                     </div>
                 </div>
-                <div class="dot-nav" style="margin-top: 16px;">
+            </div>
+            <div style="position: absolute; bottom: 40px; left: 24px; right: 24px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;">
+                <div class="dot-nav" style="margin-bottom: 24px;">
                     <div class="dot"></div>
                     <div class="dot active"></div>
                     <div class="dot"></div>
                     <div class="dot"></div>
                 </div>
-                <button class="btn-primary" style="margin-top: 20px;" onclick="goTo('screen-onboard3')">Continue</button>
+                <button class="btn-primary" style="width: 100%;" onclick="goTo('screen-onboard3')">Continue</button>
             </div>
         </div>
 
         <!-- ===== SCREEN: ONBOARDING 3 — PERSONALIZATION ===== -->
         <div class="screen onboarding-screen" id="screen-onboard3">
-            <div class="onboarding-content" style="justify-content: flex-start; padding-top: 60px; position: relative; width: 100%;">
+            <div class="onboarding-content" style="justify-content: flex-start; padding-top: 60px; padding-bottom: 160px; position: relative; width: 100%; overflow-y: auto; height: 100vh; box-sizing: border-box;">
                 <button class="back-btn" onclick="goTo('screen-onboard2')" style="position: absolute; top: 16px; left: 16px; border: 1px solid var(--ace-border); background: var(--ace-navy-card); display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
                     <svg class="sf-icon" viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: var(--ace-text-secondary); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none;"><polyline points="15 18 9 12 15 6"/></svg>
                 </button>
@@ -2256,8 +2264,8 @@
                         <label style="font-size:12px; font-weight:600; color:var(--ace-text-muted); display:block; margin-bottom:10px;">MONTHLY INCOME RANGE</label>
                         <div class="income-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
                             <div class="income-card" onclick="selectIncome(this, 'Under ₹25k')" style="padding:14px; background:var(--ace-navy-card); border:1px solid var(--ace-border); border-radius:12px; text-align:center; font-size:13px; font-weight:700; color:var(--ace-text-secondary); cursor:pointer; transition:all 0.2s;">Under ₹25k</div>
-                            <div class="income-card selected" onclick="selectIncome(this, '₹25k - ₹50k')" style="padding:14px; background:rgba(0,200,150,0.05); border:2px solid var(--ace-green); border-radius:12px; text-align:center; font-size:13px; font-weight:700; color:var(--ace-text-primary); cursor:pointer; transition:all 0.2s;">₹25k – ₹50k</div>
-                            <div class="income-card" onclick="selectIncome(this, '₹50k - ₹1L')" style="padding:14px; background:var(--ace-navy-card); border:1px solid var(--ace-border); border-radius:12px; text-align:center; font-size:13px; font-weight:700; color:var(--ace-text-secondary); cursor:pointer; transition:all 0.2s;">₹50k – ₹1L</div>
+                            <div class="income-card selected" onclick="selectIncome(this, '₹25k - ₹50k')" style="padding:14px; background:rgba(0,200,150,0.05); border:2px solid var(--ace-green); border-radius:12px; text-align:center; font-size:13px; font-weight:700; color:var(--ace-text-primary); cursor:pointer; transition:all 0.2s;">₹25k - ₹50k</div>
+                            <div class="income-card" onclick="selectIncome(this, '₹50k - ₹1L')" style="padding:14px; background:var(--ace-navy-card); border:1px solid var(--ace-border); border-radius:12px; text-align:center; font-size:13px; font-weight:700; color:var(--ace-text-secondary); cursor:pointer; transition:all 0.2s;">₹50k - ₹1L</div>
                             <div class="income-card" onclick="selectIncome(this, '₹1L+')" style="padding:14px; background:var(--ace-navy-card); border:1px solid var(--ace-border); border-radius:12px; text-align:center; font-size:13px; font-weight:700; color:var(--ace-text-secondary); cursor:pointer; transition:all 0.2s;">₹1L+</div>
                         </div>
                     </div>
@@ -2266,7 +2274,7 @@
                             <label style="font-size:12px; font-weight:600; color:var(--ace-text-muted);">SAVINGS TARGET / MONTH</label>
                             <div style="position:relative; width: 100px;">
                                 <span style="position:absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size:14px; font-weight:700; color:var(--ace-text-primary);">₹</span>
-                                <input type="number" id="savings-manual-input" value="5000" oninput="updateSavingsFromInput(this.value)" style="width: 100%; box-sizing:border-box; background: var(--ace-navy-card); border: 1px solid var(--ace-border); border-radius: 8px; padding: 6px 10px 6px 20px; color: var(--ace-text-primary); font-size: 14px; font-weight: 700; text-align: right; outline: none; -moz-appearance: textfield;">
+                                <input type="number" id="savings-manual-input" value="5000" oninput="updateSavingsFromInput(this.value)" style="width: 100%; box-sizing:border-box; background: var(--ace-navy-card); border: 1px solid var(--ace-border); border-radius: 8px; padding: 6px 10px 6px 20px; color: var(--ace-text-primary); font-size: 14px; font-weight: 700; text-align: right; outline: none; -moz-appearance: textfield; appearance: textfield;">
                             </div>
                         </div>
                         <input type="range" class="savings-slider-input" id="savings-slider" min="1000" max="50000" step="1000" value="5000" oninput="updateSavingsFromSlider(this.value)">
@@ -2276,21 +2284,22 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="dot-nav" style="margin-top: 24px;">
+            </div>
+            <div style="position: absolute; bottom: 40px; left: 24px; right: 24px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;">
+                <div class="dot-nav" style="margin-bottom: 24px;">
                     <div class="dot"></div>
                     <div class="dot"></div>
                     <div class="dot active"></div>
                     <div class="dot"></div>
                 </div>
-                <button class="btn-primary" style="margin-top: 16px;" onclick="goTo('screen-onboard4')">Continue</button>
-                <p style="font-size:11px; color: var(--ace-text-muted); margin-top:8px;">You can change all of this anytime in settings.</p>
+                <p style="font-size:11px; color: var(--ace-text-muted); margin-bottom:12px;">You can change all of this anytime in settings.</p>
+                <button class="btn-primary" style="width: 100%;" onclick="goTo('screen-onboard4')">Continue</button>
             </div>
         </div>
 
         <!-- ===== SCREEN: ONBOARDING 4 — NOTIFICATION PREFERENCE ===== -->
         <div class="screen onboarding-screen" id="screen-onboard4">
-            <div class="onboarding-content" style="justify-content: flex-start; padding-top: 60px; position: relative; width: 100%;">
+            <div class="onboarding-content" style="justify-content: flex-start; padding-top: 60px; padding-bottom: 140px; position: relative; width: 100%; overflow-y: auto; height: 100vh; box-sizing: border-box;">
                 <button class="back-btn" onclick="goTo('screen-onboard3')" style="position: absolute; top: 16px; left: 16px; border: 1px solid var(--ace-border); background: var(--ace-navy-card); display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
                     <svg class="sf-icon" viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: var(--ace-text-secondary); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none;"><polyline points="15 18 9 12 15 6"/></svg>
                 </button>
@@ -2329,15 +2338,17 @@
                         <div class="notif-checkbox" style="width:18px; height:18px; border-radius:6px; border:1px solid var(--ace-border); background:transparent; display:flex; align-items:center; justify-content:center; color:transparent; font-size:11px; font-weight:bold;">✓</div>
                     </div>
                 </div>
-
-                <div class="dot-nav" style="margin-top: 24px;">
+            </div>
+            
+            <div style="position: absolute; bottom: 40px; left: 24px; right: 24px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;">
+                <div class="dot-nav" style="margin-bottom: 24px;">
                     <div class="dot"></div>
                     <div class="dot"></div>
                     <div class="dot"></div>
                     <div class="dot active"></div>
                 </div>
-                <button class="btn-primary" style="margin-top: 16px;" onclick="goTo('screen-home')">🌳 Plant My Money Tree</button>
-                <p style="font-size:11px; color: var(--ace-text-muted); margin-top:8px;">You can change all of this anytime in settings.</p>
+                <p style="font-size:11px; color: var(--ace-text-muted); margin-bottom:12px;">You can change all of this anytime in settings.</p>
+                <button class="btn-primary" style="width: 100%;" onclick="goTo('screen-home')">🌳 Plant My Money Tree</button>
             </div>
         </div>
 
@@ -2346,7 +2357,7 @@
             <div class="home-header">
                 <div class="greeting">
                     <span>Good evening,</span>
-                    <strong id="greeting-name">Alex</strong>
+                    <strong id="greeting-name">Rajveer</strong>
                 </div>
                 <div class="notification-badge" style="cursor:pointer;" onclick="goTo('screen-notifications')"><svg class="bell-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
             </div>
@@ -2354,13 +2365,27 @@
             <div class="home-scroll">
                 <!-- Top Cards Stack -->
                 <div class="home-top-cards" style="display: flex; flex-direction: column; gap: 16px; flex-shrink: 0;">
-                    <div class="balance-card" style="padding: 32px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(135deg, var(--ace-navy-card), rgba(255,255,255,0.03)); border: 1px solid var(--ace-border); position: relative;">
-                        <div class="balance-label" style="font-size: 13px; letter-spacing: 1px; color: var(--ace-text-secondary); text-transform: uppercase;">Total Balance</div>
-                        <div class="balance-amount" style="font-size: 40px; margin: 0; display: flex; align-items: center; justify-content: center; width: 100%; position: relative;">
-                            <span id="home-balance-amount" data-original="42,850"><span class="currency" style="font-size: 26px;">₹</span>42,850</span>
-                            <span onclick="toggleBalanceVisibility()" id="balance-eye-icon" style="cursor:pointer; opacity: 0.5; position: absolute; right: 10px;"><svg class="sf-icon" viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                    <div class="balance-card" style="padding: 28px 24px; display: flex; flex-direction: column; background: linear-gradient(135deg, var(--ace-navy-card), rgba(255,255,255,0.03)); border: 1px solid var(--ace-border); position: relative; border-radius: 20px;">
+                        
+                        <!-- Top Row: Everyday Spending & Secured Badge -->
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px;">
+                            <div>
+                                <div style="font-size: 22px; font-weight: 800; color: var(--ace-text-primary);">₹1,450<span style="font-size: 14px; color: var(--ace-text-muted); font-weight: 600;">/day</span></div>
+                                <div style="font-size: 13px; font-weight: 600; color: var(--ace-text-muted); margin-top: 4px;">Avg. Spending</div>
+                            </div>
+                            <div class="trust-badge" style="font-size: 11px; padding: 6px 10px; background: rgba(0, 200, 150, 0.08); border: 1px solid rgba(0, 200, 150, 0.2); border-radius: 12px; color: var(--ace-green); display: flex; align-items: center; gap: 4px; font-weight: 700;">
+                                <svg class="sf-icon" viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;stroke-width:2.5;fill:none;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Secured
+                            </div>
                         </div>
-                        <div class="trust-badge" style="font-size: 11px; padding: 6px 12px; justify-content: center; margin-top: 4px; background: rgba(0, 200, 150, 0.08); border: 1px solid rgba(0, 200, 150, 0.2);"><svg class="sf-icon" viewBox="0 0 24 24" style="width:12px;height:12px;stroke:var(--ace-green);stroke-width:2.5;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Secured</div>
+
+                        <!-- Balance Row -->
+                        <div>
+                            <div class="balance-label" style="font-size: 12px; letter-spacing: 1px; color: var(--ace-text-secondary); text-transform: uppercase; margin-bottom: 6px; font-weight: 600;">Total Balance</div>
+                            <div class="balance-amount" style="margin: 0; display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                                <span id="home-balance-amount" data-original="42,850" style="font-size: 40px; font-weight: 800; color: var(--ace-text-primary);"><span class="currency" style="font-size: 26px; color: var(--ace-text-secondary); margin-right: 4px;">₹</span>42,850</span>
+                                <span onclick="toggleBalanceVisibility()" id="balance-eye-icon" style="cursor:pointer; opacity: 0.6; padding: 12px; background: rgba(0,0,0,0.03); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"><svg class="sf-icon" viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Action Buttons -->
@@ -3214,17 +3239,17 @@
         </div>
 
         <!-- ===== SCREEN: SCAN QR ===== -->
-        <div class="screen home-screen" id="screen-scan-qr" style="padding-top: 54px; padding-bottom: 104px;">
-            <div class="screen-top-bar">
-                <button class="back-btn" onclick="goTo('screen-home')"><svg class="sf-icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-                <h2 style="font-size:18px;">Scan QR Code</h2>
-                <button class="back-btn" style="border:none;" onclick="toggleFlash(this)"><svg class="sf-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></button>
+        <div class="screen home-screen" id="screen-scan-qr" style="padding-top: 54px; padding-bottom: 0; background-color: #000;">
+            <div class="screen-top-bar" style="background: transparent; border-bottom: none;">
+                <button class="back-btn" style="background: rgba(255,255,255,0.1); color: white;" onclick="goTo('screen-home')"><svg class="sf-icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+                <h2 style="font-size:18px; color: white;">Scan QR Code</h2>
+                <button class="back-btn" style="background: rgba(255,255,255,0.1); color: white; border:none;" onclick="toggleFlash(this)"><svg class="sf-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></button>
             </div>
             
             <div class="home-scroll" id="scan-qr-content" style="padding:0; overflow:hidden;">
                 <!-- View 1: SCANNER VIEW -->
-                <div id="qr-scanner-view" style="display:flex; flex-direction:column; align-items:center; height:100%; width:100%;">
-                    <div style="flex:1; width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#07090e; padding:32px 0; position:relative;">
+                <div id="qr-scanner-view" onclick="startScannerInteraction()" style="display:flex; flex-direction:column; align-items:center; height:100%; width:100%; cursor: pointer;">
+                    <div style="flex:1; width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 0; position:relative;">
                         <div class="camera-frame" style="position:relative; width:220px; height:220px; border:2px solid rgba(255,255,255,0.1); border-radius:16px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
                             <div style="position:absolute; top:0; left:0; width:20px; height:20px; border-top:3px solid var(--ace-green); border-left:3px solid var(--ace-green); border-top-left-radius:12px;"></div>
                             <div style="position:absolute; top:0; right:0; width:20px; height:20px; border-top:3px solid var(--ace-green); border-right:3px solid var(--ace-green); border-top-right-radius:12px;"></div>
@@ -3233,25 +3258,16 @@
                             
                             <div class="scanner-line"></div>
                             
-                            <svg viewBox="0 0 100 100" width="140" height="140" fill="var(--ace-text-primary)">
+                            <svg viewBox="0 0 100 100" width="140" height="140" fill="rgba(255,255,255,0.2)">
                                 <path d="M0 0h30v10H10v20H0V0zm10 10h10v10H10V10zm60-10h30v30h-10V10H70V0zm10 10h10v10H80V10zM0 70h30v30H0V70zm10 20v-10h10v10H10zm60 10h30V70H70v30zm10-20h10v10H80v-10zm-40-50h20v20H40V30zm10 10h10v10H50V40zm-10 20h10v10H40V60zm20 0h10v10H60V60z" fill-rule="evenodd"/>
                             </svg>
                         </div>
-                        <p style="font-size:12px; color:var(--ace-text-muted); margin-top:24px; text-align:center; padding:0 32px;">Align QR code within the frame to scan automatically.</p>
-                    </div>
-                    
-                    <div style="background:var(--ace-navy); padding:20px; display:flex; flex-direction:column; gap:12px; width:100%; box-sizing:border-box;">
-                        <button class="btn-primary" onclick="simulateSuccessfulScan()" style="background:rgba(0,200,150,0.1); border:1px solid var(--ace-green); color:var(--ace-green); width:100%;">
-                            Simulate Successful Scan (Blue Tokai Coffee)
-                        </button>
-                        <button class="balance-btn request" onclick="alert('Enter UPI ID manually coming soon!')" style="width:100%;">
-                            Enter UPI ID Manually
-                        </button>
+                        <p id="scanner-instruction-text" style="font-size:14px; color:rgba(255,255,255,0.7); margin-top:32px; text-align:center; padding:0 32px; font-weight: 500;">Tap anywhere to scan a QR code</p>
                     </div>
                 </div>
 
                 <!-- View 2: CONFIRM PAYMENT VIEW -->
-                <div id="qr-pay-confirm-view" style="display:none; flex-direction:column; padding:20px; box-sizing:border-box; width:100%; height:100%; animation: slideIn 0.3s ease-out;">
+                <div id="qr-pay-confirm-view" style="display:none; flex-direction:column; padding:20px; box-sizing:border-box; width:100%; height:100%; animation: slideIn 0.3s ease-out; background-color: var(--ace-navy);">
                     <div style="text-align:center; margin-bottom:24px; margin-top:16px;">
                         <div style="width:60px; height:60px; border-radius:50%; background:rgba(245,158,11,0.15); display:flex; align-items:center; justify-content:center; color:#f59e0b; margin:0 auto 12px; font-size:24px;">☕</div>
                         <h3 style="font-size:18px; font-weight:800;">Blue Tokai Coffee</h3>
@@ -3574,9 +3590,21 @@
         triggerDynamicIslandNudge(flashOn ? "🔦 Flash Enabled" : "🔦 Flash Disabled");
     }
 
-    function simulateSuccessfulScan() {
-        document.getElementById('qr-scanner-view').style.display = 'none';
-        document.getElementById('qr-pay-confirm-view').style.display = 'flex';
+    function startScannerInteraction() {
+        const textEl = document.getElementById('scanner-instruction-text');
+        const origText = textEl.innerHTML;
+        textEl.innerHTML = `<span style="border: 2px solid rgba(255,255,255,0.3); border-top: 2px solid var(--ace-green); border-radius: 50%; width: 14px; height: 14px; display: inline-block; animation: spin 1s linear infinite; margin-right: 8px; vertical-align: middle;"></span> Scanning...`;
+        
+        setTimeout(() => {
+            textEl.innerHTML = `<svg class="sf-icon" viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--ace-green);stroke-width:3;fill:none;vertical-align:middle;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> <span style="color:white; font-weight: 700;">Found: Blue Tokai Coffee</span>`;
+            
+            setTimeout(() => {
+                document.getElementById('qr-scanner-view').style.display = 'none';
+                document.getElementById('qr-pay-confirm-view').style.display = 'flex';
+                // Reset instruction text for next time
+                setTimeout(() => { textEl.innerHTML = origText; }, 500);
+            }, 1000);
+        }, 1200);
     }
 
     function resetQrScreen() {
@@ -3712,7 +3740,7 @@
         // Show/hide bottom nav and FAB
         const bottomNav = document.querySelector('.bottom-nav');
         const fabAi = document.querySelector('.fab-ai');
-        const onboardingScreens = ['screen-splash', 'screen-onboard1', 'screen-onboard2', 'screen-onboard3', 'screen-onboard4', 'screen-split-bill', 'screen-nudge', 'screen-notifications', 'screen-all-transactions'];
+        const onboardingScreens = ['screen-splash', 'screen-onboard1', 'screen-onboard2', 'screen-onboard3', 'screen-onboard4', 'screen-split-bill', 'screen-nudge', 'screen-notifications', 'screen-all-transactions', 'screen-scan-qr'];
         const isHidden = onboardingScreens.includes(screenId);
         bottomNav.style.display = isHidden ? 'none' : 'flex';
         if (fabAi) {
